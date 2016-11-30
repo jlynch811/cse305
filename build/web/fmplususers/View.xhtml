@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewFmplususersTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewFmplususersLabel_userId}"/>
+                    <h:outputText value="#{fmplususersController.selected.userId}" title="#{bundle.ViewFmplususersTitle_userId}"/>
+                    <h:outputText value="#{bundle.ViewFmplususersLabel_creationDate}"/>
+                    <h:outputText value="#{fmplususersController.selected.creationDate}" title="#{bundle.ViewFmplususersTitle_creationDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewFmplususersLabel_creditCardNumber}"/>
+                    <h:outputText value="#{fmplususersController.selected.creditCardNumber}" title="#{bundle.ViewFmplususersTitle_creditCardNumber}"/>
+                    <h:outputText value="#{bundle.ViewFmplususersLabel_rating}"/>
+                    <h:outputText value="#{fmplususersController.selected.rating}" title="#{bundle.ViewFmplususersTitle_rating}"/>
+                    <h:outputText value="#{bundle.ViewFmplususersLabel_users}"/>
+                    <h:outputText value="#{fmplususersController.selected.users}" title="#{bundle.ViewFmplususersTitle_users}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{fmplususersController.destroyAndView}" value="#{bundle.ViewFmplususersDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewFmplususersEditLink}"/>
+                <br />
+                <h:commandLink action="#{fmplususersController.prepareCreate}" value="#{bundle.ViewFmplususersCreateLink}" />
+                <br />
+                <h:commandLink action="#{fmplususersController.prepareList}" value="#{bundle.ViewFmplususersShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewFmplususersIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

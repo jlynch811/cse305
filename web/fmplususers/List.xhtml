@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListFmplususersTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListFmplususersEmpty}" rendered="#{fmplususersController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{fmplususersController.items.rowCount > 0}">
+                    <h:outputText value="#{fmplususersController.pagination.pageFirstItem + 1}..#{fmplususersController.pagination.pageLastItem + 1}/#{fmplususersController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{fmplususersController.previous}" value="#{bundle.Previous} #{fmplususersController.pagination.pageSize}" rendered="#{fmplususersController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{fmplususersController.next}" value="#{bundle.Next} #{fmplususersController.pagination.pageSize}" rendered="#{fmplususersController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{fmplususersController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFmplususersTitle_userId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.userId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFmplususersTitle_creationDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.creationDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFmplususersTitle_creditCardNumber}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.creditCardNumber}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFmplususersTitle_rating}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rating}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFmplususersTitle_users}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.users}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{fmplususersController.prepareView}" value="#{bundle.ListFmplususersViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{fmplususersController.prepareEdit}" value="#{bundle.ListFmplususersEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{fmplususersController.destroy}" value="#{bundle.ListFmplususersDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{fmplususersController.prepareCreate}" value="#{bundle.ListFmplususersCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListFmplususersIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

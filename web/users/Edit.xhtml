@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditUsersTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditUsersLabel_userId}" for="userId" />
+                    <h:inputText id="userId" value="#{usersController.selected.userId}" title="#{bundle.EditUsersTitle_userId}" required="true" requiredMessage="#{bundle.EditUsersRequiredMessage_userId}"/>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_emailId}" for="emailId" />
+                    <h:inputText id="emailId" value="#{usersController.selected.emailId}" title="#{bundle.EditUsersTitle_emailId}" required="true" requiredMessage="#{bundle.EditUsersRequiredMessage_emailId}"/>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_psswd}" for="psswd" />
+                    <h:inputText id="psswd" value="#{usersController.selected.psswd}" title="#{bundle.EditUsersTitle_psswd}" required="true" requiredMessage="#{bundle.EditUsersRequiredMessage_psswd}"/>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_firstName}" for="firstName" />
+                    <h:inputText id="firstName" value="#{usersController.selected.firstName}" title="#{bundle.EditUsersTitle_firstName}" required="true" requiredMessage="#{bundle.EditUsersRequiredMessage_firstName}"/>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_lastName}" for="lastName" />
+                    <h:inputText id="lastName" value="#{usersController.selected.lastName}" title="#{bundle.EditUsersTitle_lastName}" required="true" requiredMessage="#{bundle.EditUsersRequiredMessage_lastName}"/>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_address}" for="address" />
+                    <h:inputText id="address" value="#{usersController.selected.address}" title="#{bundle.EditUsersTitle_address}" required="true" requiredMessage="#{bundle.EditUsersRequiredMessage_address}"/>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_city}" for="city" />
+                    <h:inputText id="city" value="#{usersController.selected.city}" title="#{bundle.EditUsersTitle_city}" required="true" requiredMessage="#{bundle.EditUsersRequiredMessage_city}"/>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_state}" for="state" />
+                    <h:inputText id="state" value="#{usersController.selected.state}" title="#{bundle.EditUsersTitle_state}" required="true" requiredMessage="#{bundle.EditUsersRequiredMessage_state}"/>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_zipcode}" for="zipcode" />
+                    <h:inputText id="zipcode" value="#{usersController.selected.zipcode}" title="#{bundle.EditUsersTitle_zipcode}" required="true" requiredMessage="#{bundle.EditUsersRequiredMessage_zipcode}"/>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_telephone}" for="telephone" />
+                    <h:inputText id="telephone" value="#{usersController.selected.telephone}" title="#{bundle.EditUsersTitle_telephone}" />
+                    <h:outputLabel value="#{bundle.EditUsersLabel_userType}" for="userType" />
+                    <h:inputText id="userType" value="#{usersController.selected.userType}" title="#{bundle.EditUsersTitle_userType}" required="true" requiredMessage="#{bundle.EditUsersRequiredMessage_userType}"/>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_pages}" for="pages" />
+                    <h:selectOneMenu id="pages" value="#{usersController.selected.pages}" title="#{bundle.EditUsersTitle_pages}" >
+                        <f:selectItems value="#{pagesController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_fmplususers}" for="fmplususers" />
+                    <h:selectOneMenu id="fmplususers" value="#{usersController.selected.fmplususers}" title="#{bundle.EditUsersTitle_fmplususers}" >
+                        <f:selectItems value="#{fmplususersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_employees}" for="employees" />
+                    <h:selectOneMenu id="employees" value="#{usersController.selected.employees}" title="#{bundle.EditUsersTitle_employees}" >
+                        <f:selectItems value="#{employeesController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{usersController.update}" value="#{bundle.EditUsersSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditUsersViewLink}"/>
+                <br />
+                <h:commandLink action="#{usersController.prepareList}" value="#{bundle.EditUsersShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditUsersIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

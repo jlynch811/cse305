@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateFriendsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateFriendsLabel_requestStatus}" for="requestStatus" />
+                    <h:inputText id="requestStatus" value="#{friendsController.selected.requestStatus}" title="#{bundle.CreateFriendsTitle_requestStatus}" required="true" requiredMessage="#{bundle.CreateFriendsRequiredMessage_requestStatus}"/>
+                    <h:outputLabel value="#{bundle.CreateFriendsLabel_users}" for="users" />
+                    <h:selectOneMenu id="users" value="#{friendsController.selected.users}" title="#{bundle.CreateFriendsTitle_users}" required="true" requiredMessage="#{bundle.CreateFriendsRequiredMessage_users}">
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateFriendsLabel_users1}" for="users1" />
+                    <h:selectOneMenu id="users1" value="#{friendsController.selected.users1}" title="#{bundle.CreateFriendsTitle_users1}" required="true" requiredMessage="#{bundle.CreateFriendsRequiredMessage_users1}">
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{friendsController.create}" value="#{bundle.CreateFriendsSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{friendsController.prepareList}" value="#{bundle.CreateFriendsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateFriendsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

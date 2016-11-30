@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditGroupMembersTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditGroupMembersLabel_memberType}" for="memberType" />
+                    <h:inputText id="memberType" value="#{groupMembersController.selected.memberType}" title="#{bundle.EditGroupMembersTitle_memberType}" required="true" requiredMessage="#{bundle.EditGroupMembersRequiredMessage_memberType}"/>
+                    <h:outputLabel value="#{bundle.EditGroupMembersLabel_users}" for="users" />
+                    <h:selectOneMenu id="users" value="#{groupMembersController.selected.users}" title="#{bundle.EditGroupMembersTitle_users}" required="true" requiredMessage="#{bundle.EditGroupMembersRequiredMessage_users}">
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditGroupMembersLabel_groups}" for="groups" />
+                    <h:selectOneMenu id="groups" value="#{groupMembersController.selected.groups}" title="#{bundle.EditGroupMembersTitle_groups}" required="true" requiredMessage="#{bundle.EditGroupMembersRequiredMessage_groups}">
+                        <f:selectItems value="#{groupsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{groupMembersController.update}" value="#{bundle.EditGroupMembersSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditGroupMembersViewLink}"/>
+                <br />
+                <h:commandLink action="#{groupMembersController.prepareList}" value="#{bundle.EditGroupMembersShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditGroupMembersIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreatePostsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreatePostsLabel_postId}" for="postId" />
+                    <h:inputText id="postId" value="#{postsController.selected.postId}" title="#{bundle.CreatePostsTitle_postId}" required="true" requiredMessage="#{bundle.CreatePostsRequiredMessage_postId}"/>
+                    <h:outputLabel value="#{bundle.CreatePostsLabel_postDate}" for="postDate" />
+                    <h:inputText id="postDate" value="#{postsController.selected.postDate}" title="#{bundle.CreatePostsTitle_postDate}" required="true" requiredMessage="#{bundle.CreatePostsRequiredMessage_postDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreatePostsLabel_postContent}" for="postContent" />
+                    <h:inputText id="postContent" value="#{postsController.selected.postContent}" title="#{bundle.CreatePostsTitle_postContent}" required="true" requiredMessage="#{bundle.CreatePostsRequiredMessage_postContent}"/>
+                    <h:outputLabel value="#{bundle.CreatePostsLabel_cmntCount}" for="cmntCount" />
+                    <h:inputText id="cmntCount" value="#{postsController.selected.cmntCount}" title="#{bundle.CreatePostsTitle_cmntCount}" />
+                    <h:outputLabel value="#{bundle.CreatePostsLabel_likeCount}" for="likeCount" />
+                    <h:inputText id="likeCount" value="#{postsController.selected.likeCount}" title="#{bundle.CreatePostsTitle_likeCount}" />
+                    <h:outputLabel value="#{bundle.CreatePostsLabel_authorId}" for="authorId" />
+                    <h:selectOneMenu id="authorId" value="#{postsController.selected.authorId}" title="#{bundle.CreatePostsTitle_authorId}" >
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreatePostsLabel_pageId}" for="pageId" />
+                    <h:selectOneMenu id="pageId" value="#{postsController.selected.pageId}" title="#{bundle.CreatePostsTitle_pageId}" >
+                        <f:selectItems value="#{pagesController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{postsController.create}" value="#{bundle.CreatePostsSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{postsController.prepareList}" value="#{bundle.CreatePostsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreatePostsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateCommentsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateCommentsLabel_commentId}" for="commentId" />
+                    <h:inputText id="commentId" value="#{commentsController.selected.commentId}" title="#{bundle.CreateCommentsTitle_commentId}" required="true" requiredMessage="#{bundle.CreateCommentsRequiredMessage_commentId}"/>
+                    <h:outputLabel value="#{bundle.CreateCommentsLabel_cmntDate}" for="cmntDate" />
+                    <h:inputText id="cmntDate" value="#{commentsController.selected.cmntDate}" title="#{bundle.CreateCommentsTitle_cmntDate}" required="true" requiredMessage="#{bundle.CreateCommentsRequiredMessage_cmntDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateCommentsLabel_cmntContent}" for="cmntContent" />
+                    <h:inputText id="cmntContent" value="#{commentsController.selected.cmntContent}" title="#{bundle.CreateCommentsTitle_cmntContent}" required="true" requiredMessage="#{bundle.CreateCommentsRequiredMessage_cmntContent}"/>
+                    <h:outputLabel value="#{bundle.CreateCommentsLabel_likeCount}" for="likeCount" />
+                    <h:inputText id="likeCount" value="#{commentsController.selected.likeCount}" title="#{bundle.CreateCommentsTitle_likeCount}" />
+                    <h:outputLabel value="#{bundle.CreateCommentsLabel_authorId}" for="authorId" />
+                    <h:selectOneMenu id="authorId" value="#{commentsController.selected.authorId}" title="#{bundle.CreateCommentsTitle_authorId}" >
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateCommentsLabel_postId}" for="postId" />
+                    <h:selectOneMenu id="postId" value="#{commentsController.selected.postId}" title="#{bundle.CreateCommentsTitle_postId}" required="true" requiredMessage="#{bundle.CreateCommentsRequiredMessage_postId}">
+                        <f:selectItems value="#{postsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{commentsController.create}" value="#{bundle.CreateCommentsSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{commentsController.prepareList}" value="#{bundle.CreateCommentsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateCommentsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

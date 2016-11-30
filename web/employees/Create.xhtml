@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateEmployeesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateEmployeesLabel_userId}" for="userId" />
+                    <h:inputText id="userId" value="#{employeesController.selected.userId}" title="#{bundle.CreateEmployeesTitle_userId}" required="true" requiredMessage="#{bundle.CreateEmployeesRequiredMessage_userId}"/>
+                    <h:outputLabel value="#{bundle.CreateEmployeesLabel_ssnNo}" for="ssnNo" />
+                    <h:inputText id="ssnNo" value="#{employeesController.selected.ssnNo}" title="#{bundle.CreateEmployeesTitle_ssnNo}" required="true" requiredMessage="#{bundle.CreateEmployeesRequiredMessage_ssnNo}"/>
+                    <h:outputLabel value="#{bundle.CreateEmployeesLabel_startDate}" for="startDate" />
+                    <h:inputText id="startDate" value="#{employeesController.selected.startDate}" title="#{bundle.CreateEmployeesTitle_startDate}" required="true" requiredMessage="#{bundle.CreateEmployeesRequiredMessage_startDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateEmployeesLabel_hourlyRate}" for="hourlyRate" />
+                    <h:inputText id="hourlyRate" value="#{employeesController.selected.hourlyRate}" title="#{bundle.CreateEmployeesTitle_hourlyRate}" />
+                    <h:outputLabel value="#{bundle.CreateEmployeesLabel_empType}" for="empType" />
+                    <h:inputText id="empType" value="#{employeesController.selected.empType}" title="#{bundle.CreateEmployeesTitle_empType}" required="true" requiredMessage="#{bundle.CreateEmployeesRequiredMessage_empType}"/>
+                    <h:outputLabel value="#{bundle.CreateEmployeesLabel_users}" for="users" />
+                    <h:selectOneMenu id="users" value="#{employeesController.selected.users}" title="#{bundle.CreateEmployeesTitle_users}" required="true" requiredMessage="#{bundle.CreateEmployeesRequiredMessage_users}">
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{employeesController.create}" value="#{bundle.CreateEmployeesSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{employeesController.prepareList}" value="#{bundle.CreateEmployeesShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateEmployeesIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

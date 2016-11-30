@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditFmplususersTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditFmplususersLabel_userId}" for="userId" />
+                    <h:inputText id="userId" value="#{fmplususersController.selected.userId}" title="#{bundle.EditFmplususersTitle_userId}" required="true" requiredMessage="#{bundle.EditFmplususersRequiredMessage_userId}"/>
+                    <h:outputLabel value="#{bundle.EditFmplususersLabel_creationDate}" for="creationDate" />
+                    <h:inputText id="creationDate" value="#{fmplususersController.selected.creationDate}" title="#{bundle.EditFmplususersTitle_creationDate}" required="true" requiredMessage="#{bundle.EditFmplususersRequiredMessage_creationDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditFmplususersLabel_creditCardNumber}" for="creditCardNumber" />
+                    <h:inputText id="creditCardNumber" value="#{fmplususersController.selected.creditCardNumber}" title="#{bundle.EditFmplususersTitle_creditCardNumber}" />
+                    <h:outputLabel value="#{bundle.EditFmplususersLabel_rating}" for="rating" />
+                    <h:inputText id="rating" value="#{fmplususersController.selected.rating}" title="#{bundle.EditFmplususersTitle_rating}" />
+                    <h:outputLabel value="#{bundle.EditFmplususersLabel_users}" for="users" />
+                    <h:selectOneMenu id="users" value="#{fmplususersController.selected.users}" title="#{bundle.EditFmplususersTitle_users}" required="true" requiredMessage="#{bundle.EditFmplususersRequiredMessage_users}">
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{fmplususersController.update}" value="#{bundle.EditFmplususersSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditFmplususersViewLink}"/>
+                <br />
+                <h:commandLink action="#{fmplususersController.prepareList}" value="#{bundle.EditFmplususersShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditFmplususersIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

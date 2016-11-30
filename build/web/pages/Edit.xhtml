@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditPagesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditPagesLabel_pageId}" for="pageId" />
+                    <h:inputText id="pageId" value="#{pagesController.selected.pageId}" title="#{bundle.EditPagesTitle_pageId}" required="true" requiredMessage="#{bundle.EditPagesRequiredMessage_pageId}"/>
+                    <h:outputLabel value="#{bundle.EditPagesLabel_pageType}" for="pageType" />
+                    <h:inputText id="pageType" value="#{pagesController.selected.pageType}" title="#{bundle.EditPagesTitle_pageType}" />
+                    <h:outputLabel value="#{bundle.EditPagesLabel_postCount}" for="postCount" />
+                    <h:inputText id="postCount" value="#{pagesController.selected.postCount}" title="#{bundle.EditPagesTitle_postCount}" />
+                    <h:outputLabel value="#{bundle.EditPagesLabel_ownerId}" for="ownerId" />
+                    <h:selectOneMenu id="ownerId" value="#{pagesController.selected.ownerId}" title="#{bundle.EditPagesTitle_ownerId}" >
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditPagesLabel_groupId}" for="groupId" />
+                    <h:selectOneMenu id="groupId" value="#{pagesController.selected.groupId}" title="#{bundle.EditPagesTitle_groupId}" >
+                        <f:selectItems value="#{groupsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{pagesController.update}" value="#{bundle.EditPagesSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditPagesViewLink}"/>
+                <br />
+                <h:commandLink action="#{pagesController.prepareList}" value="#{bundle.EditPagesShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditPagesIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

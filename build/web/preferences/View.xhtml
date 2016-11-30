@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewPreferencesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewPreferencesLabel_preferencesPK_prefCategory}"/>
+                    <h:outputText value="#{preferencesController.selected.preferencesPK.prefCategory}" title="#{bundle.ViewPreferencesTitle_preferencesPK_prefCategory}"/>
+                    <h:outputText value="#{bundle.ViewPreferencesLabel_users}"/>
+                    <h:outputText value="#{preferencesController.selected.users}" title="#{bundle.ViewPreferencesTitle_users}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{preferencesController.destroyAndView}" value="#{bundle.ViewPreferencesDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewPreferencesEditLink}"/>
+                <br />
+                <h:commandLink action="#{preferencesController.prepareCreate}" value="#{bundle.ViewPreferencesCreateLink}" />
+                <br />
+                <h:commandLink action="#{preferencesController.prepareList}" value="#{bundle.ViewPreferencesShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewPreferencesIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

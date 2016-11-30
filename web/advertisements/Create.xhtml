@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateAdvertisementsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateAdvertisementsLabel_advId}" for="advId" />
+                    <h:inputText id="advId" value="#{advertisementsController.selected.advId}" title="#{bundle.CreateAdvertisementsTitle_advId}" required="true" requiredMessage="#{bundle.CreateAdvertisementsRequiredMessage_advId}"/>
+                    <h:outputLabel value="#{bundle.CreateAdvertisementsLabel_advType}" for="advType" />
+                    <h:inputText id="advType" value="#{advertisementsController.selected.advType}" title="#{bundle.CreateAdvertisementsTitle_advType}" required="true" requiredMessage="#{bundle.CreateAdvertisementsRequiredMessage_advType}"/>
+                    <h:outputLabel value="#{bundle.CreateAdvertisementsLabel_advDate}" for="advDate" />
+                    <h:inputText id="advDate" value="#{advertisementsController.selected.advDate}" title="#{bundle.CreateAdvertisementsTitle_advDate}" required="true" requiredMessage="#{bundle.CreateAdvertisementsRequiredMessage_advDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateAdvertisementsLabel_company}" for="company" />
+                    <h:inputText id="company" value="#{advertisementsController.selected.company}" title="#{bundle.CreateAdvertisementsTitle_company}" required="true" requiredMessage="#{bundle.CreateAdvertisementsRequiredMessage_company}"/>
+                    <h:outputLabel value="#{bundle.CreateAdvertisementsLabel_itemName}" for="itemName" />
+                    <h:inputText id="itemName" value="#{advertisementsController.selected.itemName}" title="#{bundle.CreateAdvertisementsTitle_itemName}" />
+                    <h:outputLabel value="#{bundle.CreateAdvertisementsLabel_price}" for="price" />
+                    <h:inputText id="price" value="#{advertisementsController.selected.price}" title="#{bundle.CreateAdvertisementsTitle_price}" />
+                    <h:outputLabel value="#{bundle.CreateAdvertisementsLabel_content}" for="content" />
+                    <h:inputText id="content" value="#{advertisementsController.selected.content}" title="#{bundle.CreateAdvertisementsTitle_content}" />
+                    <h:outputLabel value="#{bundle.CreateAdvertisementsLabel_unitsAvailable}" for="unitsAvailable" />
+                    <h:inputText id="unitsAvailable" value="#{advertisementsController.selected.unitsAvailable}" title="#{bundle.CreateAdvertisementsTitle_unitsAvailable}" />
+                    <h:outputLabel value="#{bundle.CreateAdvertisementsLabel_employeeId}" for="employeeId" />
+                    <h:selectOneMenu id="employeeId" value="#{advertisementsController.selected.employeeId}" title="#{bundle.CreateAdvertisementsTitle_employeeId}" >
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{advertisementsController.create}" value="#{bundle.CreateAdvertisementsSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{advertisementsController.prepareList}" value="#{bundle.CreateAdvertisementsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateAdvertisementsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditSalesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditSalesLabel_transactionId}" for="transactionId" />
+                    <h:inputText id="transactionId" value="#{salesController.selected.transactionId}" title="#{bundle.EditSalesTitle_transactionId}" required="true" requiredMessage="#{bundle.EditSalesRequiredMessage_transactionId}"/>
+                    <h:outputLabel value="#{bundle.EditSalesLabel_transactionDate}" for="transactionDate" />
+                    <h:inputText id="transactionDate" value="#{salesController.selected.transactionDate}" title="#{bundle.EditSalesTitle_transactionDate}" required="true" requiredMessage="#{bundle.EditSalesRequiredMessage_transactionDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditSalesLabel_noOfUnits}" for="noOfUnits" />
+                    <h:inputText id="noOfUnits" value="#{salesController.selected.noOfUnits}" title="#{bundle.EditSalesTitle_noOfUnits}" required="true" requiredMessage="#{bundle.EditSalesRequiredMessage_noOfUnits}"/>
+                    <h:outputLabel value="#{bundle.EditSalesLabel_advId}" for="advId" />
+                    <h:selectOneMenu id="advId" value="#{salesController.selected.advId}" title="#{bundle.EditSalesTitle_advId}" required="true" requiredMessage="#{bundle.EditSalesRequiredMessage_advId}">
+                        <f:selectItems value="#{advertisementsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditSalesLabel_accountNo}" for="accountNo" />
+                    <h:selectOneMenu id="accountNo" value="#{salesController.selected.accountNo}" title="#{bundle.EditSalesTitle_accountNo}" required="true" requiredMessage="#{bundle.EditSalesRequiredMessage_accountNo}">
+                        <f:selectItems value="#{accountsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{salesController.update}" value="#{bundle.EditSalesSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditSalesViewLink}"/>
+                <br />
+                <h:commandLink action="#{salesController.prepareList}" value="#{bundle.EditSalesShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditSalesIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
