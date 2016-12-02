@@ -7,7 +7,19 @@
         <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <p style="font-size: 30px; margin: 0px; padding: 0px;">FaceMash Plus Home</p>
+        <br />
+        <br />
+        <h:form>
+            Email ID :<br />
+            <h:inputText id="usermailid" value="#{login.userMail}" />
+            <br />
+            Password :<br />
+            <h:inputText id="userpass" value="#{login.userPass}" />
+            <br />
+            <br />
+            <h:commandButton value="Login" action="#{login.validateUsernamePassword}" />
+        </h:form>
         <br />
         <h:link outcome="/accounts/List" value="Show All Accounts Items"/>
         <br />
@@ -37,19 +49,6 @@
         <br />
         <h:link outcome="/users/List" value="Show All Users Items"/>
     </h:body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 </html>
 
