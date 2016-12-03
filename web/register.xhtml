@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Register User</title>
+    <h:outputStylesheet name="css/jsfcrud.css"/>
+</h:head>
+
+<h:body>
+    <h:form>
+        <p style="font-size: 20px; margin: 0px; padding: 0px;">New User Registration</p>
+        <br />
+        <br />
+        <p style="padding: 0px; margin: 0px">Email ID <font color="red">*</font> :</p>
+        <br />
+        <h:inputText id="usermailid" value="#{register.email}"/>
+        <br />
+        <br />
+        <p style="padding: 0px; margin: 0px">Password <font color="red">*</font> :</p>
+        <br />
+        <h:inputText id="userpassword1" value="#{register.password1}" />
+        <br />
+        <br />
+        <p style="padding: 0px; margin: 0px">Re-enter Password <font color="red">*</font> :</p>
+        <br />
+        <h:inputText id="userpassword2" value="#{register.password2}" />
+        <br />
+        <br />
+        <p style="padding: 0px; margin: 0px">First Name <font color="red">*</font> :</p>
+        <br />
+        <h:inputText id="userfirstname" value="#{register.firstName}" />
+        <br />
+        <br />
+        <p style="padding: 0px; margin: 0px">Last Name <font color="red">*</font> :</p>
+        <br />
+        <h:inputText id="userlastname" value="#{register.lastName}" />
+        <br />
+        <br />
+        <p style="padding: 0px; margin: 0px">Address <font color="red">*</font> :</p>
+        <br />
+        <h:inputText id="useraddress" value="#{register.address}" />
+        <br />
+        <br />
+        <p style="padding: 0px; margin: 0px">City <font color="red">*</font> :</p>
+        <br />
+        <h:inputText id="usercity" value="#{register.city}" />
+        <br />
+        <br />
+        <p style="padding: 0px; margin: 0px">State <font color="red">*</font> :</p>
+        <br />
+        <h:inputText id="userstate" value="#{register.state}" />
+        <br />
+        <br />
+        <p style="padding: 0px; margin: 0px">Zip code <font color="red">*</font> :</p>
+        <br />
+        <h:inputText id="userzipcode" value="#{register.zipcode}" />
+        <br />
+        <br />
+        <p style="padding: 0px; margin: 0px">Telephone :</p>
+        <br />
+        <h:inputText id="usertelephone" value="#{register.telephone}" />
+        <br />
+        <br />
+        <p style="padding: 0px; margin: 0px">User Type <font color="red">*</font> :</p>
+        <br />
+        <h:selectOneRadio id="usertype" value="#{register.userType}">
+            <f:selectItem itemValue="user" itemLabel="Register as User" />
+            <f:selectItem itemValue="emp" itemLabel="Register as Employee" />
+        </h:selectOneRadio>
+        <br />
+        <h:commandButton value="OK" action="#{register.validateRegistrationInput}" />
+        <tr />
+        <h:commandButton value="Cancel" action="index"/>
+        
+    </h:form>
+</h:body>
+</html>
