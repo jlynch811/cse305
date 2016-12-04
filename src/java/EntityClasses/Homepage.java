@@ -187,4 +187,9 @@ public class Homepage implements Serializable {
         }     
     }
     
+    public String sendMessage()
+    {
+        return "sendmessage";
+    }
 }
+

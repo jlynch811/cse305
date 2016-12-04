@@ -5,16 +5,18 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-	<title>Home Page</title>
+	<title>Send Message</title>
 </h:head>
 <h:body>
     <f:metadata>
-        <f:event type="preRenderView" listener="#{homepage.initUserAttributes}"/>
     </f:metadata>
     <h:form>
         <p>Welcome #{homepage.firstName} #{homepage.lastName}</p>
-        <h:commandButton value="Logout" action="#{login.logout}" />
-        <h:commandButton value="Send a Message" action="sendmessage" />
+        Email to Send to:<br></br>
+        <input type="text" name="email"/><br></br>
+        Message:<br></br>
+        <input type="text" name="message"/><br></br>
+        <h:commandButton value="Send Message" action="#{sendmessage.sendMessage}" />
     </h:form>
 </h:body>
 </html>
