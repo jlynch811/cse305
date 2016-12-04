@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Search User</title>
+    <h:outputStylesheet name="css/jsfcrud.css"/>
+</h:head>
+
+<h:body>
+    <h:form>
+        <p style="text-align: center; font-size: 20px; margin: 0px; padding: 0px;">Search User</p>
+        <br />
+        <p style="text-align: center; padding: 0px; margin: 0px">User ID <font color="red">*</font> :</p>
+        <br />
+        <p style="text-align: center; "><h:inputText id="usermailid" value="#{users.userid}"/>
+        </p><br />
+        <p style="text-align: center; padding: 0px; margin: 0px">User Name <font color="red">*</font> :</p>
+        <br />
+        <p style="text-align: center; "><h:inputText id="username" value="#{users.username}" />
+        </p><br />
+        <p style="text-align: center; padding: 0px; margin: 0px">Last Name</p>
+        <br />
+        <p style="text-align: center; "><h:inputText id="userlastname" value="#{users.lastname}" />
+        </p><br />
+        <p style="text-align: center; padding: 0px; margin: 0px">First Name</p>
+        <br />
+        <p style="text-align: center; "><h:inputText id="userfirstname" value="#{users.firstname}" />
+        </p><br />
+        <br />
+        <br />
+        <p style="text-align: center; "><h:commandButton value="Add" action="#{groupmember.add}" />
+        </p><tr />
+        <p style="text-align: center; "><h:commandButton value="Remove" action="#{groupmember.remove}" /></p>
+        <p style="text-align: center; "><h:commandButton value="Cancel" action="index"/></p>
+    </h:form>
+</h:body>
+</html>
