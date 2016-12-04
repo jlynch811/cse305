@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+        <title>Register User Page</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p style="font-size: 30px; margin: 0px; padding: 0px;">Employee Specific Details</p>
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">SSN Number <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="ssnnumber" value="#{register.ssnNumber}"/>
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Hourly Rate :</p>
+            <br />
+            <h:inputText id="hourlyrate" value="#{register.hourlyRate}"/>
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Employee Type :</p>
+            <br />
+            <h:selectOneRadio id="emptype" value="#{register.empType}">
+                <f:selectItem itemValue="rep" itemLabel="Register as Representative" />
+                <f:selectItem itemValue="man" itemLabel="Register as Manager" />
+            </h:selectOneRadio>
+            <br />
+            <h:commandButton value="OK" action="#{register.validateEmpRegistrationInput}" />
+            <tr />
+            <h:commandButton id="Cancel" value="Cancel" action="register"/>
+        </h:form>
+    </h:body>
+</html>
