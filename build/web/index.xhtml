@@ -3,11 +3,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Login Page</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <p style="font-size: 30px; margin: 0px; padding: 0px;">FaceMashPlus Home</p>
+        <br />
+        <br />
+        <h:form>
+            Email ID :<br />
+            <h:inputText id="usermailid" value="#{login.userMail}" />
+            <br />
+            Password :<br />
+            <h:inputSecret id="userpass" value="#{login.userPass}" />
+            <br />
+            <br />
+            <h:commandButton value="Login" action="#{login.validateUsernamePassword}" />
+            <br />
+            <br />
+            <h:commandButton value="Register" action="register" />
+        </h:form>
         <br />
         <h:link outcome="/accounts/List" value="Show All Accounts Items"/>
         <br />
@@ -37,19 +52,5 @@
         <br />
         <h:link outcome="/users/List" value="Show All Users Items"/>
     </h:body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 </html>
-

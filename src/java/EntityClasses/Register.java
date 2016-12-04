@@ -8,15 +8,14 @@ package EntityClasses;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-
 /**
  *
  * @author Tarun
  */
-@Named(value = "register")
-@Dependent
+@ManagedBean
 public class Register {
 
     private String email, password1, password2, firstName, lastName, address, city, state, zipcode, telephone, userType;
@@ -27,6 +26,11 @@ public class Register {
      * Creates a new instance of Register
      */
     public Register() {
+    }
+    
+    public String page()
+    {
+        return "register";
     }
     
     public String getEmail() {
