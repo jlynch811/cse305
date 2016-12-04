@@ -14,6 +14,7 @@
             Email ID :<br />
             <h:inputText id="usermailid" value="#{login.userMail}" />
             <br />
+            <br />
             Password :<br />
             <h:inputSecret id="userpass" value="#{login.userPass}" />
             <br />
@@ -21,7 +22,10 @@
             <h:commandButton value="Login" action="#{login.validateUsernamePassword}" />
             <br />
             <br />
-            <h:commandButton value="Register" action="register" />
+            Not Registered? <br />
+            <h:commandButton value="Register as User" action="register_user" />
+            <tr />
+            <h:commandButton value="Register as Employee" action="register_emp" />
         </h:form>
         <br />
         <h:link outcome="/accounts/List" value="Show All Accounts Items"/>

@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 @ManagedBean
 public class Register {
 
-    private String email, password1, password2, firstName, lastName, address, city, state, zipcode, telephone, userType;
+    private String email, password1, password2, firstName, lastName, address, city, state, zipcode, telephone;
     private String creationDate, ccNumber, rating;
     private String ssnNumber, startDate, hourlyRate, empType;
     
@@ -28,15 +28,9 @@ public class Register {
      * Creates a new instance of Register
      */
     public Register() {
-        userType = "user";
         empType = "rep";
     }
-    
-    public String page()
-    {
-        return "register";
-    }
-    
+
     public String getEmail() {
         return email;
     }
@@ -117,14 +111,6 @@ public class Register {
         this.telephone = telephone;
     }
 
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
     public String getCreationDate() {
         return creationDate;
     }
@@ -181,7 +167,7 @@ public class Register {
         this.empType = empType;
     }
     
-    public String validateRegistrationInput() {
+    public String validateUserRegistrationInput() {
         
         System.out.println("Inside validateRegistrationInput");
         // Uncomment this check after testing is done.
@@ -195,6 +181,7 @@ public class Register {
 //                new FacesMessage(FacesMessage.SEVERITY_WARN,
 //                    "All fields marked with red asterisk are mandatory",
 //                    "Please enter all fields"));
+//                return "register_user";
 //        }
         
         if (!password1.equals(password2)) {
@@ -204,51 +191,11 @@ public class Register {
                 new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Password does not match",
                     "Please enter same password values"));
-            return "register";
+            return "register_user";
         }
-        
-        try {
-            Integer.parseInt(zipcode);
-        } catch (NumberFormatException e) {
-            FacesContext.getCurrentInstance().addMessage(
-                null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Zipcode should only contain numbers.",
-                    "Zipcode not numeric"));
-            return "register";
-        }
-        
-        try {
-            if (!telephone.equals(""))
-                Integer.parseInt(telephone);
-        } catch (NumberFormatException e) {
-            FacesContext.getCurrentInstance().addMessage(
-                null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Telephone number should only contain numbers.",
-                    "Telephone number not numeric"));
-            return "register";
-        }
-        
-        try {
-            if (!ccNumber.equals(""))
-                Integer.parseInt(ccNumber);
-        } catch (NumberFormatException e) {
-            FacesContext.getCurrentInstance().addMessage(
-                null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Credit card number should only contain numbers.",
-                    "Credit Card number not numeric"));
-            return "register";
-        }
-        
-        System.err.println("User Type : " + userType);
-        if (userType.equals("emp")) {
-            return "register_emp";
-        }
-        
+ 
         isParamValid = RegisterDAO.register_fmuser(email, password1, firstName, lastName,
-                address, city, state, zipcode, telephone, ccNumber, userType);
+                address, city, state, zipcode, telephone, ccNumber);
         
         if (isParamValid) {
             FacesContext.getCurrentInstance().addMessage(
@@ -258,49 +205,43 @@ public class Register {
                     "Success"));
             return "index";
         } else {
-            return "register";
+            return "register_user";
         }
     }
     
     public String validateEmpRegistrationInput() {
         
         System.out.println("Inside validateEmpRegistrationInput");
+        // Uncomment this check after testing is done.
         
-        if (ssnNumber==null) {
-            System.out.println("SSN Number not entered");
-            FacesContext.getCurrentInstance().addMessage(
-                null,
-                new FacesMessage(FacesMessage.SEVERITY_WARN,
-                    "All fields marked with red asterisk are mandatory",
-                    "Please enter all fields"));
-        }
-        
-        try {
-                Integer.parseInt(ssnNumber);
-        } catch (NumberFormatException e) {
-            FacesContext.getCurrentInstance().addMessage(
-                null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "SSN Number should only contain numbers.",
-                    "SSN Number not numeric"));
-            return "register_emp";
-        }
-        
-        try {
-            if (!hourlyRate.equals(""))
-                Integer.parseInt(hourlyRate);
-        } catch (NumberFormatException e) {
+//        if (email==null || password1==null || password2==null || firstName==null
+//                || lastName==null || address==null || city==null || state==null
+//                || zipcode==null || telephone==null || ssnNumber==null) {
+//            System.out.println("Something not entered");
+//            FacesContext.getCurrentInstance().addMessage(
+//                null,
+//                new FacesMessage(FacesMessage.SEVERITY_WARN,
+//                    "All fields marked with red asterisk are mandatory",
+//                    "Please enter all fields"));
+//                return "register_emp";
+//        }
+
+        if (!password1.equals(password2)) {
+            System.out.println("Password does not match");
             FacesContext.getCurrentInstance().addMessage(
                 null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Hourly rate should only contain numbers.",
-                    "Hourly rate not numeric"));
+                    "Password does not match",
+                    "Please enter same password values"));
             return "register_emp";
         }
+
+        if (hourlyRate.equals("")) {
+            hourlyRate = "0";
+        }
         
-        System.out.println("Email");
         isParamValid = RegisterDAO.register_emp(email, password1, firstName, lastName,
-                address, city, state, zipcode, telephone, userType, ssnNumber, hourlyRate, empType);
+                address, city, state, zipcode, telephone, ssnNumber, hourlyRate, empType);
         
         if (isParamValid) {
             FacesContext.getCurrentInstance().addMessage(

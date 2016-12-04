@@ -22,7 +22,7 @@ public class RegisterDAO {
     //String creationDate, String ccNumber, String rating, String ssnNumber, String startDate, String hourlyRate, String employeeType
     public static boolean register_fmuser(String userMail, String password,
                 String firstName, String lastName, String address, String city, String state,
-                String zipcode, String telephone, String ccNumber, String userType) {
+                String zipcode, String telephone, String ccNumber) {
         Connection con = null;
         PreparedStatement ps = null;
         System.out.println("Inside register_fmuser");
@@ -71,7 +71,7 @@ public class RegisterDAO {
     
     public static boolean register_emp(String userMail, String password,
                 String firstName, String lastName, String address, String city, String state,
-                String zipcode, String telephone, String userType, String ssnNumber, String hourlyRate, String empType) {
+                String zipcode, String telephone, String ssnNumber, String hourlyRate, String empType) {
         
         Connection con = null;
         PreparedStatement ps = null;

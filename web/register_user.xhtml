@@ -69,14 +69,7 @@
         <h:inputText id="userccnumber" value="#{register.ccNumber}" />
         <br />
         <br />
-        <p style="padding: 0px; margin: 0px">User Type :</p>
-        <br />
-        <h:selectOneRadio id="usertype" value="#{register.userType}">
-            <f:selectItem itemValue="user" itemLabel="Register as User" />
-            <f:selectItem itemValue="emp" itemLabel="Register as Employee" />
-        </h:selectOneRadio>
-        <br />
-        <h:commandButton value="OK" action="#{register.validateRegistrationInput}" />
+        <h:commandButton value="OK" action="#{register.validateUserRegistrationInput}" />
         <tr />
         <h:commandButton id="Cancel" value="Cancel" action="index"/>
         
