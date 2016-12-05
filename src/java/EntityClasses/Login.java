@@ -52,7 +52,7 @@ public class Login {
         } else {
             FacesContext.getCurrentInstance().addMessage(
                 null,
-                new FacesMessage(FacesMessage.SEVERITY_WARN,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Incorrect Username and Passowrd",
                     "Please enter correct username and Password"));
             return "index";

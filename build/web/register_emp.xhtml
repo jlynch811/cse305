@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+        <title>Register User Page</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p style="font-size: 30px; margin: 0px; padding: 0px;">Employee Specific Details</p>
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Email ID <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="usermailid" value="#{register.email}"/>
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Password <font color="red">*</font> :</p>
+            <br />
+            <h:inputSecret id="userpassword1" value="#{register.password1}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Re-enter Password <font color="red">*</font> :</p>
+            <br />
+            <h:inputSecret id="userpassword2" value="#{register.password2}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">First Name <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="userfirstname" value="#{register.firstName}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Last Name <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="userlastname" value="#{register.lastName}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Address <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="useraddress" value="#{register.address}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">City <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="usercity" value="#{register.city}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">State <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="userstate" value="#{register.state}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Zip code <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="userzipcode" value="#{register.zipcode}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Telephone :</p>
+            <br />
+            <h:inputText id="usertelephone" value="#{register.telephone}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Credit Card Number :</p>
+            <br />
+            <h:inputText id="userccnumber" value="#{register.ccNumber}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">SSN Number <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="ssnnumber" value="#{register.ssnNumber}"/>
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Hourly Rate :</p>
+            <br />
+            <h:inputText id="hourlyrate" value="#{register.hourlyRate}"/>
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Employee Type :</p>
+            <br />
+            <h:selectOneRadio id="emptype" value="#{register.empType}">
+                <f:selectItem itemValue="rep" itemLabel="Register as Representative" />
+                <f:selectItem itemValue="man" itemLabel="Register as Manager" />
+            </h:selectOneRadio>
+            <br />
+            <h:commandButton value="OK" action="#{register.validateEmpRegistrationInput}" />
+            <tr />
+            <h:commandButton id="Cancel" value="Cancel" action="index"/>
+        </h:form>
+    </h:body>
+</html>

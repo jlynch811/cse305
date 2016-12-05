@@ -6,17 +6,21 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
 	<title>Send Message</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
 </h:head>
 <h:body>
     <f:metadata>
+        
     </f:metadata>
     <h:form>
-        <p>Welcome #{homepage.firstName} #{homepage.lastName}</p>
-        Email to Send to:<br></br>
-        <input type="text" name="email"/><br></br>
+        <p>Send Message</p>
+        ID to Send to:<br></br>
+        <h:inputText id="sender" value="#{sendmessage.receiver}"/><br></br>
+        Subject:<br></br>
+        <h:inputText id="subject" value="#{sendmessage.subject}"/><br></br>
         Message:<br></br>
-        <input type="text" name="message"/><br></br>
-        <h:commandButton value="Send Message" action="#{sendmessage.sendMessage}" />
+        <h:inputTextarea rows="6" cols="40" id="message" value="#{sendmessage.message}"/><br></br>
+        <h:commandButton value="Send Message" action="#{sendmessage.sendMessage(homepage.firstName)}" />
     </h:form>
 </h:body>
 </html>

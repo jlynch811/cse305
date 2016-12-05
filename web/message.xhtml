@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Message Page</title>
+    <h:outputStylesheet name="css/jsfcrud.css"/>
+</h:head>
+    <h:form>
+        <p style="font-size: 30px;font-family: georgia;text-align: center; ">Messages</p>
+        <br />
+        <br />
+         <p>Sending Message to</p><p style="text-align: left"><h:inputText value=" "/></p>
+        <p style="text-align: left" row="4" cols="20" >
+            <h:inputTextarea value=" " rows="6" cols="40"/>
+        </p>
+        <p style="text-align:left; "><h:commandButton value="Send Message" action="#{posts.PostContent}" />
+        </p>
+        <br />
+        <br />
+        <p style="text-align:left "><h:commandButton value="Received Message" action="#{messages.Received}" /></p>
+        <br />
+        <br />
+        <h:commandButton value="Delete Message" action="#{messages.Delete}" />
+    </h:form>
+</html>

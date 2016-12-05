@@ -21,12 +21,12 @@
         <br />
         <p style="padding: 0px; margin: 0px">Password <font color="red">*</font> :</p>
         <br />
-        <h:inputText id="userpassword1" value="#{register.password1}" />
+        <h:inputSecret id="userpassword1" value="#{register.password1}" />
         <br />
         <br />
         <p style="padding: 0px; margin: 0px">Re-enter Password <font color="red">*</font> :</p>
         <br />
-        <h:inputText id="userpassword2" value="#{register.password2}" />
+        <h:inputSecret id="userpassword2" value="#{register.password2}" />
         <br />
         <br />
         <p style="padding: 0px; margin: 0px">First Name <font color="red">*</font> :</p>
@@ -64,18 +64,14 @@
         <h:inputText id="usertelephone" value="#{register.telephone}" />
         <br />
         <br />
-        <p style="padding: 0px; margin: 0px">User Type <font color="red">*</font> :</p>
+        <p style="padding: 0px; margin: 0px">Credit Card Number :</p>
         <br />
-        <h:selectOneRadio id="usertype" value="#{register.userType}">
-            <f:selectItem itemValue="user" itemLabel="Register as User" />
-            <f:selectItem itemValue="emp" itemLabel="Register as Employee" />
-        </h:selectOneRadio>
+        <h:inputText id="userccnumber" value="#{register.ccNumber}" />
         <br />
-        <h:commandButton value="OK" action="#{register.validateRegistrationInput}" />
+        <br />
+        <h:commandButton value="OK" action="#{register.validateUserRegistrationInput}" />
         <tr />
         <h:commandButton id="Cancel" value="Cancel" action="index"/>
-        <h:button value="Test" outcome="register"/>
-        <h:link outcome="/accounts/List" value="Show All Accounts Items"/>
         
     </h:form>
 </h:body>

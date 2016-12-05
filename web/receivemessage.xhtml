@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Receive Message</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+</h:head>
+<h:body>
+    
+    <f:metadata>
+        
+    </f:metadata>
+    
+        <ui:repeat var="item" value="#{receiveMessage.messages}"> 
+            <h1>#{item}</h1> 
+        </ui:repeat> 
+    <h:form>
+        <h:inputText id="delete" value="#{receiveMessage.idToDelete}"/>
+        <h:commandButton value="Delete" action="#{receiveMessage.deleteMessage()}" />
+        
+    </h:form>
+</h:body>
+</html>

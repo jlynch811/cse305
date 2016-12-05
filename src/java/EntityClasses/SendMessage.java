@@ -1,98 +1,100 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package EntityClasses;
 
+import java.sql.*;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
-import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author John
+ * @author John Lynch
  */
 @Named(value = "sendmessage")
-@SessionScoped
-public class SendMessage implements Serializable {
+@RequestScoped
+public class SendMessage {
     
-    private String sender;
+    private String receiver;
     private String message;
     private String subject;
 
     /**
-     * Creates a new instance of Homepage
+     * Creates a new instance of SendMessage
      */
-    public SendMessage() 
-    {
-        
+    public SendMessage() {
     }
-    
-    public void setSender(String sender)
-    {
-        this.sender = sender;
+
+    public String getReceiver() {
+        return receiver;
     }
-    
-    public String getSender()
-    {
-        return sender;
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
-    
-    public void setMessage(String message)
-    {
-        this.message = message;
-    }
-    
-    public String getMessage(String message)
-    {
+
+    public String getMessage() {
         return message;
     }
-    
-    public void setSubject(String subject)
-    {
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
         this.subject = subject;
     }
     
-    public String getSubject(String subject)
-    {
-        return subject;
-    }
-    
-    public String sendMessage()
+    public String sendMessage(String s)
     {
         Connection con = null;
         PreparedStatement ps = null;
         
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        System.out.println("User ID: " + userId);
         try {
             con = DataConnect.getConnection();
             ps = con.prepareStatement("INSERT INTO Messages(SentDate, MsgSubject, MsgContent, SenderId, ReceiverId)\n" +
 "VALUES(CURDATE(), ?, ?, ?, ?);");
             ps.setString(1, subject);
             ps.setString(2, message);
-            ps.setString(3, sender);
-            //ps.setString(4, receiver);
+            ps.setString(3, userId);
+            ps.setString(4, receiver);
 
-            ResultSet rs = ps.executeQuery();
+            ps.executeUpdate();
             
-            if (rs.next()) {
-                System.out.println(rs.getString("Count"));
-                if(rs.getString("Count").equals("1")) {
-                    System.out.println("Success");
-                    return rs.getString("UserId");
-                } else {
-                    System.out.println("Failure");
-                    return "";
-                }
-                //result found, means valid inputs
-            }
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Message sent successfully",
+                    "Success"));
+            
+            receiver = null;
+            subject = null;
+            message = null;
+            
+            return "sendmessage";
+            
         } catch (SQLException ex) {
-            System.out.println("Login error -->" + ex.getMessage());
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    "SQL Error"));
             return "";
         } finally {
             DataConnect.close(con);
         }
-        return "sendmessage";
         
     }
     

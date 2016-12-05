@@ -18,21 +18,19 @@ import javax.servlet.http.HttpSession;
 @ManagedBean
 public class Register {
 
-    private String email, password1, password2, firstName, lastName, address, city, state, zipcode, telephone, userType;
+    private String email, password1, password2, firstName, lastName, address, city, state, zipcode, telephone;
     private String creationDate, ccNumber, rating;
     private String ssnNumber, startDate, hourlyRate, empType;
+    
+    boolean isParamValid;
 
     /**
      * Creates a new instance of Register
      */
     public Register() {
+        empType = "rep";
     }
-    
-    public String page()
-    {
-        return "register";
-    }
-    
+
     public String getEmail() {
         return email;
     }
@@ -113,14 +111,6 @@ public class Register {
         this.telephone = telephone;
     }
 
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
     public String getCreationDate() {
         return creationDate;
     }
@@ -177,35 +167,91 @@ public class Register {
         this.empType = empType;
     }
     
-    public String validateRegistrationInput() {
+    public String validateUserRegistrationInput() {
         
         System.out.println("Inside validateRegistrationInput");
+        // Uncomment this check after testing is done.
         
-        if (email==null || password1==null || password2==null || firstName==null
-                || lastName==null || address==null || city==null || state==null
-                || zipcode==null || telephone==null || userType==null) {
+//        if (email==null || password1==null || password2==null || firstName==null
+//                || lastName==null || address==null || city==null || state==null
+//                || zipcode==null || telephone==null) {
+//            System.out.println("Something not entered");
+//            FacesContext.getCurrentInstance().addMessage(
+//                null,
+//                new FacesMessage(FacesMessage.SEVERITY_WARN,
+//                    "All fields marked with red asterisk are mandatory",
+//                    "Please enter all fields"));
+//                return "register_user";
+//        }
+        
+        if (!password1.equals(password2)) {
+            System.out.println("Password does not match");
             FacesContext.getCurrentInstance().addMessage(
                 null,
-                new FacesMessage(FacesMessage.SEVERITY_WARN,
-                    "Incorrect Username and Passowrd",
-                    "Please enter correct username and Password"));
-            return "register";
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Password does not match",
+                    "Please enter same password values"));
+            return "register_user";
+        }
+ 
+        isParamValid = RegisterDAO.register_fmuser(email, password1, firstName, lastName,
+                address, city, state, zipcode, telephone, ccNumber);
+        
+        if (isParamValid) {
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "User registered successfully.",
+                    "Success"));
+            return "index";
+        } else {
+            return "register_user";
+        }
+    }
+    
+    public String validateEmpRegistrationInput() {
+        
+        System.out.println("Inside validateEmpRegistrationInput");
+        // Uncomment this check after testing is done.
+        
+//        if (email==null || password1==null || password2==null || firstName==null
+//                || lastName==null || address==null || city==null || state==null
+//                || zipcode==null || telephone==null || ssnNumber==null) {
+//            System.out.println("Something not entered");
+//            FacesContext.getCurrentInstance().addMessage(
+//                null,
+//                new FacesMessage(FacesMessage.SEVERITY_WARN,
+//                    "All fields marked with red asterisk are mandatory",
+//                    "Please enter all fields"));
+//                return "register_emp";
+//        }
+
+        if (!password1.equals(password2)) {
+            System.out.println("Password does not match");
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Password does not match",
+                    "Please enter same password values"));
+            return "register_emp";
+        }
+
+        if (hourlyRate.equals("")) {
+            hourlyRate = "0";
         }
         
-        String userId = RegisterDAO.validate_user_registration(email, password1, firstName, lastName,
-                address, city, state, zipcode, telephone, userType);
+        isParamValid = RegisterDAO.register_emp(email, password1, firstName, lastName,
+                address, city, state, zipcode, telephone, ssnNumber, hourlyRate, empType);
         
-        if (!userId.equals("")) {
-            HttpSession session = SessionUtils.getSession();
-            session.setAttribute("userid", userId);
-            return "home";
-        } else {
+        if (isParamValid) {
             FacesContext.getCurrentInstance().addMessage(
                 null,
-                new FacesMessage(FacesMessage.SEVERITY_WARN,
-                    "Incorrect Username and Passowrd",
-                    "Please enter correct username and Password"));
+                new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Employee registered successfully.",
+                    "Success"));
             return "index";
+        } else {
+            return "register_emp";
         }
     }
 } 

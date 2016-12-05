@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Create Group Page</title>
+    <h:outputStylesheet name="css/jsfcrud.css"/>
+</h:head>
+
+<h:body>
+    <h:form>
+        <p style="text-align: center; font-size: 20px; margin: 0px; padding: 0px;">New Group Register Page</p>
+        <br />
+        <p style="text-align: center; padding: 0px; margin: 0px">Group Name <font color="red">*</font> :</p>
+        <br />
+        <p style="text-align: center; "><h:inputText id="groupname" value="#{creategroup.groupName}"/>
+        </p><br />
+        <p style="text-align: center; padding: 0px; margin: 0px">Group ID <font color="red">*</font> :</p>
+        <br />
+        <p style="text-align: center; "><h:inputText id="groupid" value="#{creategroup.groupId}"/>
+        </p><br />
+        <p style="text-align: center; padding: 0px; margin: 0px"> Owner Id</p>
+        <br />
+        <p style="text-align: center; "><h:inputText id="OwnerId" value="#{creategroup.ownerId}" />
+        </p><br />
+        <p style="text-align: center; padding: 0px; margin: 0px">Group Type <font color="red">*</font> :</p>
+        <br />
+        <h:selectOneRadio id="grouptype" value="#{creategroup.groupType}">
+            <p style="inline-box-align: center"><f:selectItem itemValue="club" itemLabel="Register as Club" />
+               <f:selectItem itemValue="organization" itemLabel="Register as Organization" />
+               <f:selectItem itemValue="etc" itemLabel="Register as others" /></p>
+            </h:selectOneRadio>;
+        <br />
+        <p style="text-align: center; "><h:commandButton value="Create" action="#{creategroup.validateCreationInput}" />
+        </p><tr />
+        <p style="text-align: center; "><h:commandButton value="Cancel" action="index"/></p>
+    </h:form>
+</h:body>
+</html>
