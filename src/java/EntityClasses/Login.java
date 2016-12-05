@@ -48,7 +48,7 @@ public class Login {
         if (!userId.equals("")) {
             HttpSession session = SessionUtils.getSession();
             session.setAttribute("userid", userId);
-            return "home";
+            return LoginDAO.resolveUserType(userId);
         } else {
             FacesContext.getCurrentInstance().addMessage(
                 null,
@@ -58,7 +58,7 @@ public class Login {
             return "index";
         }
     }
-        
+
     public String logout() {
         HttpSession session = SessionUtils.getSession();
         session.invalidate();
