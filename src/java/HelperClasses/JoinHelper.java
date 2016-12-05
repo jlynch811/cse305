@@ -21,6 +21,50 @@ public class JoinHelper {
     public JoinHelper(){
     }
     
+    public String selectQuery(String q,String arg)
+    {
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        
+        try {
+            con = DataConnect.getConnection();
+            
+            ps = con.prepareStatement(q);
+           
+            ResultSet rs = ps.executeQuery();
+            if(rs.next())
+            {
+                return rs.getString(arg);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Join error -->" + ex.getMessage());
+        } finally {
+            DataConnect.close(con);
+        }     
+        return null;
+    }
+    
+    public void insertQuery(String q)
+    {
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            
+            ps = con.prepareStatement(q);
+           
+            ps.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.out.println("Insert error -->" + ex.getMessage());
+        } finally {
+            DataConnect.close(con);
+        }     
+    }
+    
     public ArrayList<String> joinQuery(String result, String table1, String table2, String join1, String join2, String and)
     {
         ArrayList<String> returnList = new ArrayList();

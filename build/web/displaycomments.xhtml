@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Comments</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+</h:head>
+<h:body>
+    
+    <f:metadata>
+        
+    </f:metadata>
+    <ui:repeat var="comment" value="#{displayedPost.comments}"> 
+        <h1>Author: #{comment.authorId}</h1>
+        <h1>Date: #{comment.cmntDate}</h1>
+        <h1>Content: #{comment.message}</h1>
+        <h1>Likes: #{comment.likeCount}</h1>
+        <h:form>
+            <h:commandButton value="Like Comment" action="#{comment.like}" />
+        </h:form>
+        <h1>-----</h1>
+    </ui:repeat> 
+</h:body>
+</html>

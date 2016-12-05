@@ -3,13 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/web/template.xhtml</file>
-            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/web/accounts/Create.xhtml</file>
-            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/src/java/EntityClasses/Advertisements.java</file>
-            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/src/java/EntityClasses/AdvertisementsController.java</file>
-            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/src/java/EntityClasses/UsersController.java</file>
-            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/src/java/EntityClasses/Accounts.java</file>
-            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/web/index.xhtml</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/src/java/HelperClasses/TestBean.java</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/src/java/EntityClasses/SendMessage.java</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/web/sendmessage.xhtml</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/web/displaycomments.xhtml</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/src/java/HelperClasses/JoinHelper.java</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/src/java/EntityClasses/Homepage.java</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/src/java/HelperClasses/Posts.java</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/web/receivemessage.xhtml</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/src/java/EntityClasses/Page.java</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/src/java/EntityClasses/ReceiveMessage.java</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/web/home.xhtml</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/src/java/HelperClasses/Comments.java</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/web/message.xhtml</file>
+            <file>file:/C:/Users/John%20Lynch/Documents/CSE305/facesmash/Facemashplus/web/personalpage.xhtml</file>
         </group>
     </open-files>
 </project-private>

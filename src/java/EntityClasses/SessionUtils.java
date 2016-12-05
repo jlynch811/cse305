@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Tarun
  */
-class SessionUtils {
+public class SessionUtils {
     public static HttpSession getSession() {
         return (HttpSession) FacesContext.getCurrentInstance()
                         .getExternalContext().getSession(false);

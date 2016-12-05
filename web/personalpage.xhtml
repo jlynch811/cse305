@@ -6,21 +6,30 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<title>Receive Message</title>
+	<title>Personal Page</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
 </h:head>
 <h:body>
     
     <f:metadata>
-        
+        <f:event type="preRenderView" listener="#{page.initPersonalPage()}"/>
     </f:metadata>
-    <ui:repeat var="post" value="#{page.posts}"> 
-        <h1>Author: #{post.authorId}    </h1>
-        <h1>Date: #{post.postDate}</h1>
-        <h1>Content: #{post.postContent}</h1>
-        <h1>Likes: #{post.likeCount}    </h1>
-        <h1>-----</h1>
-    </ui:repeat> 
-    
+        <h:form>
+            <h:inputTextarea rows="6" cols="40" id="message" value="#{posts.postContent}"/><br></br>
+            <h:commandButton value="Create New Post" action="#{posts.createNewPost}" />
+        </h:form>
+        <ui:repeat var="post" value="#{page.posts}"> 
+            
+                <h1>Author: #{post.authorName}    </h1>
+                <h1>Date: #{post.postDate}</h1>
+                <h1>Content: #{post.postContent}</h1>
+                <h1>Likes: #{post.likeCount}    </h1>
+                <h:form>
+                    <h:commandButton value="Like Post" action="#{post.like}" />
+                    <h:commandButton value="View Comments" action="#{post.displayPostComments}" />
+                </h:form>
+                <h1>-----</h1>
+            
+        </ui:repeat> 
 </h:body>
 </html>

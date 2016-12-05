@@ -5,16 +5,26 @@
  */
 package HelperClasses;
 
+import EntityClasses.DataConnect;
+import EntityClasses.Page;
+import EntityClasses.SessionUtils;
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.*;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author John Lynch
  */
 @Named(value = "posts")
-@RequestScoped
-public class Posts {
+@SessionScoped
+public class Posts implements Serializable{
     
     private String id;
     private String authorId;
@@ -24,6 +34,7 @@ public class Posts {
     private String cmntCount;
     private String likeCount;
     private String authorName;
+    private ArrayList<Comments> comments = new ArrayList();
     
     public Posts()
     {
@@ -93,6 +104,14 @@ public class Posts {
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
     }
+
+    public ArrayList<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<Comments> comments) {
+        this.comments = comments;
+    }
     
     
     
@@ -106,8 +125,64 @@ public class Posts {
         this.cmntCount = cmntCount;
         this.likeCount = likeCount;
         
-        //JoinHelper j = new JoinHelper();
-        //this.authorName = j.joinQuery("FirstName", "Posts", "Users", "UserId", "OwnerId", "AND  PostId = " + id).get(0);
+        JoinHelper j = new JoinHelper();
+        String q = "SELECT * FROM Pages, Users WHERE UserId = OwnerId AND PageId = " + this.pageId + ";";
+        this.authorName =  j.selectQuery(q, "FirstName") + " ";
+        this.authorName = this.authorName + j.selectQuery(q, "LastName");
+        
+        
+        q = "SELECT * FROM Comments WHERE PostId = " + this.id + ";";
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            
+            ps = con.prepareStatement(q);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                String cid = rs.getString("CommentId");
+                String cauthorId = rs.getString("AuthorId");
+                String cpostId = rs.getString("PostId");
+                String cmntDate = rs.getString("CmntDate");
+                String cmessage = rs.getString("CmntContent");
+                String clikeCount = rs.getString("LikeCount");
+                
+                Comments comment = new Comments(cid, cauthorId, cpostId, cmntDate, cmessage, clikeCount);
+                this.comments.add(comment);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Post Init error -->" + ex.getMessage());
+        } finally {
+            DataConnect.close(con);
+        }     
     }
     
+    public String displayPostComments()
+    {
+        
+        HttpSession session = SessionUtils.getSession();
+        session.setAttribute("displayedPost", this);
+        return "displaycomments";
+    }
+    
+    public String like()
+    {
+        return "personalpage";
+    }
+    
+    public String createNewPost()
+    { 
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        Page userPage = (Page)session.getAttribute("userPage");
+        
+        String q = "INSERT INTO Posts(AuthorId, PageId, PostDate, PostContent) VALUES(" + userId + "," + userPage.getPageId() + ", CURDATE(), " + "\"" + postContent + "\")";
+        JoinHelper j = new JoinHelper();
+        j.insertQuery(q);
+        
+        return "personalpage";
+    }
 }
