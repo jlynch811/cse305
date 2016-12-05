@@ -12,7 +12,7 @@ import java.sql.DriverManager;
  *
  * @author Tarun
  */
-class DataConnect {
+public class DataConnect {
     public static Connection getConnection() {
         try {
             System.out.println("Inside getConnection");

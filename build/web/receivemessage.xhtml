@@ -15,13 +15,15 @@
         
     </f:metadata>
     
-        <ui:repeat var="item" value="#{receiveMessage.messages}"> 
-            <h1>#{item}</h1> 
-        </ui:repeat> 
     <h:form>
         <h:inputText id="delete" value="#{receiveMessage.idToDelete}"/>
         <h:commandButton value="Delete" action="#{receiveMessage.deleteMessage()}" />
         
     </h:form>
+    
+    <ui:repeat var="item" value="#{receiveMessage.messages}"> 
+        <h1>#{item}</h1> 
+    </ui:repeat> 
+    
 </h:body>
 </html>

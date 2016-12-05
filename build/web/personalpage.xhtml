@@ -14,15 +14,12 @@
     <f:metadata>
         
     </f:metadata>
-    
-    <h:form>
-        <h:inputText id="delete" value="#{receiveMessage.idToDelete}"/>
-        <h:commandButton value="Delete" action="#{receiveMessage.deleteMessage()}" />
-        
-    </h:form>
-    
-    <ui:repeat var="item" value="#{receiveMessage.messages}"> 
-        <h1>#{item}</h1> 
+    <ui:repeat var="post" value="#{page.posts}"> 
+        <h1>Author: #{post.authorId}    </h1>
+        <h1>Date: #{post.postDate}</h1>
+        <h1>Content: #{post.postContent}</h1>
+        <h1>Likes: #{post.likeCount}    </h1>
+        <h1>-----</h1>
     </ui:repeat> 
     
 </h:body>
