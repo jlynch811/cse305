@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<title>Create Group</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+</h:head>
+<h:body>
+    <f:metadata>
+        
+    </f:metadata>
+    <h:form>
+        <p>Create Group</p>
+        Group Name<br></br>
+        <h:inputText id="name" value="#{groups.groupName}"/><br></br>
+        Group Type<br></br>
+        <h:inputText id="type" value="#{groups.groupType}"/><br></br>
+        Message:<br></br>
+        <h:commandButton value="Create Group" action="#{groups.createGroup}" />
+    </h:form>
+</h:body>
+</html>

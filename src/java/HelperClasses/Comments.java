@@ -5,10 +5,13 @@
  */
 package HelperClasses;
 
+import EntityClasses.Page;
+import EntityClasses.SessionUtils;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,6 +27,7 @@ public class Comments implements Serializable{
     private String cmntDate;
     private String message;
     private String likeCount;
+    private String authorName;
     
     public Comments()
     {
@@ -77,6 +81,16 @@ public class Comments implements Serializable{
     public void setLikeCount(String likeCount) {
         this.likeCount = likeCount;
     }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+    
+    
     
     public Comments(String id, String authorId,String postId,String cmntDate,String message,String likeCount)
     {
@@ -86,6 +100,11 @@ public class Comments implements Serializable{
         this.cmntDate = cmntDate;
         this.message = message;
         this.likeCount = likeCount;
+        
+        JoinHelper j = new JoinHelper();
+        String q = "SELECT * FROM Comments, Users WHERE UserId = AuthorId AND CommentId = " + id + ";";
+        this.authorName =  j.selectQuery(q, "FirstName") + " ";
+        this.authorName = this.authorName + j.selectQuery(q, "LastName");
     }  
     
     public String like()
@@ -93,4 +112,32 @@ public class Comments implements Serializable{
         return "displaycomments";
     }
     
+    public void createNewComment()
+    {
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        Posts currentPost = (Posts)session.getAttribute("displayedPost");
+        
+        String q = "INSERT INTO Comments(AuthorId, PostId, CmntDate, cmntContent) VALUES(" + userId + "," + currentPost.getId() + ", CURDATE(), " + "\"" + message + "\")";
+        JoinHelper j = new JoinHelper();
+        j.insertQuery(q);
+    }
+    
+    public boolean amOwner()
+    {
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        if(authorId.equals(userId))
+            {
+                return true;
+            }
+        return false;
+    }
+    
+    public void deleteSelf()
+    {
+        JoinHelper j = new JoinHelper();
+        String q = "DELETE FROM Comments WHERE CommentId = " + id;
+        j.deleteQuery(q);
+    }
 }

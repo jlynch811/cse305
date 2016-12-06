@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+<h:head>
+	<title>Groups</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <f:event type="preRenderView" listener="#{factorybean.initGroups()}"/>
+</h:head>
+<h:body>
+    <f:metadata>
+        
+    </f:metadata>
+    <h:form>
+        <h:commandButton value="Create a Group" action="creategroup" /><br/>
+    </h:form>
+    
+    <ui:repeat id="group" var="group" value="#{myGroups}"> 
+        <h1>Author: #{group.groupName}</h1>
+        <h1>-----</h1>
+        <h:form>
+        <h:commandButton value="Group Page" action="#{group.displayGroupPage}" />
+    </h:form>
+        
+    <h:panelGroup layout="block" rendered="#{group.amOwner()}">
+        <h:form>
+            <h:commandButton value="Delete Post" action="#{group.deleteSelf}" />
+        </h:form>
+    </h:panelGroup>
+    </ui:repeat> 
+    
+    
+    
+    
+</h:body>
+</html>

@@ -12,13 +12,13 @@
 <h:body>
     
     <f:metadata>
-        <f:event type="preRenderView" listener="#{page.initPersonalPage()}"/>
+        <f:event type="preRenderView" listener="#{page.initGroupPage()}"/>
     </f:metadata>
         <h:form>
             <h:inputTextarea rows="6" cols="40" id="message" value="#{posts.postContent}"/><br></br>
             <h:commandButton value="Create New Post" action="#{posts.createNewPost}" />
         </h:form>
-        <ui:repeat var="post" value="#{page.posts}"> 
+        <ui:repeat var="post" value="#{displayedPage.posts}"> 
             
                 <h1>Author: #{post.authorName}    </h1>
                 <h1>Date: #{post.postDate}</h1>

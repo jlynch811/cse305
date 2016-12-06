@@ -21,6 +21,26 @@ public class JoinHelper {
     public JoinHelper(){
     }
     
+    public ResultSet selectResultSetQuery(String q, Connection con)
+    {
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            
+            ps = con.prepareStatement(q);
+           
+            ResultSet rs = ps.executeQuery();
+            return rs;
+            
+        } catch (SQLException ex) {
+            System.out.println("Join error -->" + ex.getMessage());
+        } finally {
+            
+        }     
+        return null;
+    }
+    
     public String selectQuery(String q,String arg)
     {
         Connection con = null;
@@ -46,7 +66,54 @@ public class JoinHelper {
         return null;
     }
     
+    public ArrayList<String> selectMultipleQuery(String q,String arg)
+    {
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        ArrayList<String> ret = new ArrayList();
+        
+        
+        try {
+            con = DataConnect.getConnection();
+            
+            ps = con.prepareStatement(q);
+           
+            ResultSet rs = ps.executeQuery();
+            while(rs.next())
+            {
+                ret.add(rs.getString(arg));
+            }
+            return ret;
+            
+        } catch (SQLException ex) {
+            System.out.println("Join error -->" + ex.getMessage());
+        } finally {
+            DataConnect.close(con);
+        }     
+        return null;
+    }
+    
     public void insertQuery(String q)
+    {
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            
+            ps = con.prepareStatement(q);
+           
+            ps.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.out.println("Insert error -->" + ex.getMessage());
+        } finally {
+            DataConnect.close(con);
+        }     
+    }
+    
+    public void deleteQuery(String q)
     {
         Connection con = null;
         PreparedStatement ps = null;

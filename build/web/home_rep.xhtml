@@ -5,7 +5,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-	<title>FMPlus User Home Page</title>
+	<title>Representative Home Page</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
 </h:head>
 <h:body>
@@ -13,13 +13,8 @@
         <f:event type="preRenderView" listener="#{homepage.initUserAttributes}"/>
     </f:metadata>
     <h:form>
-        <p>Welcome User - #{homepage.firstName} #{homepage.lastName}</p>
-        <h:commandButton value="Send a Message" action="sendmessage" /><br/>
-        <h:commandButton value="Receive Message" action="#{receiveMessage.displayMessages()}" /><br/>
-        <h:commandButton value="View Personal Page" action="#{page.initPersonalPage()}" /><br/>
-        <h:commandButton value="Groups" action="groups" /><br/>
+        <p>Welcome Representative - #{homepage.firstName} #{homepage.lastName}</p>
         <h:commandButton value="Logout" action="#{login.logout}" />
-       
     </h:form>
 </h:body>
 </html>

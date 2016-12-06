@@ -126,7 +126,7 @@ public class Posts implements Serializable{
         this.likeCount = likeCount;
         
         JoinHelper j = new JoinHelper();
-        String q = "SELECT * FROM Pages, Users WHERE UserId = OwnerId AND PageId = " + this.pageId + ";";
+        String q = "SELECT * FROM Posts, Users WHERE UserId = AuthorId AND PostId = " + id + ";";
         this.authorName =  j.selectQuery(q, "FirstName") + " ";
         this.authorName = this.authorName + j.selectQuery(q, "LastName");
         
@@ -162,9 +162,9 @@ public class Posts implements Serializable{
     
     public String displayPostComments()
     {
-        
         HttpSession session = SessionUtils.getSession();
         session.setAttribute("displayedPost", this);
+        session.setAttribute("currentPost", this);
         return "displaycomments";
     }
     
@@ -173,16 +173,91 @@ public class Posts implements Serializable{
         return "personalpage";
     }
     
-    public String createNewPost()
+    public void createNewPost()
     { 
         HttpSession session = SessionUtils.getSession();
         String userId = (String)session.getAttribute("userid");
-        Page userPage = (Page)session.getAttribute("userPage");
+        Page userPage = (Page)session.getAttribute("displayedPage");
         
         String q = "INSERT INTO Posts(AuthorId, PageId, PostDate, PostContent) VALUES(" + userId + "," + userPage.getPageId() + ", CURDATE(), " + "\"" + postContent + "\")";
         JoinHelper j = new JoinHelper();
         j.insertQuery(q);
         
-        return "personalpage";
     }
+    
+    public void createNewGroupPost()
+    { 
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        Page page = (Page)session.getAttribute("displayedGroupPage");
+        
+        String q = "INSERT INTO Posts(AuthorId, PageId, PostDate, PostContent) VALUES(" + userId + "," + page.getPageId() + ", CURDATE(), " + "\"" + postContent + "\")";
+        JoinHelper j = new JoinHelper();
+        j.insertQuery(q);
+        
+    }
+    
+    public void refactorPost()
+    {
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            
+            
+            ps = con.prepareStatement("SELECT * FROM Posts WHERE PostId = ? ORDER BY PostDate DESC;");
+            ps.setString(1, id);
+
+            ResultSet rs = ps.executeQuery();
+            
+           while (rs.next()) {
+                String nid = rs.getString("PostId");
+                String nauthorId = rs.getString("AuthorId");
+                String npageId = rs.getString("PageId");
+                String npostDate = rs.getString("PostDate");
+                String npostContent = rs.getString("PostContent");
+                String ncmntCount = rs.getString("CmntCount");
+                String nlikeCount = rs.getString("LikeCount");
+                
+                Posts refactoredPost = new Posts(nid, nauthorId, npageId, npostDate, npostContent, ncmntCount, nlikeCount);
+             this.id = nid;
+             this.authorId = nauthorId;
+             this.pageId = npageId;
+             this.postDate = npostDate;
+             this.postContent = npostContent;
+             this.cmntCount = ncmntCount;
+             this.likeCount = nlikeCount;
+             
+             this.comments = refactoredPost.getComments();
+            }
+           
+        } catch (SQLException ex) {
+            System.out.println("Page Init error -->" + ex.getMessage());
+        } finally {
+            DataConnect.close(con);
+        }     
+    }
+    
+    public boolean amOwner()
+    {
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        if(authorId.equals(userId))
+            {
+                return true;
+            }
+        return false;
+    }
+    
+    public void deleteSelf()
+    {
+        JoinHelper j = new JoinHelper();
+        String q = "DELETE FROM Posts WHERE PostId = " + id;
+        j.deleteQuery(q);
+    }
+    
+    
+    
+    
 }

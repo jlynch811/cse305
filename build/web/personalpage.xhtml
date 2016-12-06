@@ -28,6 +28,12 @@
                     <h:commandButton value="Like Post" action="#{post.like}" />
                     <h:commandButton value="View Comments" action="#{post.displayPostComments}" />
                 </h:form>
+                
+                <h:panelGroup layout="block" rendered="#{post.amOwner()}">
+                    <h:form>
+                        <h:commandButton value="Delete Post" action="#{post.deleteSelf}" />
+                    </h:form>
+                </h:panelGroup>
                 <h1>-----</h1>
             
         </ui:repeat> 

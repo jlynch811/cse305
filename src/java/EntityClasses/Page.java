@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 /**
  *
  * @author John Lynch
@@ -100,6 +101,7 @@ public class Page implements Serializable{
             }
            
            session.setAttribute("userPage", this);
+           session.setAttribute("displayedPage", this);
         } catch (SQLException ex) {
             System.out.println("Page Init error -->" + ex.getMessage());
         } finally {
@@ -107,6 +109,105 @@ public class Page implements Serializable{
         }     
         
         return "personalpage";
+    }
+    
+    public String initGroupPage(){
+        posts = new ArrayList();
+        HttpSession session = SessionUtils.getSession();
+        String displayedGroupPage = (String)session.getAttribute("displayedGroupPage");
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        //Set the personal page ID
+        try {
+            con = DataConnect.getConnection();
+            
+            ps = con.prepareStatement("SELECT * FROM Pages WHERE PageId = ?;");
+            ps.setString(1, displayedGroupPage);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next())
+            {
+                pageId = rs.getString("PageId");
+            }
+            
+            ps = con.prepareStatement("SELECT * FROM Posts WHERE PageId = ? ORDER BY PostDate DESC;");
+            ps.setString(1, pageId);
+
+            rs = ps.executeQuery();
+            
+           while (rs.next()) {
+                String id = rs.getString("PostId");
+                String authorId = rs.getString("AuthorId");
+                String pageId = rs.getString("PageId");
+                String postDate = rs.getString("PostDate");
+                String postContent = rs.getString("PostContent");
+                String cmntCount = rs.getString("CmntCount");
+                String likeCount = rs.getString("LikeCount");
+                
+                Posts post = new Posts(id, authorId, pageId, postDate, postContent, cmntCount, likeCount);
+                posts.add(post);
+            }
+           
+           session.setAttribute("groupPage", this);
+           session.setAttribute("displayedPage", this);
+        } catch (SQLException ex) {
+            System.out.println("Page Init error -->" + ex.getMessage());
+        } finally {
+            DataConnect.close(con);
+        }     
+        
+        return "displaygrouppage";
+    }
+    
+    public void refactorPage(){
+        posts = new ArrayList();
+        HttpSession session = SessionUtils.getSession();
+        Page displayedPage = (Page)session.getAttribute("displayedPage");
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        //Set the personal page ID
+        try {
+            con = DataConnect.getConnection();
+            
+            ps = con.prepareStatement("SELECT * FROM Pages WHERE PageId = ?;");
+            ps.setString(1, displayedPage.getPageId());
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next())
+            {
+                pageId = rs.getString("PageId");
+            }
+            
+            ps = con.prepareStatement("SELECT * FROM Posts WHERE PageId = ? ORDER BY PostDate DESC;");
+            ps.setString(1, pageId);
+
+            rs = ps.executeQuery();
+            
+           while (rs.next()) {
+                String id = rs.getString("PostId");
+                String authorId = rs.getString("AuthorId");
+                String pageId = rs.getString("PageId");
+                String postDate = rs.getString("PostDate");
+                String postContent = rs.getString("PostContent");
+                String cmntCount = rs.getString("CmntCount");
+                String likeCount = rs.getString("LikeCount");
+                
+                Posts post = new Posts(id, authorId, pageId, postDate, postContent, cmntCount, likeCount);
+                posts.add(post);
+            }
+           
+           session.setAttribute("displayedPage", this);
+        } catch (SQLException ex) {
+            System.out.println("Page Init error -->" + ex.getMessage());
+        } finally {
+            DataConnect.close(con);
+        }     
     }
 }
     
