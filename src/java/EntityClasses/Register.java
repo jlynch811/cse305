@@ -193,7 +193,11 @@ public class Register {
                     "Please enter same password values"));
             return "register_user";
         }
- 
+
+        if (ccNumber.equals("")) {
+            ccNumber = "0";
+        }
+        
         isParamValid = RegisterDAO.register_fmuser(email, password1, firstName, lastName,
                 address, city, state, zipcode, telephone, ccNumber);
         
