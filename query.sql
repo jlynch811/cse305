@@ -76,7 +76,7 @@ CREATE TABLE Group_Members(
 	MemberType ENUM('Member', 'Owner') NOT NULL,
 	PRIMARY KEY (MemberId, GroupId),
 	FOREIGN KEY (MemberId) REFERENCES Users(UserId),
-	FOREIGN KEY (GroupId) REFERENCES Groups(GroupId)
+	FOREIGN KEY (GroupId) REFERENCES Groups(GroupId) ON DELETE CASCADE
 );
 
 CREATE TABLE Pages(
@@ -87,7 +87,7 @@ CREATE TABLE Pages(
 	PostCount INTEGER,
 	PRIMARY KEY (PageId),
 	FOREIGN KEY (OwnerId) REFERENCES Users(UserId),
-	FOREIGN KEY (GroupId) REFERENCES Groups(GroupId)
+	FOREIGN KEY (GroupId) REFERENCES Groups(GroupId) ON DELETE CASCADE
 );
 
 CREATE TABLE Posts (
@@ -100,7 +100,7 @@ CREATE TABLE Posts (
 	LikeCount INTEGER DEFAULT 0,
 	PRIMARY KEY (PostId),
 	FOREIGN KEY (AuthorId) REFERENCES Users(UserId),
-	FOREIGN KEY (PageId) REFERENCES Pages(PageId));
+	FOREIGN KEY (PageId) REFERENCES Pages(PageId) ON DELETE CASCADE);
     
 CREATE TABLE Comments (
 	CommentId INTEGER AUTO_INCREMENT,
