@@ -157,9 +157,7 @@ public class Groups implements Serializable{
     {
         JoinHelper j = new JoinHelper();
         
-        String q = "DELETE c\n" +
-"FROM Comments c, Posts po, Pages pa, Groups g\n" +
-"WHERE c.AuthorId = po.AuthorId AND po.pageId = pa.PageId AND pa.GroupId = g.groupId AND g.GroupId = " + groupId;
+        String q = "DELETE FROM Groups WHERE GroupId = " + groupId;
         j.deleteQuery(q);
         //String q = "DELETE FROM Comments, Posts, "
         //q = "DELETE FROM Groups WHERE GroupId = " + groupId;
