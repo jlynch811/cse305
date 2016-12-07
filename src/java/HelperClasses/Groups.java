@@ -29,6 +29,7 @@ public class Groups implements Serializable{
     private String groupName;
     private String groupType;
     private String ownerId;
+    private String userToAdd;
 
     /**
      * Creates a new instance of Groups
@@ -78,6 +79,16 @@ public class Groups implements Serializable{
     public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
     }
+
+    public String getUserToAdd() {
+        return userToAdd;
+    }
+
+    public void setUserToAdd(String userToAdd) {
+        this.userToAdd = userToAdd;
+    }
+    
+    
     
     public String displayGroupPage()
     {
@@ -90,6 +101,8 @@ public class Groups implements Serializable{
         
         session.setAttribute("displayedGroupPage", id);
         session.setAttribute("currentPage", id);
+        
+        session.setAttribute("currentGroup", this);
         return "displaygrouppage";
     }
     
@@ -163,5 +176,49 @@ public class Groups implements Serializable{
         //q = "DELETE FROM Groups WHERE GroupId = " + groupId;
         //j.deleteQuery(q);
         
+    }
+    
+    public void leave()
+    {
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        JoinHelper j = new JoinHelper();
+        
+        String q = "DELETE FROM Group_Members WHERE GroupId = " + groupId + " AND MemberId = " + userId;
+        j.deleteQuery(q);
+        //String q = "DELETE FROM Comments, Posts, "
+        //q = "DELETE FROM Groups WHERE GroupId = " + groupId;
+        //j.deleteQuery(q);
+        
+    }
+    
+    public String joinGroup()
+    {
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        
+        JoinHelper j = new JoinHelper();
+        String q = "INSERT INTO Group_Members(MemberId, GroupId, MemberType) VALUES(" + userId + ", \"" + groupId + "\", \"Member\")";
+        
+        j.insertQuery(q);
+        return "groups";
+    }
+    
+    public String addUser()
+    {
+        JoinHelper j = new JoinHelper();
+        String q = "INSERT INTO Group_Members(MemberId, GroupId, MemberType) VALUES(" + userToAdd + ", \"" + groupId + "\", \"Member\")";
+        
+        j.insertQuery(q);
+        return "groups";
+    }
+    
+    public String removeUser()
+    {
+        JoinHelper j = new JoinHelper();
+        String q = "DELETE FROM Group_Members WHERE MemberId = " + userToAdd + " AND GroupId = " + groupId;
+        
+        j.deleteQuery(q);
+        return "groups";
     }
 }

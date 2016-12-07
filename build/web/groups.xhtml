@@ -13,14 +13,19 @@
 </h:head>
 <h:body>
     <f:metadata>
-        
+        <f:event type="preRenderView" listener="#{page.initGroupPage()}"/>
     </f:metadata>
     <h:form>
         <h:commandButton value="Create a Group" action="creategroup" /><br/>
     </h:form>
+    <h:form>
+        <h:commandButton value="Search Groups" action="searchgroups" /><br/>
+    </h:form>
     
     <ui:repeat id="group" var="group" value="#{myGroups}"> 
-        <h1>Author: #{group.groupName}</h1>
+        <h1>Group Name : #{group.groupName}</h1>
+        <h1>Group Type : #{group.groupType}</h1>
+        <h1>Group Owner : #{group.ownerId}</h1>
         <h1>-----</h1>
         <h:form>
         <h:commandButton value="Group Page" action="#{group.displayGroupPage}" />
@@ -31,6 +36,13 @@
             <h:commandButton value="Delete Group" action="#{group.deleteSelf}" />
         </h:form>
     </h:panelGroup>
+        
+    <h:panelGroup layout="block" rendered="#{!group.amOwner()}">
+        <h:form>
+            <h:commandButton value="Leave Group" action="#{group.leave}" />
+        </h:form>
+    </h:panelGroup>
+        
     </ui:repeat> 
     
     

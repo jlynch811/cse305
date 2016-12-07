@@ -10,10 +10,26 @@
         <h:outputStylesheet name="css/jsfcrud.css"/>
 </h:head>
 <h:body>
-    
     <f:metadata>
         <f:event type="preRenderView" listener="#{page.initGroupPage()}"/>
+        <f:event type="preRenderView" listener="#{factorybean.initGroupLists()}"/>
     </f:metadata>
+    
+        <h:panelGroup layout="block" rendered="#{currentGroup.amOwner()}">
+            <h:form>
+                <h:selectOneMenu value="#{currentGroup.userToAdd}">
+                    <f:selectItems value="#{usersNotInCurrentGroup}" var="f" itemLabel="#{f.emailId}" itemValue="#{f.userId}" />
+                </h:selectOneMenu>
+                <h:commandButton value="Add User To Group" action="#{currentGroup.addUser}" />
+            </h:form>
+            
+            <h:form>
+                <h:selectOneMenu value="#{currentGroup.userToAdd}">
+                    <f:selectItems value="#{usersInCurrentGroup}" var="f" itemLabel="#{f.emailId}" itemValue="#{f.userId}" />
+                </h:selectOneMenu>
+                <h:commandButton value="Remove User From Group" action="#{currentGroup.removeUser}" />
+            </h:form>
+        </h:panelGroup>
         <h:form>
             <h:inputTextarea rows="6" cols="40" id="message" value="#{posts.postContent}"/><br></br>
             <h:commandButton value="Create New Post" action="#{posts.createNewPost}" />
