@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 public class Register {
 
     private String email, password1, password2, firstName, lastName, address, city, state, zipcode, telephone;
-    private String creationDate, ccNumber, rating;
+    private String creationDate, ccNumber, rating, preferences;
     private String ssnNumber, startDate, hourlyRate, empType;
     
     boolean isParamValid;
@@ -135,6 +135,14 @@ public class Register {
         this.rating = rating;
     }
 
+    public String getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(String preferences) {
+        this.preferences = preferences;
+    }
+
     public String getSsnNumber() {
         return ssnNumber;
     }
@@ -206,8 +214,12 @@ public class Register {
             address = null;
         }
         
+        if (preferences.equals("")) {
+            preferences = null;
+        }
+        
         isParamValid = RegisterDAO.register_fmuser(email, password1, firstName, lastName,
-                address, city, state, zipcode, telephone, ccNumber);
+                address, city, state, zipcode, telephone, ccNumber, preferences);
         
         if (isParamValid) {
             FacesContext.getCurrentInstance().addMessage(

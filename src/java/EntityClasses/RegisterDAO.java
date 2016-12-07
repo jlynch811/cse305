@@ -21,7 +21,7 @@ public class RegisterDAO {
     //String creationDate, String ccNumber, String rating, String ssnNumber, String startDate, String hourlyRate, String employeeType
     public static boolean register_fmuser(String userMail, String password,
                 String firstName, String lastName, String address, String city, String state,
-                String zipcode, String telephone, String ccNumber) {
+                String zipcode, String telephone, String ccNumber, String preferences) {
         Connection con = null;
         PreparedStatement ps = null;
         System.out.println("Inside register_fmuser");
@@ -49,6 +49,16 @@ public class RegisterDAO {
             ps.setString(1, currentTime);
             ps.setString(2, ccNumber);
             ps.executeUpdate();
+            
+            if (preferences != null) {
+                String[] pref_arr = preferences.split(",");
+                
+                for (String pref : pref_arr) {
+                    ps = con.prepareStatement("INSERT INTO Preferences VALUES (LAST_INSERT_ID(), ?)");
+                    ps.setString(1, pref.trim());
+                    ps.executeUpdate();
+                }
+            }
             
             ps = con.prepareStatement("INSERT INTO Pages(PageType, OwnerId, GroupId, PostCount) VALUES (\"Personal\", LAST_INSERT_ID(), NULL, 0)");
             ps.executeUpdate();

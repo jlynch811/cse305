@@ -69,6 +69,12 @@
         <h:inputText id="userccnumber" value="#{register.ccNumber}" />
         <br />
         <br />
+        <p style="padding: 0px; margin: 0px">Preferences :</p>
+        <br />
+        <h:inputText id="userpreferences" value="#{register.preferences}" /><br />
+        <p style="padding: 0px; margin: 0px; font-size: 10px">List all your preferences separated by comma.</p>
+        <br />
+        <br />
         <h:commandButton value="OK" action="#{register.validateUserRegistrationInput}" />
         <tr />
         <h:commandButton id="Cancel" value="Cancel" action="index"/>
