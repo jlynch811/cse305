@@ -64,7 +64,7 @@ CREATE TABLE Messages (
 CREATE TABLE Groups (
 	GroupId INTEGER AUTO_INCREMENT,
 	GroupName VARCHAR(60) NOT NULL,
-	GroupType ENUM('Club', 'Organization', 'Association'),
+	GroupType VARCHAR(50) NOT NULL,
 	OwnerId INTEGER,
 	PRIMARY KEY (GroupId),
 	FOREIGN KEY (OwnerId) REFERENCES Users(UserId)
@@ -131,7 +131,7 @@ CREATE TABLE Advertisements (
 
 CREATE TABLE Preferences (
 	UserId INTEGER NOT NULL,
-	PrefCategory ENUM('Cars', 'Clothing', 'Computer') NOT NULL,
+	PrefCategory VARCHAR(50) NOT NULL,
 	PRIMARY KEY (UserId, PrefCategory),
 	FOREIGN KEY (UserId) REFERENCES Users(UserId));
     
