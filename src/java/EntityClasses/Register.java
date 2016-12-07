@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 @ManagedBean
 public class Register {
 
-    private String email, password1, password2, firstName, lastName, city, state, zipcode, telephone;
+    private String email, password1, password2, firstName, lastName, address, city, state, zipcode, telephone;
     private String creationDate, ccNumber, rating;
     private String ssnNumber, startDate, hourlyRate, empType;
     
@@ -69,6 +69,14 @@ public class Register {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCity() {
@@ -194,8 +202,12 @@ public class Register {
             ccNumber = "0";
         }
         
+        if (address.equals("")) {
+            address = null;
+        }
+        
         isParamValid = RegisterDAO.register_fmuser(email, password1, firstName, lastName,
-                city, state, zipcode, telephone, ccNumber);
+                address, city, state, zipcode, telephone, ccNumber);
         
         if (isParamValid) {
             FacesContext.getCurrentInstance().addMessage(
@@ -244,8 +256,12 @@ public class Register {
             hourlyRate = "0";
         }
         
+        if (address.equals("")) {
+            address = null;
+        }
+        
         isParamValid = RegisterDAO.register_emp(email, password1, firstName, lastName,
-                city, state, zipcode, telephone, ssnNumber, hourlyRate, empType);
+                address, city, state, zipcode, telephone, ssnNumber, hourlyRate, empType);
         
         if (isParamValid) {
             FacesContext.getCurrentInstance().addMessage(
