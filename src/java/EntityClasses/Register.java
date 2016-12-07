@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 @ManagedBean
 public class Register {
 
-    private String email, password1, password2, firstName, lastName, address, city, state, zipcode, telephone;
+    private String email, password1, password2, firstName, lastName, city, state, zipcode, telephone;
     private String creationDate, ccNumber, rating;
     private String ssnNumber, startDate, hourlyRate, empType;
     
@@ -69,14 +69,6 @@ public class Register {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getCity() {
@@ -173,7 +165,7 @@ public class Register {
         // Uncomment this check after testing is done.
         
 //        if (email==null || password1==null || password2==null || firstName==null
-//                || lastName==null || address==null || city==null || state==null
+//                || lastName==null || city==null || state==null
 //                || zipcode==null || telephone==null) {
 //            System.out.println("Something not entered");
 //            FacesContext.getCurrentInstance().addMessage(
@@ -194,12 +186,16 @@ public class Register {
             return "register_user";
         }
 
+        if (telephone.equals("")) {
+            telephone = "0";
+        }
+        
         if (ccNumber.equals("")) {
             ccNumber = "0";
         }
         
         isParamValid = RegisterDAO.register_fmuser(email, password1, firstName, lastName,
-                address, city, state, zipcode, telephone, ccNumber);
+                city, state, zipcode, telephone, ccNumber);
         
         if (isParamValid) {
             FacesContext.getCurrentInstance().addMessage(
@@ -219,7 +215,7 @@ public class Register {
         // Uncomment this check after testing is done.
         
 //        if (email==null || password1==null || password2==null || firstName==null
-//                || lastName==null || address==null || city==null || state==null
+//                || lastName==null || city==null || state==null
 //                || zipcode==null || telephone==null || ssnNumber==null) {
 //            System.out.println("Something not entered");
 //            FacesContext.getCurrentInstance().addMessage(
@@ -240,12 +236,16 @@ public class Register {
             return "register_emp";
         }
 
+        if (telephone.equals("")) {
+            telephone = "0";
+        }
+        
         if (hourlyRate.equals("")) {
             hourlyRate = "0";
         }
         
         isParamValid = RegisterDAO.register_emp(email, password1, firstName, lastName,
-                address, city, state, zipcode, telephone, ssnNumber, hourlyRate, empType);
+                city, state, zipcode, telephone, ssnNumber, hourlyRate, empType);
         
         if (isParamValid) {
             FacesContext.getCurrentInstance().addMessage(

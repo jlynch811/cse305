@@ -21,7 +21,7 @@ import javax.faces.context.FacesContext;
 public class RegisterDAO {
     //String creationDate, String ccNumber, String rating, String ssnNumber, String startDate, String hourlyRate, String employeeType
     public static boolean register_fmuser(String userMail, String password,
-                String firstName, String lastName, String address, String city, String state,
+                String firstName, String lastName, String city, String state,
                 String zipcode, String telephone, String ccNumber) {
         Connection con = null;
         PreparedStatement ps = null;
@@ -29,17 +29,16 @@ public class RegisterDAO {
         
         try {
             con = DataConnect.getConnection();
-            ps = con.prepareStatement("INSERT INTO Users(EmailId, Psswd, FirstName, LastName, Address, City, State, Zipcode, Telephone, UserType) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, \"FMUser\")");
+            ps = con.prepareStatement("INSERT INTO Users(EmailId, Psswd, FirstName, LastName, City, State, Zipcode, Telephone, UserType) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, \"FMUser\")");
             ps.setString(1, userMail);
             ps.setString(2, password);
             ps.setString(3, firstName);
             ps.setString(4, lastName);
-            ps.setString(5, address);
-            ps.setString(6, city);
-            ps.setString(7, state);
-            ps.setString(8, zipcode);
-            ps.setString(9, telephone);
+            ps.setString(5, city);
+            ps.setString(6, state);
+            ps.setString(7, zipcode);
+            ps.setString(8, telephone);
             ps.executeUpdate();
             
             Date date = new java.util.Date();
@@ -70,7 +69,7 @@ public class RegisterDAO {
     }
     
     public static boolean register_emp(String userMail, String password,
-                String firstName, String lastName, String address, String city, String state,
+                String firstName, String lastName, String city, String state,
                 String zipcode, String telephone, String ssnNumber, String hourlyRate, String empType) {
         
         Connection con = null;
@@ -79,17 +78,16 @@ public class RegisterDAO {
         
         try {
             con = DataConnect.getConnection();
-            ps = con.prepareStatement("INSERT INTO Users(EmailId, Psswd, FirstName, LastName, Address, City, State, Zipcode, Telephone, UserType) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, \"Employee\")");
+            ps = con.prepareStatement("INSERT INTO Users(EmailId, Psswd, FirstName, LastName, City, State, Zipcode, Telephone, UserType) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, \"Employee\")");
             ps.setString(1, userMail);
             ps.setString(2, password);
             ps.setString(3, firstName);
             ps.setString(4, lastName);
-            ps.setString(5, address);
-            ps.setString(6, city);
-            ps.setString(7, state);
-            ps.setString(8, zipcode);
-            ps.setString(9, telephone);
+            ps.setString(5, city);
+            ps.setString(6, state);
+            ps.setString(7, zipcode);
+            ps.setString(8, telephone);
             ps.executeUpdate();
             
             Date date = new java.util.Date();
