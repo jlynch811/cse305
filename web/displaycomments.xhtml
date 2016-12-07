@@ -27,9 +27,11 @@
         <h:form>
             <h:commandButton value="Like Comment" action="#{comment.like}" />
         </h:form>
-        <h:panelGroup layout="block" rendered="#{comment.amOwner()}">
+        <h:panelGroup layout="block" rendered="#{comment.amOwner() or displayedPage.amOwner()}">
             <h:form>
+                <h:commandButton value="Modify Comment" action="#{comment.prepForModify}" />
                 <h:commandButton value="Delete Comment" action="#{comment.deleteSelf}" />
+                
             </h:form>
         </h:panelGroup>
         <h1>-----</h1>

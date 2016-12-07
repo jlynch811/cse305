@@ -26,7 +26,6 @@
         <h1>Group Name : #{group.groupName}</h1>
         <h1>Group Type : #{group.groupType}</h1>
         <h1>Group Owner : #{group.ownerId}</h1>
-        <h1>-----</h1>
         <h:form>
         <h:commandButton value="Group Page" action="#{group.displayGroupPage}" />
     </h:form>
@@ -42,6 +41,7 @@
             <h:commandButton value="Leave Group" action="#{group.leave}" />
         </h:form>
     </h:panelGroup>
+    <h1>-----</h1>
         
     </ui:repeat> 
     

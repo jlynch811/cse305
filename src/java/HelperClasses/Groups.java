@@ -204,21 +204,27 @@ public class Groups implements Serializable{
         return "groups";
     }
     
-    public String addUser()
+    public void addUser()
     {
         JoinHelper j = new JoinHelper();
         String q = "INSERT INTO Group_Members(MemberId, GroupId, MemberType) VALUES(" + userToAdd + ", \"" + groupId + "\", \"Member\")";
         
         j.insertQuery(q);
-        return "groups";
     }
     
-    public String removeUser()
+    public void removeUser()
     {
         JoinHelper j = new JoinHelper();
         String q = "DELETE FROM Group_Members WHERE MemberId = " + userToAdd + " AND GroupId = " + groupId;
         
         j.deleteQuery(q);
-        return "groups";
+    }
+    
+    public void rename()
+    {
+        String q = "UPDATE Groups SET GroupName = \"" + groupName +"\" " + "WHERE Groupid = " + groupId;
+        JoinHelper j = new JoinHelper();
+        
+        j.insertQuery(q);
     }
 }

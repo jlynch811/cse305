@@ -140,4 +140,21 @@ public class Comments implements Serializable{
         String q = "DELETE FROM Comments WHERE CommentId = " + id;
         j.deleteQuery(q);
     }
+    
+    public String prepForModify()
+    {
+        HttpSession session = SessionUtils.getSession();
+        session.setAttribute("displayedComment", this);
+        return "modifycomment";
+    }
+    
+    public String modifySelf()
+    {
+        
+        String q = "UPDATE Comments SET CmntContent = \"" + message +"\" " + "WHERE CommentId = " + id;
+        JoinHelper j = new JoinHelper();
+        
+        j.insertQuery(q);
+        return "displaycomments";
+    }
 }

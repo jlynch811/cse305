@@ -6,20 +6,20 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<title>Personal Page</title>
+	<title>Others Personal Page</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
 </h:head>
 <h:body>
-    
     <f:metadata>
-        <f:event type="preRenderView" listener="#{page.initPersonalPage()}"/>
+        <f:event type="preRenderView" listener="#{page.initOtherPage()}"/>
     </f:metadata>
     <p style="font-size: 30px; margin: 0px; padding: 0px;text-align: center;font-weight: bold">#{displayedPage.ownerName}'s Page</p>
+    
         <h:form>
             <h:inputTextarea rows="6" cols="40" id="message" value="#{posts.postContent}"/><br></br>
             <h:commandButton value="Create New Post" action="#{posts.createNewPost}" />
         </h:form>
-        <ui:repeat var="post" value="#{page.posts}"> 
+        <ui:repeat var="post" value="#{displayedPage.posts}"> 
             
                 <h1>Author: #{post.authorName}    </h1>
                 <h1>Date: #{post.postDate}</h1>
@@ -32,7 +32,7 @@
                 
                 <h:panelGroup layout="block" rendered="#{post.amOwner() or displayedPage.amOwner()}">
                     <h:form>
-                        <h:commandButton value="Modify Post" action="#{post.prepForModify('personalpage')}" />
+                        <h:commandButton value="Modify Post" action="#{post.prepForModify('otherpersonalpage')}" />
                         <h:commandButton value="Delete Post" action="#{post.deleteSelf}" />
                     </h:form>
                 </h:panelGroup>

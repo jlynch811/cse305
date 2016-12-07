@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Modify Comment</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+</h:head>
+<h:body>
+    
+    <f:metadata>
+    </f:metadata>
+     <h:form>
+            
+            <h:inputTextarea rows="6" cols="40" id="message" value="#{displayedComment.message}"/><br></br>
+            <h:commandButton value="Modify Comment" action="#{displayedComment.modifySelf}" />
+    </h:form>
+    
+    <ui:repeat var="comment" value="#{displayedComment}"> 
+        <h1>Author: #{comment.authorName}</h1>
+        <h1>Date: #{comment.cmntDate}</h1>
+        <h1>Content: #{comment.message}</h1>
+        <h1>Likes: #{comment.likeCount}</h1>
+    </ui:repeat> 
+</h:body>
+</html>

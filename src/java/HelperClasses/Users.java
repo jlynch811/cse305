@@ -135,7 +135,4 @@ public class Users implements Serializable {
     public void setUserType(String userType) {
         this.userType = userType;
     }
-    
-    
-    
 }

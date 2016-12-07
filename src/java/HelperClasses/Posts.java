@@ -257,6 +257,23 @@ public class Posts implements Serializable{
         j.deleteQuery(q);
     }
     
+    public String prepForModify(String pageToGoTo)
+    {
+        HttpSession session = SessionUtils.getSession();
+        session.setAttribute("displayedPost", this);
+        session.setAttribute("pageToGoTo", pageToGoTo);
+        return "modifypost";
+    }
+    
+    public String modifySelf()
+    {
+        HttpSession session = SessionUtils.getSession();
+        JoinHelper j = new JoinHelper();
+        String q = "UPDATE Posts SET PostContent = \"" + postContent +"\" " + "WHERE PostId = " + id;
+        j.insertQuery(q);
+        return (String)session.getAttribute("pageToGoTo");
+    }
+    
     
     
     

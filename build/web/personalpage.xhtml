@@ -14,6 +14,7 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{page.initPersonalPage()}"/>
     </f:metadata>
+    <p style="font-size: 30px; margin: 0px; padding: 0px;text-align: center;font-weight: bold">#{displayedPage.ownerName}'s Page</p>
         <h:form>
             <h:inputTextarea rows="6" cols="40" id="message" value="#{posts.postContent}"/><br></br>
             <h:commandButton value="Create New Post" action="#{posts.createNewPost}" />
@@ -29,8 +30,9 @@
                     <h:commandButton value="View Comments" action="#{post.displayPostComments}" />
                 </h:form>
                 
-                <h:panelGroup layout="block" rendered="#{post.amOwner()}">
+                <h:panelGroup layout="block" rendered="#{post.amOwner() or displayedPage.amOwner()}">
                     <h:form>
+                        <h:commandButton value="Modify Post" action="#{post.prepForModify('personalpage')}" />
                         <h:commandButton value="Delete Post" action="#{post.deleteSelf}" />
                     </h:form>
                 </h:panelGroup>

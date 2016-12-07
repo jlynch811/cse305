@@ -234,4 +234,46 @@ public class FactoryBean implements Serializable {
         }
     }
     
+    
+    public void initUsersList()
+    {
+        ArrayList<Users> usersList = new ArrayList();
+        HttpSession session = SessionUtils.getSession();
+        
+        String q = "SELECT * FROM Users";
+        
+        JoinHelper j = new JoinHelper();
+        
+        Connection con = null;
+        ResultSet rs = j.selectResultSetQuery(q, con);
+        
+                try{
+            while(rs.next())
+            {
+                String userId = rs.getString("UserId");
+                String emailId = rs.getString("EmailId");
+                String psswd = rs.getString("Psswd");
+                String firstName = rs.getString("FirstName");
+                String lastName = rs.getString("LastName");
+                String address = rs.getString("Address");
+                String city = rs.getString("City");
+                String state = rs.getString("State");
+                String zipcode = rs.getString("Zipcode");
+                String telephone = rs.getString("Telephone");
+                String userType = rs.getString("UserType");
+                
+                Users user = new Users(userId, emailId, psswd, firstName, lastName, address, city, state, zipcode, telephone, userType);
+                usersList.add(user);
+            }
+            session.setAttribute("usersList", usersList);
+        }
+        
+        
+        catch (SQLException ex) {
+            System.out.println("Init UsersList error -->" + ex.getMessage());
+        } finally {
+            DataConnect.close(con);
+        }
+    }
+    
 }
