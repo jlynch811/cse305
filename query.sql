@@ -1,8 +1,4 @@
-# DROP SCHEMA cse305;
-
-# CREATE SCHEMA cse305;
-
-DROP TABLE IF EXISTS Sales, Accounts, Preferences, Advertisements, Comments, Posts, Group_Members, Messages, Friends, FMPlusUsers, Employees, Pages, Groups, Users;
+DROP TABLE IF EXISTS PostLikes, CommentLikes, Sales, Accounts, Preferences, Advertisements, Comments, Posts, Group_Members, Messages, Friends, FMPlusUsers, Employees, Pages, Groups, Users;
 
 CREATE TABLE Users (
 	UserId INTEGER AUTO_INCREMENT,
@@ -71,7 +67,7 @@ CREATE TABLE Groups (
 );
 
 CREATE TABLE Group_Members(
-	MemberId INTEGER,
+	MemberId INTEGER NOT NULL,
 	GroupId INTEGER,
 	MemberType ENUM('Member', 'Owner') NOT NULL,
 	PRIMARY KEY (MemberId, GroupId),
@@ -92,19 +88,20 @@ CREATE TABLE Pages(
 
 CREATE TABLE Posts (
 	PostId INTEGER AUTO_INCREMENT,
-	AuthorId INTEGER,
-	PageId INTEGER,
+	AuthorId INTEGER NOT NULL,
+	PageId INTEGER NOT NULL,
 	PostDate DATE NOT NULL,
 	PostContent VARCHAR(250) NOT NULL,
 	CmntCount INTEGER DEFAULT 0,
 	LikeCount INTEGER DEFAULT 0,
 	PRIMARY KEY (PostId),
 	FOREIGN KEY (AuthorId) REFERENCES Users(UserId),
-	FOREIGN KEY (PageId) REFERENCES Pages(PageId) ON DELETE CASCADE);
+	FOREIGN KEY (PageId) REFERENCES Pages(PageId) ON DELETE CASCADE
+); 
     
 CREATE TABLE Comments (
 	CommentId INTEGER AUTO_INCREMENT,
-	AuthorId INTEGER,
+	AuthorId INTEGER NOT NULL,
 	PostId INTEGER NOT NULL,
 	CmntDate DATE NOT NULL,
 	CmntContent VARCHAR(250) NOT NULL,
@@ -116,7 +113,7 @@ CREATE TABLE Comments (
 
 CREATE TABLE Advertisements (
 	AdvId INTEGER AUTO_INCREMENT,
-	EmployeeId INTEGER,
+	EmployeeId INTEGER NOT NULL,
 	AdvType ENUM('Cars', 'Clothing', 'Computer') NOT NULL,
 	AdvDate DATE NOT NULL,
 	Company VARCHAR(60) NOT NULL,
@@ -129,27 +126,45 @@ CREATE TABLE Advertisements (
 );
 
 CREATE TABLE Preferences (
-	UserId INTEGER,
+	UserId INTEGER NOT NULL,
 	PrefCategory ENUM('Cars', 'Clothing', 'Computer') NOT NULL,
 	PRIMARY KEY (UserId, PrefCategory),
 	FOREIGN KEY (UserId) REFERENCES Users(UserId));
     
 CREATE TABLE Accounts (
 	AccountNo INTEGER,
-	UserId INTEGER,
+	UserId INTEGER NOT NULL,
 	PRIMARY KEY (AccountNo),
 	FOREIGN KEY (UserId) REFERENCES Users(UserId)
 );
 
 CREATE TABLE Sales (
 	TransactionId INTEGER AUTO_INCREMENT,
-	AdvId INTEGER,
-	AccountNo INTEGER,
+	AdvId INTEGER NOT NULL,
+	AccountNo INTEGER NOT NULL,
 	TransactionDate DATE NOT NULL,
 	NoOfUnits INTEGER NOT NULL,
 	PRIMARY KEY (TransactionId),
 	FOREIGN KEY (AdvId) REFERENCES Advertisements(AdvId),
 	FOREIGN KEY (AccountNo) REFERENCES Accounts(AccountNo)
+);
+
+CREATE TABLE PostLikes (
+	UserId INTEGER NOT NULL,
+    PostId INTEGER NOT NULL,
+    PRIMARY KEY (UserId, PostId),
+    FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE,
+    FOREIGN KEY (PostId) REFERENCES Posts(PostId) ON DELETE CASCADE
+    
+);
+
+CREATE TABLE CommentLikes (
+	UserId INTEGER NOT NULL,
+    CommentId INTEGER NOT NULL,
+    PRIMARY KEY (UserId, CommentId),
+    FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE,
+    FOREIGN KEY (CommentId) REFERENCES Comments(CommentId) ON DELETE CASCADE
+    
 );
 	
 

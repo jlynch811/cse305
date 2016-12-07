@@ -168,10 +168,6 @@ public class Posts implements Serializable{
         return "displaycomments";
     }
     
-    public String like()
-    {
-        return "personalpage";
-    }
     
     public void createNewPost()
     { 
@@ -274,7 +270,49 @@ public class Posts implements Serializable{
         return (String)session.getAttribute("pageToGoTo");
     }
     
+    public void like()
+    {
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        
+        String q = "INSERT INTO PostLikes(UserId, PostId) VALUES(" + userId + ", " + id + ")";
+        JoinHelper j = new JoinHelper();
+        j.insertQuery(q);
+    }
     
+    public void unLike()
+    {
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        
+        String q = "DELETE FROM PostLikes WHERE UserId = " + userId + " AND PostId = " + id;
+        JoinHelper j = new JoinHelper();
+        j.deleteQuery(q);
+    }
     
+    public boolean doILike()
+    {
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        
+        String q = "SELECT * FROM PostLikes WHERE UserId = " + userId + " AND PostId = " + id;
+        
+        JoinHelper j = new JoinHelper();
+        String r = j.selectQuery(q,"UserId");
+        
+        if(r==null)
+            return false;
+        return true;
+    }
+    
+    public int calcLikeCount()
+    {
+        String q = "SELECT COUNT(UserId) as count FROM PostLikes WHERE PostId = " + id;
+        JoinHelper j = new JoinHelper();
+        likeCount = j.selectQuery(q,"count");
+        
+        return Integer.parseInt(likeCount);
+        
+    }
     
 }

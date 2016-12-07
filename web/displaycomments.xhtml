@@ -23,9 +23,14 @@
         <h1>Author: #{comment.authorName}</h1>
         <h1>Date: #{comment.cmntDate}</h1>
         <h1>Content: #{comment.message}</h1>
-        <h1>Likes: #{comment.likeCount}</h1>
+        <h1>Likes: #{comment.calcLikeCount()}</h1>
         <h:form>
-            <h:commandButton value="Like Comment" action="#{comment.like}" />
+            <h:panelGroup layout="block" rendered="#{!comment.doILike()}">
+                <h:commandButton value="Like Comment" action="#{comment.like}" />
+            </h:panelGroup>
+            <h:panelGroup layout="block" rendered="#{comment.doILike()}">
+                <h:commandButton value="Unlike Comment" action="#{comment.unLike}" />
+            </h:panelGroup>
         </h:form>
         <h:panelGroup layout="block" rendered="#{comment.amOwner() or displayedPage.amOwner()}">
             <h:form>

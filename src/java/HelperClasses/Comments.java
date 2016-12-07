@@ -107,10 +107,6 @@ public class Comments implements Serializable{
         this.authorName = this.authorName + j.selectQuery(q, "LastName");
     }  
     
-    public String like()
-    {
-        return "displaycomments";
-    }
     
     public void createNewComment()
     {
@@ -156,5 +152,50 @@ public class Comments implements Serializable{
         
         j.insertQuery(q);
         return "displaycomments";
+    }
+    
+    public void like()
+    {
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        
+        String q = "INSERT INTO CommentLikes(UserId, CommentId) VALUES(" + userId + ", " + id + ")";
+        JoinHelper j = new JoinHelper();
+        j.insertQuery(q);
+    }
+    
+    public void unLike()
+    {
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        
+        String q = "DELETE FROM CommentLikes WHERE UserId = " + userId + " AND CommentId = " + id;
+        JoinHelper j = new JoinHelper();
+        j.deleteQuery(q);
+    }
+    
+    public boolean doILike()
+    {
+        HttpSession session = SessionUtils.getSession();
+        String userId = (String)session.getAttribute("userid");
+        
+        String q = "SELECT * FROM CommentLikes WHERE UserId = " + userId + " AND CommentId = " + id;
+        
+        JoinHelper j = new JoinHelper();
+        String r = j.selectQuery(q,"UserId");
+        
+        if(r==null)
+            return false;
+        return true;
+    }
+    
+    public int calcLikeCount()
+    {
+        String q = "SELECT COUNT(UserId) as count FROM CommentLikes WHERE CommentId = " + id;
+        JoinHelper j = new JoinHelper();
+        likeCount = j.selectQuery(q,"count");
+        
+        return Integer.parseInt(likeCount);
+        
     }
 }

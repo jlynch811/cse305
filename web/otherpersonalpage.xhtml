@@ -24,9 +24,14 @@
                 <h1>Author: #{post.authorName}    </h1>
                 <h1>Date: #{post.postDate}</h1>
                 <h1>Content: #{post.postContent}</h1>
-                <h1>Likes: #{post.likeCount}    </h1>
+                <h1>Likes: #{post.calcLikeCount()}    </h1>
                 <h:form>
-                    <h:commandButton value="Like Post" action="#{post.like}" />
+                    <h:panelGroup layout="block" rendered="#{!post.doILike()}">
+                        <h:commandButton value="Like Post" action="#{post.like}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" rendered="#{post.doILike()}">
+                        <h:commandButton value="Unlike Post" action="#{post.unLike}" />
+                    </h:panelGroup>
                     <h:commandButton value="View Comments" action="#{post.displayPostComments}" />
                 </h:form>
                 

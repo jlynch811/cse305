@@ -12,6 +12,7 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{homepage.initUserAttributes}"/>
         <f:event type="preRenderView" listener="#{factorybean.initUsersList}"/>
+        <f:event type="preRenderView" listener="#{factorybean.initUsersNotMe}"/>
     </f:metadata>
     <h:outputText value="" style="font-weight:bold"/>
     <h:form>
@@ -26,7 +27,7 @@
     
     <h:form>
         <h:selectOneMenu value="#{page.ownerId}">
-                <f:selectItems value="#{usersList}" var="f" itemLabel="#{f.emailId}" itemValue="#{f.userId}" />
+                <f:selectItems value="#{usersNotMeList}" var="f" itemLabel="#{f.emailId}" itemValue="#{f.userId}" />
         </h:selectOneMenu>
         <h:commandButton value="View Other Personal Page" action="#{page.initOtherPage()}" /><br/>
     </h:form>
