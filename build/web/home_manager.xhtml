@@ -13,7 +13,30 @@
         <f:event type="preRenderView" listener="#{homepage.initUserAttributes}"/>
     </f:metadata>
     <h:form>
-        <p>Welcome Manager - #{homepage.firstName} #{homepage.lastName}</p>
+        <p>Welcome - #{homepage.firstName} #{homepage.lastName}</p>
+        <br />
+        <br />
+        <h:commandButton value="Manage Employee Info" action="employeeTrans/manager/manage_emp" />
+        <br />
+        <br />
+        <h:commandButton value="See Sales Report" action="employeeTrans/manager/view_sales" />
+        <br />
+        <br />
+        <h:commandButton value="See Advertisements" action="employeeTrans/manager/view_adv" />
+        <br />
+        <br />
+        <h:commandButton value="See Transactions" action="employeeTrans/manager/view_transactions" />
+        <br />
+        <br />
+        <h:commandButton value="See Revenues" action="employeeTrans/manager/view_revenues" />
+        <br />
+        <br />
+        <h:commandButton value="See Customers" action="employeeTrans/manager/view_customers" />
+        <br />
+        <br />
+        <h:commandButton value="See Items" action="employeeTrans/manager/view_items" />
+        <br /><br />
+        <br /><br />
         <h:commandButton value="Logout" action="#{login.logout}" />
     </h:form>
 </h:body>
