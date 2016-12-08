@@ -8,11 +8,15 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <head>
+    <h:head>
         <title>Update Employee Info</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+    </h:head>
     <body>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{managerTransactions.initEmpUpdate()}"/>
+        </f:metadata>
         <h:form>
             <p style="font-size: 30px; margin: 0px; padding: 0px;">Update Employee Details</p>
             <br />
@@ -24,7 +28,7 @@ and open the template in the editor.
             <br />
             <p style="padding: 0px; margin: 0px">Password <font color="red">*</font> :</p>
             <br />
-            <h:inputSecret id="userpassword" value="#{managerTransactions.psswd}" />
+            <h:inputText id="userpassword" value="#{managerTransactions.psswd}" />
             <br />
             <br />
             <p style="padding: 0px; margin: 0px">First Name <font color="red">*</font> :</p>
@@ -65,6 +69,11 @@ and open the template in the editor.
             <p style="padding: 0px; margin: 0px">SSN Number <font color="red">*</font> :</p>
             <br />
             <h:inputText id="ssnnumber" value="#{managerTransactions.ssnNumber}"/>
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Start Date <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="startdate" value="#{managerTransactions.startDate}"/>
             <br />
             <br />
             <p style="padding: 0px; margin: 0px">Hourly Rate :</p>

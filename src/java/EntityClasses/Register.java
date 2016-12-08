@@ -203,11 +203,11 @@ public class Register {
         }
 
         if (telephone.equals("")) {
-            telephone = "0";
+            telephone = null;
         }
         
         if (ccNumber.equals("")) {
-            ccNumber = "0";
+            ccNumber = null;
         }
         
         if (address.equals("")) {
@@ -261,11 +261,11 @@ public class Register {
         }
 
         if (telephone.equals("")) {
-            telephone = "0";
+            telephone = null;
         }
         
         if (hourlyRate.equals("")) {
-            hourlyRate = "0";
+            hourlyRate = null;
         }
         
         if (address.equals("")) {
