@@ -9,10 +9,13 @@
 <h:head>
 	<title>Groups</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
-        <f:event type="preRenderView" listener="#{factorybean.initGroups()}"/>
 </h:head>
 <h:body>
+    <h:form><p align="right">
+      <h:commandButton value="Home" action="home" />
+    </p></h:form>
     <f:metadata>
+        <f:event type="preRenderView" listener="#{factorybean.initGroups()}"/>
         <f:event type="preRenderView" listener="#{page.initGroupPage()}"/>
     </f:metadata>
     <h:form>
@@ -25,7 +28,7 @@
     <ui:repeat id="group" var="group" value="#{myGroups}"> 
         <h1>Group Name : #{group.groupName}</h1>
         <h1>Group Type : #{group.groupType}</h1>
-        <h1>Group Owner : #{group.ownerId}</h1>
+        <h1>Group Owner : #{group.ownerName}</h1>
         <h:form>
         <h:commandButton value="Group Page" action="#{group.displayGroupPage}" />
     </h:form>

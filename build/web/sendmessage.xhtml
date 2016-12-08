@@ -9,13 +9,19 @@
         <h:outputStylesheet name="css/jsfcrud.css"/>
 </h:head>
 <h:body>
+    <h:form><p align="right">
+      <h:commandButton value="Home" action="home" />
+    </p></h:form>
     <f:metadata>
         
     </f:metadata>
     <h:form>
         <p>Send Message</p>
+        
         ID to Send to:<br></br>
-        <h:inputText id="sender" value="#{sendmessage.receiver}"/><br></br>
+        <h:selectOneMenu value="#{sendmessage.receiver}">
+                <f:selectItems value="#{usersNotMeList}" var="f" itemLabel="#{f.emailId}" itemValue="#{f.userId}" />
+        </h:selectOneMenu>
         Subject:<br></br>
         <h:inputText id="subject" value="#{sendmessage.subject}"/><br></br>
         Message:<br></br>

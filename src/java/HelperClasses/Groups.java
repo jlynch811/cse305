@@ -30,6 +30,7 @@ public class Groups implements Serializable{
     private String groupType;
     private String ownerId;
     private String userToAdd;
+    private String ownerName;
 
     /**
      * Creates a new instance of Groups
@@ -40,6 +41,17 @@ public class Groups implements Serializable{
         this.groupName = groupName;
         this.groupType = groupType;
         this.ownerId = ownerId;
+        
+        FactoryBean b = new FactoryBean();
+        
+        Users owner = b.getUserFromId(ownerId);
+        
+        if(owner==null)
+        {
+            b.getUserFromId(ownerId);
+            System.out.println("NullOwner");
+        }
+        this.ownerName = owner.getFirstName() + " " + owner.getLastName();
         
     }
     
@@ -87,6 +99,16 @@ public class Groups implements Serializable{
     public void setUserToAdd(String userToAdd) {
         this.userToAdd = userToAdd;
     }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+    
+    
     
     
     

@@ -21,7 +21,7 @@ public class JoinHelper {
     public JoinHelper(){
     }
     
-    public ResultSet selectResultSetQuery(String q, Connection con)
+    public ResultSetCon selectResultSetQuery(String q, Connection con)
     {
         PreparedStatement ps = null;
         
@@ -31,9 +31,10 @@ public class JoinHelper {
             ps = con.prepareStatement(q);
            
             ResultSet rs = ps.executeQuery();
-            return rs;
+            ResultSetCon rsc = new ResultSetCon(rs, con);
+            return rsc;
             
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println("Join error -->" + ex.getMessage());
         } finally {
             
@@ -58,7 +59,7 @@ public class JoinHelper {
                 return rs.getString(arg);
             }
             
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println("Join error -->" + ex.getMessage());
         } finally {
             DataConnect.close(con);
@@ -86,7 +87,7 @@ public class JoinHelper {
             }
             return ret;
             
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println("Join error -->" + ex.getMessage());
         } finally {
             DataConnect.close(con);
@@ -106,7 +107,7 @@ public class JoinHelper {
            
             ps.executeUpdate();
             
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println("Insert error -->" + ex.getMessage());
         } finally {
             DataConnect.close(con);
@@ -125,7 +126,7 @@ public class JoinHelper {
            
             ps.executeUpdate();
             
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println("Insert error -->" + ex.getMessage());
         } finally {
             DataConnect.close(con);
@@ -157,7 +158,7 @@ public class JoinHelper {
                 returnList.add(res);
                 
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println("Join error -->" + ex.getMessage());
         } finally {
             DataConnect.close(con);

@@ -126,12 +126,12 @@ public class Posts implements Serializable{
         this.likeCount = likeCount;
         
         JoinHelper j = new JoinHelper();
-        String q = "SELECT * FROM Posts, Users WHERE UserId = AuthorId AND PostId = " + id + ";";
+        String q = "SELECT * FROM Posts, Users WHERE UserId = AuthorId AND PostId = " + id + " ;";
         this.authorName =  j.selectQuery(q, "FirstName") + " ";
         this.authorName = this.authorName + j.selectQuery(q, "LastName");
         
         
-        q = "SELECT * FROM Comments WHERE PostId = " + this.id + ";";
+        q = "SELECT * FROM Comments WHERE PostId = " + this.id + " ORDER BY CmntDate DESC;";
         Connection con = null;
         PreparedStatement ps = null;
         
@@ -175,7 +175,7 @@ public class Posts implements Serializable{
         String userId = (String)session.getAttribute("userid");
         Page userPage = (Page)session.getAttribute("displayedPage");
         
-        String q = "INSERT INTO Posts(AuthorId, PageId, PostDate, PostContent) VALUES(" + userId + "," + userPage.getPageId() + ", CURDATE(), " + "\"" + postContent + "\")";
+        String q = "INSERT INTO Posts(AuthorId, PageId, PostDate, PostContent) VALUES(" + userId + "," + userPage.getPageId() + ", NOW(), " + "\"" + postContent + "\")";
         JoinHelper j = new JoinHelper();
         j.insertQuery(q);
         

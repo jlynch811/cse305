@@ -114,7 +114,7 @@ public class Comments implements Serializable{
         String userId = (String)session.getAttribute("userid");
         Posts currentPost = (Posts)session.getAttribute("displayedPost");
         
-        String q = "INSERT INTO Comments(AuthorId, PostId, CmntDate, cmntContent) VALUES(" + userId + "," + currentPost.getId() + ", CURDATE(), " + "\"" + message + "\")";
+        String q = "INSERT INTO Comments(AuthorId, PostId, CmntDate, cmntContent) VALUES(" + userId + "," + currentPost.getId() + ", Now(), " + "\"" + message + "\")";
         JoinHelper j = new JoinHelper();
         j.insertQuery(q);
     }

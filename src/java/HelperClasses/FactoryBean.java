@@ -30,6 +30,49 @@ public class FactoryBean implements Serializable {
     public FactoryBean() {
     }
     
+    
+    public Users getUserFromId(String uid)
+    {
+        String q = "SELECT * FROM Users WHERE UserId = " + uid;
+        JoinHelper j = new JoinHelper();
+        
+        Connection con = null;
+        
+                try{
+            ResultSetCon temp = j.selectResultSetQuery(q, con);
+            ResultSet rs = temp.getRs();
+            con = temp.getCon();
+            
+            if(rs.next())
+            {
+                String userId = rs.getString("UserId");
+                String emailId = rs.getString("EmailId");
+                String psswd = rs.getString("Psswd");
+                String firstName = rs.getString("FirstName");
+                String lastName = rs.getString("LastName");
+                String address = rs.getString("Address");
+                String city = rs.getString("City");
+                String state = rs.getString("State");
+                String zipcode = rs.getString("Zipcode");
+                String telephone = rs.getString("Telephone");
+                String userType = rs.getString("UserType");
+                
+                Users user = new Users(userId, emailId, psswd, firstName, lastName, address, city, state, zipcode, telephone, userType);
+                return user;
+            }
+            
+        }
+        
+        
+        catch (Exception ex) {
+            System.out.println("Init UsersNotInCurrentGroup error -->" + ex.getMessage());
+        } finally {
+            DataConnect.close(con);
+        }
+                
+                return null;
+    }
+    
     public void initGroups()
     {
         HttpSession session = SessionUtils.getSession();
@@ -40,7 +83,9 @@ public class FactoryBean implements Serializable {
         String q = "SELECT * FROM Groups, Group_Members WHERE Groups.GroupId = Group_Members.GroupId AND MemberId =" + userId;
         
         Connection con = null;
-        ResultSet rs = j.selectResultSetQuery(q, con);
+        ResultSetCon temp = j.selectResultSetQuery(q, con);
+        ResultSet rs = temp.getRs();
+        con = temp.getCon();
         initAllGroupList();
         initNotMyGroupsList();
         
@@ -76,7 +121,9 @@ public class FactoryBean implements Serializable {
         String q = "SELECT * FROM Groups";
         
         Connection con = null;
-        ResultSet rs = j.selectResultSetQuery(q, con);
+        ResultSetCon temp = j.selectResultSetQuery(q, con);
+        ResultSet rs = temp.getRs();
+        con = temp.getCon();
         
                 try{
             while(rs.next())
@@ -109,10 +156,12 @@ public class FactoryBean implements Serializable {
         JoinHelper j = new JoinHelper();
         
         String userId = (String)session.getAttribute("userid");
-        String q = "SELECT * FROM Groups, Group_Members g WHERE Groups.GroupId = g.GroupId AND NOT EXISTS (SELECT * FROM Group_Members g2 WHERE g2.GroupId = g.GroupId AND g2.MemberId =" + userId +")";
+        String q = "SELECT * FROM Groups g WHERE NOT EXISTS (SELECT * FROM Group_Members g2 WHERE g2.GroupId = g.GroupId AND g2.MemberId = " + userId +")";
         
         Connection con = null;
-        ResultSet rs = j.selectResultSetQuery(q, con);
+        ResultSetCon temp = j.selectResultSetQuery(q, con);
+        ResultSet rs = temp.getRs();
+        con = temp.getCon();
         
                 try{
             while(rs.next())
@@ -150,15 +199,20 @@ public class FactoryBean implements Serializable {
         
         Groups currentGroup = (Groups)session.getAttribute("currentGroup");
         
-        String q = "SELECT DISTINCT UserId, EmailId, Psswd, FirstName, LastName, Address, City, State, Zipcode, Telephone, UserType \n" +
+        /*String q = "SELECT DISTINCT UserId, EmailId, Psswd, FirstName, LastName, Address, City, State, Zipcode, Telephone, UserType \n" +
 "FROM Group_Members g, Users u \n" +
-"WHERE g.MemberId = u.UserId AND NOT EXISTS (SELECT * FROM Group_Members g2 WHERE g2.MemberId =  u.UserId AND g2.GroupId = " + currentGroup.getGroupId() + ")";
+"WHERE g.MemberId = u.UserId AND NOT EXISTS (SELECT * FROM Group_Members g2 WHERE g2.MemberId =  u.UserId AND g2.GroupId = " + currentGroup.getGroupId() + ")";*/
+        
+        String q = "SELECT DISTINCT UserId, EmailId, Psswd, FirstName, LastName, Address, City, State, Zipcode, Telephone, UserType \n" +
+"FROM Users u \n" +
+"WHERE NOT EXISTS (SELECT * FROM Group_Members g2, Users u2 WHERE g2.MemberId =  u.UserId AND g2.GroupId = " + currentGroup.getGroupId() + ")";
         
         JoinHelper j = new JoinHelper();
         
         Connection con = null;
-        ResultSet rs = j.selectResultSetQuery(q, con);
-        ResultSet temp;
+        ResultSetCon tempr = j.selectResultSetQuery(q, con);
+        ResultSet rs = tempr.getRs();
+        con = tempr.getCon();
         
                 try{
             while(rs.next())
@@ -203,7 +257,9 @@ public class FactoryBean implements Serializable {
         JoinHelper j = new JoinHelper();
         
         Connection con = null;
-        ResultSet rs = j.selectResultSetQuery(q, con);
+        ResultSetCon temp = j.selectResultSetQuery(q, con);
+        ResultSet rs = temp.getRs();
+        con = temp.getCon();
         
                 try{
             while(rs.next())
@@ -245,7 +301,9 @@ public class FactoryBean implements Serializable {
         JoinHelper j = new JoinHelper();
         
         Connection con = null;
-        ResultSet rs = j.selectResultSetQuery(q, con);
+        ResultSetCon temp = j.selectResultSetQuery(q, con);
+        ResultSet rs = temp.getRs();
+        con = temp.getCon();
         
                 try{
             while(rs.next())
@@ -287,7 +345,9 @@ public class FactoryBean implements Serializable {
         JoinHelper j = new JoinHelper();
         
         Connection con = null;
-        ResultSet rs = j.selectResultSetQuery(q, con);
+        ResultSetCon temp = j.selectResultSetQuery(q, con);
+        ResultSet rs = temp.getRs();
+        con = temp.getCon();
         
                 try{
             while(rs.next())

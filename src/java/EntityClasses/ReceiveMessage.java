@@ -5,6 +5,7 @@
  */
 package EntityClasses;
 
+import HelperClasses.FactoryBean;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -65,7 +66,12 @@ public class ReceiveMessage implements Serializable {
             ResultSet rs = ps.executeQuery();
             messages = new ArrayList();
             while (rs.next()) {
-                messages.add("(" + rs.getString("MessageId") + ") FROM: " + rs.getString("SenderId"));
+                
+                FactoryBean b = new FactoryBean();
+                HelperClasses.Users sender = b.getUserFromId(rs.getString("SenderId"));
+                
+                
+                messages.add("(" + rs.getString("MessageId") + ") FROM: " + sender.getFirstName() + " " + sender.getLastName());
                 messages.add("SUBJECT: " + rs.getString("MsgSubject"));
                 messages.add("MESSAGE: " + rs.getString("ReceiverId"));
                 messages.add("------");

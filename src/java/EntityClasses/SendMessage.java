@@ -65,7 +65,7 @@ public class SendMessage {
         try {
             con = DataConnect.getConnection();
             ps = con.prepareStatement("INSERT INTO Messages(SentDate, MsgSubject, MsgContent, SenderId, ReceiverId)\n" +
-"VALUES(CURDATE(), ?, ?, ?, ?);");
+"VALUES(NOW(), ?, ?, ?, ?);");
             ps.setString(1, subject);
             ps.setString(2, message);
             ps.setString(3, userId);

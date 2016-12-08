@@ -10,6 +10,13 @@
 </h:head>
 
 <h:body>
+    <h:form><p align="right">
+      <h:commandButton value="Home" action="home" />
+    </p></h:form>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{factorybean.initGroups()}"/>
+    </f:metadata>
+    
     <h:form>
         <p style="text-align: center; font-size: 20px; margin: 0px; padding: 0px;">Search Group</p>
         <br />

@@ -10,6 +10,9 @@
         <h:outputStylesheet name="css/jsfcrud.css"/>
 </h:head>
 <h:body>
+    <h:form><p align="right">
+      <h:commandButton value="Home" action="home" />
+    </p></h:form>
     
     <f:metadata>
         <f:event type="preRenderView" listener="#{currentPost.refactorPost()}"/>
