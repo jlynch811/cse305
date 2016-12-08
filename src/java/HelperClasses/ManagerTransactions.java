@@ -43,13 +43,13 @@ public class ManagerTransactions implements Serializable {
     private String ssnNumber;
     private String startDate;
     private String hourlyRate;
-    private String empType;
+    private String empType = "rep";
     
     /**
      * Creates a new instance of ManagerTransactions
      */
     public ManagerTransactions() {
-        
+        empType = "rep";
     }
 
     public String getEmpId() {
@@ -172,9 +172,7 @@ public class ManagerTransactions implements Serializable {
         this.empType = empType;
     }
     
-    
-    
-    public String initEmpUpdate () {
+    public void initEmpUpdate () {
         System.out.println("Inside initEmpUpdate");
         
         Connection con = null;
@@ -184,7 +182,7 @@ public class ManagerTransactions implements Serializable {
             con = DataConnect.getConnection();
             ps = con.prepareStatement("SELECT * FROM Users U, Employees E WHERE U.UserId = ? AND E.UserId = ?");
             ps.setString(1, empId);
-            ps.setString(1, empId);
+            ps.setString(2, empId);
             ResultSet rs = ps.executeQuery();
             
             while(rs.next())
@@ -202,17 +200,44 @@ public class ManagerTransactions implements Serializable {
                 ssnNumber = rs.getString("SsnNo");
                 startDate = rs.getString("StartDate");
                 hourlyRate = rs.getString("HourlyRate");
-                empType = rs.getString("EmpType");
+                empType = "rep";
             }
-            return "update_emp_info";
         } catch (SQLException ex) {
             Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "";
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    "SQL Error"));
         }
     }
     
     public String updateEmployeeInfo () {
         System.out.println("Inside updateEmployeeInfo");
+                
+        if (emailId==null || psswd==null || firstName==null
+                || lastName==null || city==null || state==null
+                || zipcode==null || telephone==null || ssnNumber==null || startDate==null) {
+            System.out.println("Something not entered");
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_WARN,
+                    "All fields marked with red asterisk are mandatory",
+                    "Please enter all fields"));
+                return "register_emp";
+        }
+
+        if (telephone.equals("")) {
+            telephone = null;
+        }
+        
+        if (hourlyRate.equals("")) {
+            hourlyRate = null;
+        }
+        
+        if (address.equals("")) {
+            address = null;
+        }
         
         Connection con = null;
         PreparedStatement ps = null;
@@ -232,11 +257,18 @@ public class ManagerTransactions implements Serializable {
             ps.setString(10, empId);
             ps.executeUpdate();
             
-            ps = con.prepareStatement("UPDATE Employee SET SsnNo=?, StartDate=?, HourlyRate=?, EmpType=? WHERE UserId=?");
+            String employeeType;
+            if (empType.equals("rep")) {
+                employeeType = "Representative";
+            } else {
+                employeeType = "Manager";
+            }
+            
+            ps = con.prepareStatement("UPDATE Employees SET SsnNo=?, StartDate=?, HourlyRate=?, EmpType=? WHERE UserId=?");
             ps.setString(1, ssnNumber);
             ps.setString(2, startDate);
             ps.setString(3, hourlyRate);
-            ps.setString(4, empType);
+            ps.setString(4, employeeType);
             ps.setString(5, empId);
             ps.executeUpdate();
             
