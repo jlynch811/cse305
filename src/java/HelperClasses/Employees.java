@@ -11,11 +11,11 @@ import java.io.Serializable;
 
 /**
  *
- * @author John Lynch
+ * @author Tarun
  */
-@Named(value = "users")
+@Named(value = "employees")
 @SessionScoped
-public class Users implements Serializable {
+public class Employees implements Serializable {
 
     private String userId;
     private String emailId;
@@ -28,9 +28,16 @@ public class Users implements Serializable {
     private String zipcode;
     private String telephone;
     private String userType;
+    private String ssnNumber;
+    private String startDate;
+    private String hourlyRate;
+    private String empType;
     
+    /**
+     * Creates a new instance of Employees
+     */
     
-    public Users(String userId, String emailId, String psswd, String firstName, String lastName, String address, String city, String state, String zipcode, String telephone, String userType) {     
+    public Employees(String userId, String emailId, String psswd, String firstName, String lastName, String address, String city, String state, String zipcode, String telephone, String userType, String ssnNumber, String startDate, String hourlyRate, String empType) {
         this.userId = userId;
         this.emailId = emailId;
         this.psswd = psswd;
@@ -42,10 +49,13 @@ public class Users implements Serializable {
         this.zipcode = zipcode;
         this.telephone = telephone;
         this.userType = userType;
+        this.ssnNumber = ssnNumber;
+        this.startDate = startDate;
+        this.hourlyRate = hourlyRate;
+        this.empType = empType;
     }
     
-    
-    public Users() {
+    public Employees () {
     }
 
     public String getUserId() {
@@ -135,4 +145,38 @@ public class Users implements Serializable {
     public void setUserType(String userType) {
         this.userType = userType;
     }
+
+    public String getSsnNumber() {
+        return ssnNumber;
+    }
+
+    public void setSsnNumber(String ssnNumber) {
+        this.ssnNumber = ssnNumber;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getHourlyRate() {
+        return hourlyRate;
+    }
+
+    public void setHourlyRate(String hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
+    public String getEmpType() {
+        return empType;
+    }
+
+    public void setEmpType(String empType) {
+        this.empType = empType;
+    }
+    
+    
 }

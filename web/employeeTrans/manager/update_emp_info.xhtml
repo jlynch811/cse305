@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>Update Employee Info</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h:form>
+            <p style="font-size: 30px; margin: 0px; padding: 0px;">Update Employee Details</p>
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Email ID <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="usermailid" value="#{managerTransactions.emailId}"/>
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Password <font color="red">*</font> :</p>
+            <br />
+            <h:inputSecret id="userpassword" value="#{managerTransactions.psswd}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">First Name <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="userfirstname" value="#{managerTransactions.firstName}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Last Name <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="userlastname" value="#{managerTransactions.lastName}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Address :</p>
+            <br />
+            <h:inputText id="useraddress" value="#{managerTransactions.address}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">City <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="usercity" value="#{managerTransactions.city}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">State <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="userstate" value="#{managerTransactions.state}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Zip code <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="userzipcode" value="#{managerTransactions.zipcode}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Telephone :</p>
+            <br />
+            <h:inputText id="usertelephone" value="#{managerTransactions.telephone}" />
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">SSN Number <font color="red">*</font> :</p>
+            <br />
+            <h:inputText id="ssnnumber" value="#{managerTransactions.ssnNumber}"/>
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Hourly Rate :</p>
+            <br />
+            <h:inputText id="hourlyrate" value="#{managerTransactions.hourlyRate}"/>
+            <br />
+            <br />
+            <p style="padding: 0px; margin: 0px">Employee Type :</p>
+            <br />
+            <h:selectOneRadio id="emptype" value="#{managerTransactions.empType}">
+                <f:selectItem itemValue="rep" itemLabel="Register as Representative" />
+                <f:selectItem itemValue="man" itemLabel="Register as Manager" />
+            </h:selectOneRadio>
+            <br />
+            <h:commandButton value="OK" action="#{managerTransactions.updateEmployeeInfo()}" />
+            <tr />
+            <h:commandButton id="Cancel" value="Cancel" action="index"/>
+        </h:form>
+    </body>
+</html>
