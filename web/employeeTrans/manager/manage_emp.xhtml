@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>Manage Employees</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <f:event type="preRenderView" listener="#{factorybean.initRepresentatives()}"/>
+    </head>
+    <body>
+        <h:form>
+            <h:selectOneMenu value="#{managerTransactions.empId}">
+                    <f:selectItems value="#{representativeList}" var="f" itemLabel="#{f.emailId}" itemValue="#{f.userId}" />
+            </h:selectOneMenu>
+            <tr />
+            <h:commandButton value="Update Employee Info" action="update_emp_info" /><br/>
+        </h:form>
+    </body>
+</html>

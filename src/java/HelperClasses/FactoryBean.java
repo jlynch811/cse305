@@ -11,9 +11,12 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -315,6 +318,48 @@ public class FactoryBean implements Serializable {
             System.out.println("Init UsersList error -->" + ex.getMessage());
         } finally {
             DataConnect.close(con);
+        }
+    }
+    
+    public void initRepresentatives() {
+        ArrayList<Employees> representativeList = new ArrayList();
+        HttpSession session = SessionUtils.getSession();
+
+        System.out.println("Inside initRepresentatives");
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            ps = con.prepareStatement("SELECT * FROM Users U, Employees E WHERE U.UserId = E.UserId AND E.EmpType = \"Representative\"");
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                String userId = rs.getString("UserId");
+                String emailId = rs.getString("EmailId");
+                String psswd = rs.getString("Psswd");
+                String firstName = rs.getString("FirstName");
+                String lastName = rs.getString("LastName");
+                String address = rs.getString("Address");
+                String city = rs.getString("City");
+                String state = rs.getString("State");
+                String zipcode = rs.getString("Zipcode");
+                String telephone = rs.getString("Telephone");
+                String userType = rs.getString("UserType");
+                String ssnNumber = rs.getString("SsnNo");
+                String startDate = rs.getString("StartDate");
+                String hourlyRate = rs.getString("HourlyRate");
+                String empType = rs.getString("EmpType");
+                
+                Employees emp = new Employees(userId, emailId, psswd, firstName, lastName, address, city, state, zipcode, telephone, userType, ssnNumber, startDate, hourlyRate, empType);
+                representativeList.add(emp);
+            }
+            session.setAttribute("representativeList", representativeList);
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
