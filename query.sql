@@ -137,7 +137,7 @@ CREATE TABLE Comments (
 CREATE TABLE Advertisements (
     AdvId INTEGER AUTO_INCREMENT,
     EmployeeId INTEGER NOT NULL,
-    AdvType ENUM('Cars', 'Clothing', 'Computer') NOT NULL,
+    AdvType VARCHAR(50) NOT NULL,
     AdvDate DATE NOT NULL,
     Company VARCHAR(60) NOT NULL,
     ItemName VARCHAR(60),
@@ -633,6 +633,71 @@ INSERT INTO Groups(GroupName, GroupType, OwnerId)
 VALUES ("Roma", "Club", 3);
 
 
+INSERT INTO Advertisements (EmployeeId,	AdvType, AdvDate, Company, ItemName, Price,	Content, UnitsAvailable)
+VALUES (40, "Mobile", "2015-10-20", "Samsung", "S6", 50000, "Galaxy S6", 15);
+
+INSERT INTO Advertisements (EmployeeId,	AdvType, AdvDate, Company, ItemName, Price,	Content, UnitsAvailable)
+VALUES (40, "Tablet", "2015-10-20", "HTC", "G1", 25000, "Nova", 17);
+
+INSERT INTO Advertisements (EmployeeId,	AdvType, AdvDate, Company, ItemName, Price,	Content, UnitsAvailable)
+VALUES (42, "Mobile", "2015-11-20", "Nokia", "A6", 5000, "Connect", 28);
+
+INSERT INTO Advertisements (EmployeeId,	AdvType, AdvDate, Company, ItemName, Price,	Content, UnitsAvailable)
+VALUES (42, "Tablet", "2015-11-20", "Apple", "Air", 55000, "Apple pro", 9);
+
+INSERT INTO Advertisements (EmployeeId,	AdvType, AdvDate, Company, ItemName, Price,	Content, UnitsAvailable)
+VALUES (47, "Tablet", "2015-10-15", "Samsung", "J5", 18000, "Galaxy Series", 32);
+
+INSERT INTO Advertisements (EmployeeId,	AdvType, AdvDate, Company, ItemName, Price,	Content, UnitsAvailable)
+VALUES (47, "Mobile", "2015-10-15", "Sansui", "A9", 12500, "Sansui mega", 25);
+
+INSERT INTO Accounts VALUES (1, 7);
+
+INSERT INTO Accounts VALUES (2, 8);
+
+INSERT INTO Accounts VALUES (3, 12);
+
+INSERT INTO Accounts VALUES (4, 7);
+
+INSERT INTO Accounts VALUES (5, 8);
+
+INSERT INTO Accounts VALUES (6, 12);
+
+
+
+INSERT INTO Sales(AdvId, AccountNo, TransactionDate, NoOfUnits)
+VALUES (1, 2, "2016-08-12", 8);
+
+INSERT INTO Sales(AdvId, AccountNo, TransactionDate, NoOfUnits)
+VALUES (2, 2, "2016-09-25", 10);
+
+INSERT INTO Sales(AdvId, AccountNo, TransactionDate, NoOfUnits)
+VALUES (3, 3, "2016-08-18", 12);
+
+INSERT INTO Sales(AdvId, AccountNo, TransactionDate, NoOfUnits)
+VALUES (4, 4, "2016-08-18", 6);
+
+INSERT INTO Sales(AdvId, AccountNo, TransactionDate, NoOfUnits)
+VALUES (5, 5, "2016-08-18", 3);
+
+INSERT INTO Sales(AdvId, AccountNo, TransactionDate, NoOfUnits)
+VALUES (6, 6, "2016-08-18", 7);
+
+INSERT INTO Sales(AdvId, AccountNo, TransactionDate, NoOfUnits)
+VALUES (3, 4, "2016-08-18", 12);
+
+INSERT INTO Sales(AdvId, AccountNo, TransactionDate, NoOfUnits)
+VALUES (5, 1, "2016-08-18", 26);
+
+INSERT INTO Sales(AdvId, AccountNo, TransactionDate, NoOfUnits)
+VALUES (1, 1, "2016-08-18", 5);
+
+INSERT INTO Sales(AdvId, AccountNo, TransactionDate, NoOfUnits)
+VALUES (1, 4, "2016-08-18", 4);
+
+INSERT INTO Sales(AdvId, AccountNo, TransactionDate, NoOfUnits)
+VALUES (1, 6, "2016-08-18", 4);
+
 
 # Professor's DB
 INSERT INTO Users
@@ -822,16 +887,3 @@ VALUES ("My Family", "Friends", 100005);
 
 INSERT INTO Groups(GroupName, GroupType, OwnerId)
 VALUES ("Microsoft Groupies", "Friends", 100006);
-
-SELECT 
-    *
-FROM
-    Fmplususers;
-SELECT 
-    *
-FROM
-    Employees;
-SELECT 
-    *
-FROM
-    Users;

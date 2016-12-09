@@ -51,6 +51,8 @@ public class ManagerTransactions implements Serializable {
 
     private ArrayList<Sales> salesArr = new ArrayList<>();
     private ArrayList<Revenue> revenueArr = new ArrayList<>();
+    private ArrayList<Users> customersArr = new ArrayList<>();
+    private ArrayList<Item> itemsArr = new ArrayList<>();
     
     private String txMode;
     private String txItemName;
@@ -60,6 +62,10 @@ public class ManagerTransactions implements Serializable {
     private String revItemName;
     private String revUserName;
     private String revItemType;
+    
+    private String custItem;
+    
+    private String companyName;
     
     /**
      * Creates a new instance of ManagerTransactions
@@ -276,6 +282,38 @@ public class ManagerTransactions implements Serializable {
 
     public void setRevItemType(String revItemType) {
         this.revItemType = revItemType;
+    }
+
+    public String getCustItem() {
+        return custItem;
+    }
+
+    public void setCustItem(String custItem) {
+        this.custItem = custItem;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public ArrayList<Users> getCustomersArr() {
+        return customersArr;
+    }
+
+    public void setCustomersArr(ArrayList<Users> customersArr) {
+        this.customersArr = customersArr;
+    }
+
+    public ArrayList<Item> getItemsArr() {
+        return itemsArr;
+    }
+
+    public void setItemsArr(ArrayList<Item> itemsArr) {
+        this.itemsArr = itemsArr;
     }
     
     public void initEmpUpdate () {
@@ -603,6 +641,113 @@ public class ManagerTransactions implements Serializable {
                 
                 Revenue revenue = new Revenue(custId, custMail, profit);
                 revenueArr.add(revenue);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    "SQL Error"));
+        }
+    }
+    
+    public void viewActiveItemList () {
+        System.out.println("Inside viewActiveItemList");
+        
+        revenueArr.clear();
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            ResultSet rs;
+
+            ps = con.prepareStatement("Select ItemName,  AdvType, Company, Sum(NoOfUnits) as TotalUnitsSold from Sales S, Advertisements A where A.AdvId = S.AdvId group by ItemName order by TotalUnitsSold desc");
+            rs = ps.executeQuery();
+
+            while(rs.next())
+            {
+                String itemName = rs.getString("ItemName");
+                String advType = rs.getString("AdvType");
+                String company = rs.getString("Company");
+                String unitsSold = rs.getString("TotalUnitsSold");
+
+                System.out.println("Profit : " + unitsSold);
+                
+                Revenue revenue = new Revenue(itemName, advType, company, unitsSold);
+                revenueArr.add(revenue);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    "SQL Error"));
+        }
+    }
+    
+    public void filterUsersForItem () {
+        System.out.println("Inside filterUsersForItem");
+        
+        customersArr = new ArrayList<>();
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        try {
+            con = DataConnect.getConnection();
+            ResultSet rs;
+            ps = con.prepareStatement("Select distinct EmailId from Advertisements AD, Sales S, Accounts AC, Users U where AD.ItemName = ? and AD.AdvId = S.AdvId and S.AccountNo = AC.AccountNo and AC.UserId = U.UserId");
+            ps.setString(1, custItem);
+            rs = ps.executeQuery();
+
+            while(rs.next())
+            {
+                String emailId = rs.getString("EmailId");
+                System.out.println("Email Id : " + emailId);
+                Users users = new Users(emailId);
+                customersArr.add(users);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    "SQL Error"));
+        }
+    }
+    
+    public void filterItemsOfCompany () {
+        System.out.println("Inside filterItemsOfCompany");
+        
+        itemsArr = new ArrayList<>();
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        try {
+            con = DataConnect.getConnection();
+            ResultSet rs;
+            ps = con.prepareStatement("Select ItemName, AdvType, Price, UnitsAvailable from Advertisements where Company = ?");
+            ps.setString(1, companyName);
+            rs = ps.executeQuery();
+
+            while(rs.next())
+            {
+                String itemName = rs.getString("ItemName");
+                String itemType = rs.getString("AdvType");
+                String price = rs.getString("Price");
+                String units = rs.getString("UnitsAvailable");                
+                System.out.println("Email Id : " + itemName);
+                Item item = new Item(itemName, itemType, price, units);
+                itemsArr.add(item);
             }
             
         } catch (SQLException ex) {

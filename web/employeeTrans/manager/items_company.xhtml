@@ -5,12 +5,51 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Items of Company</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+    </h:head>
+    <h:body>
+        <p style="font-size: 25px; margin: 0px; padding: 0px;">Items of a Company</p>
+        <h:form><p align="right">
+            <h:commandButton value="Home" action="/home_manager" />
+        </p></h:form>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{factorybean.initAllCompanyNames()}"/>
+        </f:metadata>
+        <h:outputText value="" style="font-weight:bold"/>
+        <h:form>
+            <p>Select Company Name :</p>
+            <h:selectOneMenu value="#{managerTransactions.companyName}">
+                <f:selectItems value="#{companyList}" var="itemvar" itemLabel="#{itemvar.company}" itemValue="#{itemvar.company}" />
+            </h:selectOneMenu>
+            <br /><br /><br />
+            <h:commandButton value="View all Products" action="#{managerTransactions.filterItemsOfCompany()}" /><br/>
+            <br /><br />
+        </h:form>
+        
+        <h:dataTable class="myDataTable" value="#{managerTransactions.itemsArr}" var="itemvar">
+                <h:column>    				
+                        <f:facet name="header">Product Name</f:facet>    				
+                                #{itemvar.itemName}
+                </h:column>
+                <h:column>    				
+                        <f:facet name="header">Item Type</f:facet>    				
+                                #{itemvar.itemType}
+                </h:column>
+                <h:column>    				
+                        <f:facet name="header">Price</f:facet>    				
+                                #{itemvar.price}
+                </h:column>
+                <h:column>    				
+                        <f:facet name="header">Units Available</f:facet>    				
+                                #{itemvar.unitsAvailable}
+                </h:column>
+         </h:dataTable>
+        
+    </h:body>
 </html>

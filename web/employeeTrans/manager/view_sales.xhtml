@@ -16,6 +16,12 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <h:form>
+        <p style="font-size: 25px; margin: 0px; padding: 0px;">View Sales</p>
+        <p align="right">
+            <h:commandButton value="Home" action="/home_manager" />
+        </p></h:form>
+        <h:form>
+            <p>Select Year :</p>
             <h:selectOneMenu value="#{managerTransactions.month}">
                     <f:selectItem itemValue="01" itemLabel="January" />
                     <f:selectItem itemValue="02" itemLabel="February" />
@@ -30,7 +36,8 @@ and open the template in the editor.
                     <f:selectItem itemValue="11" itemLabel="Novermber" />
                     <f:selectItem itemValue="12" itemLabel="December" />
             </h:selectOneMenu>
-            <tr /><tr /><tr />
+            <br />
+            <p>Select Month :</p>
             <h:selectOneMenu value="#{managerTransactions.year}">
                     <f:selectItem itemValue="2000" itemLabel="2000" />
                     <f:selectItem itemValue="2001" itemLabel="2001" />
@@ -50,7 +57,7 @@ and open the template in the editor.
                     <f:selectItem itemValue="2015" itemLabel="2015" />
                     <f:selectItem itemValue="2016" itemLabel="2016" />
             </h:selectOneMenu>
-            <tr /><tr /><tr />
+            <br /><br /><br />
             <h:commandButton value="View Sales" action="#{managerTransactions.populateSalesList()}" /><br/>
             <br /><br /><br />
         </h:form>

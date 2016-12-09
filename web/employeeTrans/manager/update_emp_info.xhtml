@@ -10,17 +10,18 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Update Employee Info</title>
+        <p style="font-size: 25px; margin: 0px; padding: 0px;">Update Employee Details</p>
         <h:outputStylesheet name="css/jsfcrud.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <body>
+        <h:form><p align="right">
+            <h:commandButton value="Home" action="/home_manager" />
+        </p></h:form>
         <f:metadata>
             <f:event type="preRenderView" listener="#{managerTransactions.initEmpUpdate()}"/>
         </f:metadata>
         <h:form>
-            <p style="font-size: 30px; margin: 0px; padding: 0px;">Update Employee Details</p>
-            <br />
-            <br />
             <p style="padding: 0px; margin: 0px">Email ID <font color="red">*</font> :</p>
             <br />
             <h:inputText id="usermailid" value="#{managerTransactions.emailId}"/>

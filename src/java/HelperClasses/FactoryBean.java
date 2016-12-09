@@ -515,4 +515,32 @@ public class FactoryBean implements Serializable {
             Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void initAllCompanyNames()
+    {
+        ArrayList<Item> companyList = new ArrayList();
+        HttpSession session = SessionUtils.getSession();
+        
+        System.out.println("Inside initAllCompanyNames");
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            ps = con.prepareStatement("Select distinct Company from Advertisements");
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                String company = rs.getString("Company");
+                System.out.println("Company Name : " + company);
+                Item item = new Item(company);
+                companyList.add(item);
+            }
+            session.setAttribute("companyList", companyList);
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

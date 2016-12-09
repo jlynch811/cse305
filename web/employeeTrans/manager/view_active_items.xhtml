@@ -9,29 +9,29 @@ and open the template in the editor.
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>View Best Revenue</title>
+        <title>Active Items</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
         <h:form>
-        <p style="font-size: 25px; margin: 0px; padding: 0px;">View Best Revenue</p>
+        <p style="font-size: 25px; margin: 0px; padding: 0px;">Active Items</p>
         <p align="right">
             <h:commandButton value="Home" action="/home_manager" />
         </p></h:form>
         <f:metadata>
-            <f:event type="preRenderView" listener="#{managerTransactions.bestEmpRevenueList()}"/>
+            <f:event type="preRenderView" listener="#{managerTransactions.viewActiveItemList()}"/>
         </f:metadata>
         <h:outputText value="" style="font-weight:bold"/>
         <h:form>
             <h:dataTable class="myDataTable" value="#{managerTransactions.revenueArr}" var="revenuevar">
                     <h:column>    				
-                            <f:facet name="header">Employee Mail</f:facet>    				
-                                    #{revenuevar.empMail}
+                            <f:facet name="header">Item Name</f:facet>    				
+                                    #{revenuevar.itemName}
                     </h:column>
                     <h:column>    				
-                            <f:facet name="header">Total Revenue</f:facet>    				
-                                    #{revenuevar.profit}
+                            <f:facet name="header">Total Units Sold</f:facet>    				
+                                    #{revenuevar.unitsSold}
                     </h:column>
              </h:dataTable>
         </h:form>

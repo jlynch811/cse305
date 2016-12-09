@@ -14,6 +14,11 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
+        <h:form>
+        <p style="font-size: 25px; margin: 0px; padding: 0px;">List of All Items</p>
+        <p align="right">
+            <h:commandButton value="Home" action="/home_manager" />
+        </p></h:form>
         <f:metadata>
             <f:event type="preRenderView" listener="#{factorybean.initDistinctItems()}"/>
         </f:metadata>

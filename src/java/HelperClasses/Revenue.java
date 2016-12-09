@@ -80,6 +80,24 @@ public class Revenue implements Serializable {
         this.unitsSold = null;
         this.profit = profit;
     }
+    
+    public Revenue(String itemName, String advType, String company, String unitsSold) {
+        this.advId = null;
+        this.empId = null;
+        this.empMail = null;
+        this.advType = advType;
+        this.advDate = null;
+        this.company = company;
+        this.itemName = itemName;
+        this.price = null;
+        this.custId = null;
+        this.custMail = null;
+        this.accountNo = null;
+        this.txId = null;
+        this.txDate = null;
+        this.unitsSold = unitsSold;
+        this.profit = null;
+    }
 
     public String getAdvId() {
         return advId;
