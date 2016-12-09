@@ -542,4 +542,77 @@ public class ManagerTransactions implements Serializable {
             return "";
         }
     }
+    
+    public void bestEmpRevenueList () {
+        System.out.println("Inside bestEmpRevenueList");
+        
+        revenueArr.clear();
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            ResultSet rs;
+
+            ps = con.prepareStatement("Select EmployeeId, EmailId, (Price*NoOfUnits) AS TotalRevenue from Advertisements AD, Accounts AC, Sales S, Users U where AD.AdvId = S.AdvId and AC.AccountNo = S.AccountNo and AD.EmployeeId = U.UserId group by EmployeeId order by TotalRevenue Desc");
+            rs = ps.executeQuery();
+
+            while(rs.next())
+            {
+                String empMail = rs.getString("EmailId");
+                String profit = rs.getString("TotalRevenue");
+                System.out.println("Profit : " + profit);
+                
+                Revenue revenue = new Revenue(empMail, profit);
+                revenueArr.add(revenue);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    "SQL Error"));
+        }
+    }
+    
+    public void bestCustRevenueList () {
+        System.out.println("Inside bestCustRevenueList");
+        
+        revenueArr.clear();
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            ResultSet rs;
+
+            ps = con.prepareStatement("Select AC.UserId, EmailId, (Price*NoOfUnits) AS TotalRevenue from Advertisements AD, Accounts AC, Sales S, Users U where AD.AdvId = S.AdvId and AC.AccountNo = S.AccountNo and AC.UserId = U.UserId group by UserId order by TotalRevenue Desc;");
+            rs = ps.executeQuery();
+
+            while(rs.next())
+            {
+                String custId = rs.getString("UserId");
+                String custMail = rs.getString("EmailId");
+                String profit = rs.getString("TotalRevenue");
+
+                System.out.println("Profit : " + profit);
+                
+                Revenue revenue = new Revenue(custId, custMail, profit);
+                revenueArr.add(revenue);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    "SQL Error"));
+        }
+    }
+    
 }

@@ -17,7 +17,7 @@ import java.io.Serializable;
 @SessionScoped
 public class Revenue implements Serializable {
     
-    String advId, empId, advType, advDate, company, itemName, price, custId, accountNo, txId, txDate, unitsSold, profit;
+    String advId, empId, empMail, advType, advDate, company, itemName, price, custId, custMail, accountNo, txId, txDate, unitsSold, profit;
 
     /**
      * Creates a new instance of Revenue
@@ -30,16 +30,54 @@ public class Revenue implements Serializable {
     public Revenue(String advId, String empId, String advType, String advDate, String company, String itemName, String price, String custId, String accountNo, String txId, String txDate, String unitsSold, String profit) {
         this.advId = advId;
         this.empId = empId;
+        this.empMail = null;
         this.advType = advType;
         this.advDate = advDate;
         this.company = company;
         this.itemName = itemName;
         this.price = price;
         this.custId = custId;
+        this.custMail = null;
         this.accountNo = accountNo;
         this.txId = txId;
         this.txDate = txDate;
         this.unitsSold = unitsSold;
+        this.profit = profit;
+    }
+    
+    public Revenue(String empMail, String profit) {
+        this.advId = null;
+        this.empId = null;
+        this.empMail = empMail;
+        this.advType = null;
+        this.advDate = null;
+        this.company = null;
+        this.itemName = null;
+        this.price = null;
+        this.custId = null;
+        this.custMail = null;
+        this.accountNo = null;
+        this.txId = null;
+        this.txDate = null;
+        this.unitsSold = null;
+        this.profit = profit;
+    }
+    
+    public Revenue(String custId, String custMail, String profit) {
+        this.advId = null;
+        this.empId = null;
+        this.empMail = null;
+        this.advType = null;
+        this.advDate = null;
+        this.company = null;
+        this.itemName = null;
+        this.price = null;
+        this.custId = custId;
+        this.custMail = custMail;
+        this.accountNo = null;
+        this.txId = null;
+        this.txDate = null;
+        this.unitsSold = null;
         this.profit = profit;
     }
 
@@ -57,6 +95,14 @@ public class Revenue implements Serializable {
 
     public void setEmpId(String empId) {
         this.empId = empId;
+    }
+
+    public String getEmpMail() {
+        return empMail;
+    }
+
+    public void setEmpMail(String empMail) {
+        this.empMail = empMail;
     }
 
     public String getAdvType() {
@@ -105,6 +151,14 @@ public class Revenue implements Serializable {
 
     public void setCustId(String custId) {
         this.custId = custId;
+    }
+
+    public String getCustMail() {
+        return custMail;
+    }
+
+    public void setCustMail(String custMail) {
+        this.custMail = custMail;
     }
 
     public String getAccountNo() {
