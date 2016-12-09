@@ -5,170 +5,201 @@
 DROP TABLE IF EXISTS PostLikes, CommentLikes, Sales, Accounts, Preferences, Advertisements, Comments, Posts, Group_Members, Messages, Friends, FMPlusUsers, Employees, Pages, Groups, Users;
 
 CREATE TABLE Users (
-	UserId INTEGER AUTO_INCREMENT,
-	EmailId VARCHAR(60) NOT NULL UNIQUE,
-	Psswd VARCHAR(60) NOT NULL,
-	FirstName VARCHAR(30) NOT NULL,
-	LastName VARCHAR(30) NOT NULL,
-        Address VARCHAR(150),
-	City VARCHAR(30) NOT NULL,
-	State VARCHAR(30) NOT NULL,
-	Zipcode INTEGER NOT NULL,
-	Telephone BIGINT,
-	UserType ENUM('Employee', 'FMUser') NOT NULL,
-	PRIMARY KEY (UserId)
+    UserId INTEGER AUTO_INCREMENT,
+    EmailId VARCHAR(60) NOT NULL UNIQUE,
+    Psswd VARCHAR(60) NOT NULL,
+    FirstName VARCHAR(30) NOT NULL,
+    LastName VARCHAR(30) NOT NULL,
+    Address VARCHAR(150),
+    City VARCHAR(30) NOT NULL,
+    State VARCHAR(30) NOT NULL,
+    Zipcode INTEGER NOT NULL,
+    Telephone BIGINT,
+    UserType ENUM('Employee', 'FMUser') NOT NULL,
+    PRIMARY KEY (UserId)
 );
 
 CREATE TABLE Employees (
-	UserId INTEGER,
-	SsnNo INTEGER NOT NULL,
-	StartDate DATE NOT NULL,
-	HourlyRate INTEGER,
-	EmpType ENUM('Manager', 'Representative') NOT NULL,
-	PRIMARY KEY(UserId),
-	FOREIGN KEY (UserId) REFERENCES Users(UserId)
+    UserId INTEGER,
+    SsnNo INTEGER NOT NULL,
+    StartDate DATE NOT NULL,
+    HourlyRate INTEGER,
+    EmpType ENUM('Manager', 'Representative') NOT NULL,
+    PRIMARY KEY (UserId),
+    FOREIGN KEY (UserId)
+        REFERENCES Users (UserId)
 );
 
 
 CREATE TABLE FMPlusUsers (
-	UserId INTEGER,
-	CreationDate DATE NOT NULL,
-	CreditCardNumber BIGINT,
-	Rating INTEGER DEFAULT 0,
-	PRIMARY KEY (UserId),
-	FOREIGN KEY (UserId) REFERENCES Users(UserId)
+    UserId INTEGER,
+    CreationDate DATE NOT NULL,
+    CreditCardNumber BIGINT,
+    Rating INTEGER DEFAULT 0,
+    PRIMARY KEY (UserId),
+    FOREIGN KEY (UserId)
+        REFERENCES Users (UserId)
 );
 
 CREATE TABLE Friends (
-	Friend1_Id INTEGER NOT NULL,
+    Friend1_Id INTEGER NOT NULL,
     Friend2_Id INTEGER NOT NULL,
     RequestStatus ENUM('Friends', 'Pending') NOT NULL,
-    PRIMARY KEY (Friend1_Id, Friend2_Id),
-    FOREIGN KEY (Friend1_Id) REFERENCES Users(UserId),
-    FOREIGN KEY (Friend2_Id) REFERENCES Users(UserId)
+    PRIMARY KEY (Friend1_Id , Friend2_Id),
+    FOREIGN KEY (Friend1_Id)
+        REFERENCES Users (UserId),
+    FOREIGN KEY (Friend2_Id)
+        REFERENCES Users (UserId)
 );
 
 CREATE TABLE Messages (
-	MessageId INTEGER AUTO_INCREMENT,
-	SentDate DATETIME NOT NULL,
-	MsgSubject VARCHAR(50),
-	MsgContent VARCHAR(250),
-	SenderId INTEGER,
-	ReceiverId INTEGER,
-	CHECK (SenderId != ReceiverId),
-	PRIMARY KEY (MessageId),
-	FOREIGN KEY (SenderId) REFERENCES Users(UserId),
-	FOREIGN KEY (ReceiverId) REFERENCES Users(UserId)
+    MessageId INTEGER AUTO_INCREMENT,
+    SentDate DATETIME NOT NULL,
+    MsgSubject VARCHAR(50),
+    MsgContent VARCHAR(250),
+    SenderId INTEGER,
+    ReceiverId INTEGER,
+    CHECK (SenderId != ReceiverId),
+    PRIMARY KEY (MessageId),
+    FOREIGN KEY (SenderId)
+        REFERENCES Users (UserId),
+    FOREIGN KEY (ReceiverId)
+        REFERENCES Users (UserId)
 );
 
 CREATE TABLE Groups (
-	GroupId INTEGER AUTO_INCREMENT,
-	GroupName VARCHAR(60) NOT NULL,
-	GroupType VARCHAR(50) NOT NULL,
-	OwnerId INTEGER,
-	PRIMARY KEY (GroupId),
-	FOREIGN KEY (OwnerId) REFERENCES Users(UserId)
+    GroupId INTEGER AUTO_INCREMENT,
+    GroupName VARCHAR(60) NOT NULL,
+    GroupType VARCHAR(50) NOT NULL,
+    OwnerId INTEGER,
+    PRIMARY KEY (GroupId),
+    FOREIGN KEY (OwnerId)
+        REFERENCES Users (UserId)
 );
 
-CREATE TABLE Group_Members(
-	MemberId INTEGER NOT NULL,
-	GroupId INTEGER,
-	MemberType ENUM('Member', 'Owner') NOT NULL,
-	PRIMARY KEY (MemberId, GroupId),
-	FOREIGN KEY (MemberId) REFERENCES Users(UserId),
-	FOREIGN KEY (GroupId) REFERENCES Groups(GroupId) ON DELETE CASCADE
+CREATE TABLE Group_Members (
+    MemberId INTEGER NOT NULL,
+    GroupId INTEGER,
+    MemberType ENUM('Member', 'Owner') NOT NULL,
+    PRIMARY KEY (MemberId , GroupId),
+    FOREIGN KEY (MemberId)
+        REFERENCES Users (UserId),
+    FOREIGN KEY (GroupId)
+        REFERENCES Groups (GroupId)
+        ON DELETE CASCADE
 );
 
-CREATE TABLE Pages(
-	PageId INTEGER AUTO_INCREMENT,
-	PageType ENUM('Personal', 'Group'),
-	OwnerId INTEGER UNIQUE,
-	GroupId INTEGER UNIQUE,
-	PostCount INTEGER,
-	PRIMARY KEY (PageId),
-	FOREIGN KEY (OwnerId) REFERENCES Users(UserId),
-	FOREIGN KEY (GroupId) REFERENCES Groups(GroupId) ON DELETE CASCADE
+CREATE TABLE Pages (
+    PageId INTEGER AUTO_INCREMENT,
+    PageType ENUM('Personal', 'Group'),
+    OwnerId INTEGER UNIQUE,
+    GroupId INTEGER UNIQUE,
+    PostCount INTEGER,
+    PRIMARY KEY (PageId),
+    FOREIGN KEY (OwnerId)
+        REFERENCES Users (UserId),
+    FOREIGN KEY (GroupId)
+        REFERENCES Groups (GroupId)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE Posts (
-	PostId INTEGER AUTO_INCREMENT,
-	AuthorId INTEGER NOT NULL,
-	PageId INTEGER NOT NULL,
-	PostDate DATETIME NOT NULL,
-	PostContent VARCHAR(250) NOT NULL,
-	CmntCount INTEGER DEFAULT 0,
-	LikeCount INTEGER DEFAULT 0,
-	PRIMARY KEY (PostId),
-	FOREIGN KEY (AuthorId) REFERENCES Users(UserId),
-	FOREIGN KEY (PageId) REFERENCES Pages(PageId) ON DELETE CASCADE
-); 
+    PostId INTEGER AUTO_INCREMENT,
+    AuthorId INTEGER NOT NULL,
+    PageId INTEGER NOT NULL,
+    PostDate DATETIME NOT NULL,
+    PostContent VARCHAR(250) NOT NULL,
+    CmntCount INTEGER DEFAULT 0,
+    LikeCount INTEGER DEFAULT 0,
+    PRIMARY KEY (PostId),
+    FOREIGN KEY (AuthorId)
+        REFERENCES Users (UserId),
+    FOREIGN KEY (PageId)
+        REFERENCES Pages (PageId)
+        ON DELETE CASCADE
+);
     
 CREATE TABLE Comments (
-	CommentId INTEGER AUTO_INCREMENT,
-	AuthorId INTEGER NOT NULL,
-	PostId INTEGER NOT NULL,
-	CmntDate DATETIME NOT NULL,
-	CmntContent VARCHAR(250) NOT NULL,
-	LikeCount INTEGER DEFAULT 0,
-	PRIMARY KEY (CommentId),
-	FOREIGN KEY (AuthorId) REFERENCES Users(UserId),
-	FOREIGN KEY (PostId) REFERENCES Posts(PostId) ON DELETE CASCADE
+    CommentId INTEGER AUTO_INCREMENT,
+    AuthorId INTEGER NOT NULL,
+    PostId INTEGER NOT NULL,
+    CmntDate DATETIME NOT NULL,
+    CmntContent VARCHAR(250) NOT NULL,
+    LikeCount INTEGER DEFAULT 0,
+    PRIMARY KEY (CommentId),
+    FOREIGN KEY (AuthorId)
+        REFERENCES Users (UserId),
+    FOREIGN KEY (PostId)
+        REFERENCES Posts (PostId)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE Advertisements (
-	AdvId INTEGER AUTO_INCREMENT,
-	EmployeeId INTEGER NOT NULL,
-	AdvType ENUM('Cars', 'Clothing', 'Computer') NOT NULL,
-	AdvDate DATE NOT NULL,
-	Company VARCHAR(60) NOT NULL,
-	ItemName VARCHAR(60),
-	Price INTEGER,
-	Content VARCHAR (250),
-	UnitsAvailable INTEGER,
-	PRIMARY KEY (AdvId),
-	FOREIGN KEY (EmployeeId) REFERENCES Users(UserId)
+    AdvId INTEGER AUTO_INCREMENT,
+    EmployeeId INTEGER NOT NULL,
+    AdvType ENUM('Cars', 'Clothing', 'Computer') NOT NULL,
+    AdvDate DATE NOT NULL,
+    Company VARCHAR(60) NOT NULL,
+    ItemName VARCHAR(60),
+    Price INTEGER,
+    Content VARCHAR(250),
+    UnitsAvailable INTEGER,
+    PRIMARY KEY (AdvId),
+    FOREIGN KEY (EmployeeId)
+        REFERENCES Users (UserId)
 );
 
 CREATE TABLE Preferences (
-	UserId INTEGER NOT NULL,
-	PrefCategory VARCHAR(50) NOT NULL,
-	PRIMARY KEY (UserId, PrefCategory),
-	FOREIGN KEY (UserId) REFERENCES Users(UserId));
+    UserId INTEGER NOT NULL,
+    PrefCategory VARCHAR(50) NOT NULL,
+    PRIMARY KEY (UserId , PrefCategory),
+    FOREIGN KEY (UserId)
+        REFERENCES Users (UserId)
+);
     
 CREATE TABLE Accounts (
-	AccountNo INTEGER,
-	UserId INTEGER NOT NULL,
-	PRIMARY KEY (AccountNo),
-	FOREIGN KEY (UserId) REFERENCES Users(UserId)
+    AccountNo INTEGER,
+    UserId INTEGER NOT NULL,
+    PRIMARY KEY (AccountNo),
+    FOREIGN KEY (UserId)
+        REFERENCES Users (UserId)
 );
 
 CREATE TABLE Sales (
-	TransactionId INTEGER AUTO_INCREMENT,
-	AdvId INTEGER NOT NULL,
-	AccountNo INTEGER NOT NULL,
-	TransactionDate DATE NOT NULL,
-	NoOfUnits INTEGER NOT NULL,
-	PRIMARY KEY (TransactionId),
-	FOREIGN KEY (AdvId) REFERENCES Advertisements(AdvId),
-	FOREIGN KEY (AccountNo) REFERENCES Accounts(AccountNo)
+    TransactionId INTEGER AUTO_INCREMENT,
+    AdvId INTEGER NOT NULL,
+    AccountNo INTEGER NOT NULL,
+    TransactionDate DATE NOT NULL,
+    NoOfUnits INTEGER NOT NULL,
+    PRIMARY KEY (TransactionId),
+    FOREIGN KEY (AdvId)
+        REFERENCES Advertisements (AdvId),
+    FOREIGN KEY (AccountNo)
+        REFERENCES Accounts (AccountNo)
 );
 
 CREATE TABLE PostLikes (
-	UserId INTEGER NOT NULL,
+    UserId INTEGER NOT NULL,
     PostId INTEGER NOT NULL,
-    PRIMARY KEY (UserId, PostId),
-    FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE,
-    FOREIGN KEY (PostId) REFERENCES Posts(PostId) ON DELETE CASCADE
-    
+    PRIMARY KEY (UserId , PostId),
+    FOREIGN KEY (UserId)
+        REFERENCES Users (UserId)
+        ON DELETE CASCADE,
+    FOREIGN KEY (PostId)
+        REFERENCES Posts (PostId)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE CommentLikes (
-	UserId INTEGER NOT NULL,
+    UserId INTEGER NOT NULL,
     CommentId INTEGER NOT NULL,
-    PRIMARY KEY (UserId, CommentId),
-    FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE,
-    FOREIGN KEY (CommentId) REFERENCES Comments(CommentId) ON DELETE CASCADE
-    
+    PRIMARY KEY (UserId , CommentId),
+    FOREIGN KEY (UserId)
+        REFERENCES Users (UserId)
+        ON DELETE CASCADE,
+    FOREIGN KEY (CommentId)
+        REFERENCES Comments (CommentId)
+        ON DELETE CASCADE
 );
 
 # Users
@@ -604,11 +635,15 @@ VALUES ("Roma", "Club", 3);
 
 
 # Professor's DB
-
 INSERT INTO Users
-VALUES (100001, "Michael.Collins@cse305.stonybrook.edu", "care2cash", "Michael", "Collins", NULL, "Washington", "DC", 12345, 228807080, "FMUser");
-INSERT INTO FMPlusUsers VALUES (100001, "2013-02-19", 7427263998435096, 123);
-INSERT INTO Pages(PageType, OwnerId, GroupId, PostCount) VALUES ("Personal", 100001, NULL, 0);
+VALUES (100000, "Justin.Biber@cse305.stonybrook.edu", "just@bibe", "Justin", "Biber", NULL, "Stony Brook", "NY", 10001, 228807000, "FMUser");
+INSERT INTO FMPlusUsers VALUES (100000, "2013-02-19", 7427263998435090, 113);
+INSERT INTO Pages(PageType, OwnerId, GroupId, PostCount) VALUES ("Personal", 100000, NULL, 0);
+
+INSERT INTO Users(EmailId, Psswd, FirstName, LastName, Address, City, State, Zipcode, Telephone, UserType)
+VALUES ("Michael.Collins@cse305.stonybrook.edu", "care2cash", "Michael", "Collins", NULL, "Washington", "DC", 12345, 228807080, "FMUser");
+INSERT INTO FMPlusUsers VALUES (LAST_INSERT_ID(), "2013-02-19", 7427263998435096, 123);
+INSERT INTO Pages(PageType, OwnerId, GroupId, PostCount) VALUES ("Personal", LAST_INSERT_ID(), NULL, 0);
 
 INSERT INTO Users(EmailId, Psswd, FirstName, LastName, Address, City, State, Zipcode, Telephone, UserType)
 VALUES ("Aria.Rose@cse305.stonybrook.edu", "dawn4call", "Aria", "Rose", NULL, "New York", "NY", 10001, 263303749, "FMUser");
@@ -705,7 +740,98 @@ VALUES ("Lucy.Phillips@cse305.stonybrook.edu", "away2bath", "Lucy", "Phillips", 
 INSERT INTO FMPlusUsers VALUES (LAST_INSERT_ID(), "2013-02-19", NULL, 0);
 INSERT INTO Pages(PageType, OwnerId, GroupId, PostCount) VALUES ("Personal", LAST_INSERT_ID(), NULL, 0);
 
+#Accounts
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100001,900001);
 
-Select * from Fmplususers;
-Select * from Employees;
-Select * from Users;
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100002,900002);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100003,900003);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100004,900004);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100005,900005);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100006,900006);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100007,900007);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100008,900008);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100009,900009);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100010,900010);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100011,900011);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100012,900012);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100013,900013);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100014,900014);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100015,900015);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100016,900016);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100017,900017);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100018,900018);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100019,900019);
+
+INSERT INTO Accounts(UserId, AccountNo)
+VALUES(100020,900020);
+
+#Circle
+INSERT INTO Groups(GroupName, GroupType, OwnerId)
+VALUES ("My Friends", "Friends", 100000);
+
+INSERT INTO Groups( GroupName, GroupType, OwnerId)
+VALUES ("My Friends", "Friends", 100001);
+
+INSERT INTO Groups(GroupName, GroupType, OwnerId)
+VALUES ("Best Friends", "Friends", 100002);
+
+INSERT INTO Groups(GroupName, GroupType, OwnerId)
+VALUES ("StonyBrookGang", "Friends", 100003);
+
+INSERT INTO Groups(GroupName, GroupType, OwnerId)
+VALUES ("CS Folks", "Friends", 100004);
+
+INSERT INTO Groups(GroupName, GroupType, OwnerId)
+VALUES ("My Family", "Friends", 100005);
+
+INSERT INTO Groups(GroupName, GroupType, OwnerId)
+VALUES ("Microsoft Groupies", "Friends", 100006);
+
+SELECT 
+    *
+FROM
+    Fmplususers;
+SELECT 
+    *
+FROM
+    Employees;
+SELECT 
+    *
+FROM
+    Users;
