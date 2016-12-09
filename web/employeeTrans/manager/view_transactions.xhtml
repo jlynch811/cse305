@@ -21,7 +21,7 @@ and open the template in the editor.
         <h:outputText value="" style="font-weight:bold"/>
         <h:form>
             <h:selectOneMenu value="#{managerTransactions.txItemName}">
-                <f:selectItems value="#{itemList}" var="itemName" itemLabel="#{itemname.itemName}" itemValue="#{itemNnme.itemName}" />
+                <f:selectItems value="#{itemList}" var="item" itemLabel="#{item.itemName}" itemValue="#{item.itemName}" />
             </h:selectOneMenu>
             <tr /><tr /><tr />
             <h:selectOneMenu value="#{managerTransactions.txUserId}">
@@ -38,7 +38,7 @@ and open the template in the editor.
             <br />
             <h:commandButton value="View Transactions" action="#{managerTransactions.filteredTxList()}" /><br/>
             
-            <h:dataTable value="#{managerTransactions.salesArr}" var="advertisement">
+            <h:dataTable value="#{managerTransactions.salesArr}" var="sales">
                 <h:column>
                     <p>#{sales.noOfUnits}</p>
                 </h:column>

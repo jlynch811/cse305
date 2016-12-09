@@ -48,10 +48,16 @@ public class ManagerTransactions implements Serializable {
     private String year;
 
     private ArrayList<Sales> salesArr = new ArrayList<>();
+    private ArrayList<Revenue> revenueArr = new ArrayList<>();
     
     private String txMode;
     private String txItemName;
     private String txUserId;
+    
+    private String revMode;
+    private String revItemName;
+    private String revUserName;
+    private String revItemType;
     
     /**
      * Creates a new instance of ManagerTransactions
@@ -59,6 +65,7 @@ public class ManagerTransactions implements Serializable {
     public ManagerTransactions() {
         empType = "rep";
         txMode = "itemName";
+        revMode = "itemName";
     }
 
     public String getEmpId() {
@@ -228,6 +235,46 @@ public class ManagerTransactions implements Serializable {
     public void setTxMode(String txMode) {
         this.txMode = txMode;
     }
+
+    public ArrayList<Revenue> getRevenueArr() {
+        return revenueArr;
+    }
+
+    public void setRevenueArr(ArrayList<Revenue> revenueArr) {
+        this.revenueArr = revenueArr;
+    }
+    
+    public String getRevMode() {
+        return revMode;
+    }
+
+    public void setRevMode(String revMode) {
+        this.revMode = revMode;
+    }
+
+    public String getRevItemName() {
+        return revItemName;
+    }
+
+    public void setRevItemName(String revItemName) {
+        this.revItemName = revItemName;
+    }
+
+    public String getRevUserName() {
+        return revUserName;
+    }
+
+    public void setRevUserName(String revUserName) {
+        this.revUserName = revUserName;
+    }
+
+    public String getRevItemType() {
+        return revItemType;
+    }
+
+    public void setRevItemType(String revItemType) {
+        this.revItemType = revItemType;
+    }
     
     public void initEmpUpdate () {
         System.out.println("Inside initEmpUpdate");
@@ -395,20 +442,17 @@ public class ManagerTransactions implements Serializable {
         
         Connection con = null;
         PreparedStatement ps = null;
-        
-//        String compare = year + "-" + month + "-%";
+
         try {
             con = DataConnect.getConnection();
             ResultSet rs;
             if (txMode.equals("itemName")) {
-//                ps = con.prepareStatement("Select TransactionId, S.AdvId, AccountNo, TransactionDate, NoOfUnits from Sales S, Advertisements A where A.ItemName = ? and A.AdvId = S.AdvId");
-//                ps.setString(1, txItemName);
-                ps = con.prepareStatement("Select TransactionId, S.AdvId, AccountNo, TransactionDate, NoOfUnits from Sales S, Advertisements A where A.ItemName = \"S6\" and A.AdvId = S.AdvId");
+                ps = con.prepareStatement("Select TransactionId, S.AdvId, AccountNo, TransactionDate, NoOfUnits from Sales S, Advertisements A where A.ItemName = ? and A.AdvId = S.AdvId");
+                ps.setString(1, "S6");
                 rs = ps.executeQuery();
             } else {
-//                ps = con.prepareStatement("Select TransactionId, S.AdvId, AccountNo, TransactionDate, NoOfUnits from Sales S, Accounts A, Users U where U.EmailId = ? and A.UserId = U.UserId and A.AccountNo = S.AccountNo;");
-//                ps.setString(1, txUserId);
-                ps = con.prepareStatement("Select TransactionId, S.AdvId, AccountNo, TransactionDate, NoOfUnits from Sales S, Accounts A, Users U where U.EmailId = \"gksharma1203@gmail.com\" and A.UserId = U.UserId and A.AccountNo = S.AccountNo");
+                ps = con.prepareStatement("Select TransactionId, S.AdvId, AccountNo, TransactionDate, NoOfUnits from Sales S, Accounts A, Users U where U.EmailId = ? and A.UserId = U.UserId and A.AccountNo = S.AccountNo;");
+                ps.setString(1, "gksharma1203@gmail.com");
                 rs = ps.executeQuery();
             }
 
@@ -425,6 +469,67 @@ public class ManagerTransactions implements Serializable {
             }
             
             return "view_transactions";
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    "SQL Error"));
+            return "";
+        }
+    }
+    
+    
+    public String filteredRevenueList () {
+        System.out.println("Inside filteredRevenueList");
+        
+        revenueArr.clear();
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            ResultSet rs;
+            if (txMode.equals("itemName")) {
+                ps = con.prepareStatement("Select AD.AdvId, EmployeeId, AdvType, AdvDate, Company, ItemName, Price, UserId, AC.AccountNo, TransactionId, TransactionDate, NoOfUnits, Price*NoOfUnits AS Revenue  from Advertisements AD, Accounts AC, Sales S where AD.ItemName = ? and AD.AdvId = S.AdvId and AC.AccountNo = S.AccountNo");
+                ps.setString(1, "S6");
+                rs = ps.executeQuery();
+            } else if (txMode.equals("userName")) {
+                ps = con.prepareStatement("Select AD.AdvId, EmployeeId, AdvType, AdvDate, Company, ItemName, Price, UserId, AC.AccountNo, TransactionId, TransactionDate, NoOfUnits, Price*NoOfUnits AS Revenue  from Advertisements AD, Accounts AC, Sales S where AD.AdvType = ? and AD.AdvId = S.AdvId and AC.AccountNo = S.AccountNo");
+                ps.setString(1, "Mobile");
+                rs = ps.executeQuery();
+            } else {
+                ps = con.prepareStatement("Select AD.AdvId, EmployeeId, AdvType, AdvDate, Company, ItemName, Price, UserId, AC.AccountNo, TransactionId, TransactionDate, NoOfUnits, Price*NoOfUnits AS Revenue  from Advertisements AD, Accounts AC, Sales S where AC.UserId = ? and AD.AdvId = S.AdvId and AC.AccountNo = S.AccountNo");
+                ps.setString(1, "12");
+                rs = ps.executeQuery();            
+            }
+
+            while(rs.next())
+            {
+                String advId = rs.getString("AdvId");
+                String empId = rs.getString("EmployeeId");
+                String advType = rs.getString("AdvType");
+                String advDate = rs.getString("AdvDate");
+                String company = rs.getString("Company");
+                String itemName = rs.getString("ItemName");
+                String price = rs.getString("Price");
+                String userId = rs.getString("UserId");
+                String accNo = rs.getString("AccountNo");
+                String txId = rs.getString("TransactionId");
+                String txDate = rs.getString("TransactionDate");
+                String units = rs.getString("NoOfUnits");
+                String profit = rs.getString("Revenue");
+
+                System.out.println("Profit : " + profit);
+                
+                Revenue revenue = new Revenue(advId, empId, advType, advDate, company, itemName, price, userId, accNo, txId, txDate, units, profit);
+                revenueArr.add(revenue);
+            }
+            
+            return "view_revenues";
             
         } catch (SQLException ex) {
             Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);

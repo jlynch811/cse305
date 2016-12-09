@@ -424,7 +424,7 @@ public class FactoryBean implements Serializable {
     }
     
     public void initDistinctItems() {
-        ArrayList<ItemName> itemList = new ArrayList();
+        ArrayList<Item> itemList = new ArrayList();
         HttpSession session = SessionUtils.getSession();
 
         System.out.println("Inside initDistinctItems");
@@ -441,7 +441,7 @@ public class FactoryBean implements Serializable {
             {
                 String item = rs.getString("ItemName");
                 //System.out.println("ItemName : " + item);
-                ItemName itemName = new ItemName(item);
+                Item itemName = new Item(item, null);
                 itemList.add(itemName);
             }
             session.setAttribute("itemList", itemList);
@@ -450,6 +450,33 @@ public class FactoryBean implements Serializable {
         }
     }
     
+    
+    public void initItemsTypes() {
+        ArrayList<Item> itemTypeList = new ArrayList();
+        HttpSession session = SessionUtils.getSession();
+
+        System.out.println("Inside initDistinctItems");
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            ps = con.prepareStatement("Select Distinct AdvType from Advertisements");
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                String itemType = rs.getString("AdvType");
+                //System.out.println("ItemName : " + item);
+                Item itemName = new Item(null, itemType);
+                itemTypeList.add(itemName);
+            }
+            session.setAttribute("itemTypeList", itemTypeList);
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public void initFMPUser()
     {

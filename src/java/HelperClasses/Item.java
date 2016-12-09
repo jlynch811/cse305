@@ -13,20 +13,21 @@ import java.io.Serializable;
  *
  * @author Tarun
  */
-@Named(value = "itemname")
+@Named(value = "item")
 @SessionScoped
-public class ItemName implements Serializable {
+public class Item implements Serializable {
 
-    String itemName;
+    String itemName, itemType;
     
     /**
-     * Creates a new instance of ItemName
+     * Creates a new instance of Item
      */
-    public ItemName() {
+    public Item() {
     }
     
-    public ItemName(String itemName) {
+    public Item(String itemName, String itemtype) {
         this.itemName = itemName;
+        this.itemType = itemtype;
     }
 
     public String getItemName() {
@@ -35,6 +36,14 @@ public class ItemName implements Serializable {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
     }
     
 }
