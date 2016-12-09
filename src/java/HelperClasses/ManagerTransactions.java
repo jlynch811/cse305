@@ -6,7 +6,6 @@
 package HelperClasses;
 
 import EntityClasses.DataConnect;
-import EntityClasses.SessionUtils;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +18,6 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -45,11 +43,22 @@ public class ManagerTransactions implements Serializable {
     private String hourlyRate;
     private String empType = "rep";
     
+    
+    private String month;
+    private String year;
+
+    private ArrayList<Sales> salesArr = new ArrayList<>();
+    
+    private String txMode;
+    private String txItemName;
+    private String txUserId;
+    
     /**
      * Creates a new instance of ManagerTransactions
      */
     public ManagerTransactions() {
         empType = "rep";
+        txMode = "itemName";
     }
 
     public String getEmpId() {
@@ -171,6 +180,54 @@ public class ManagerTransactions implements Serializable {
     public void setEmpType(String empType) {
         this.empType = empType;
     }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public ArrayList<Sales> getSalesArr() {
+        return salesArr;
+    }
+
+    public void setSalesArr(ArrayList<Sales> salesArr) {
+        this.salesArr = salesArr;
+    }
+
+    public String getTxItemName() {
+        return txItemName;
+    }
+
+    public void setTxItemName(String txItemName) {
+        this.txItemName = txItemName;
+    }
+
+    public String getTxUserId() {
+        return txUserId;
+    }
+
+    public void setTxUserId(String txUserId) {
+        this.txUserId = txUserId;
+    }
+
+    public String getTxMode() {
+        return txMode;
+    }
+
+    public void setTxMode(String txMode) {
+        this.txMode = txMode;
+    }
     
     public void initEmpUpdate () {
         System.out.println("Inside initEmpUpdate");
@@ -279,6 +336,96 @@ public class ManagerTransactions implements Serializable {
                     "SQL Error"));
             
             return "manage_emp";
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    "SQL Error"));
+            return "";
+        }
+    }
+    
+    public String populateSalesList () {
+        System.out.println("Inside populateSalesList");
+        
+        salesArr.clear();
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+//        String compare = year + "-" + month + "-%";
+        String compare = "2016-08-%";
+        try {
+            con = DataConnect.getConnection();
+            ps = con.prepareStatement("Select * from Sales where TransactionDate like ?");
+            ps.setString(1, compare);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                String txId = rs.getString("TransactionId");
+                String advId = rs.getString("AdvId");
+                String accNo = rs.getString("AccountNo");
+                String txDate = rs.getString("TransactionDate");
+                String units = rs.getString("NoOfUnits");
+                System.out.println("No Of Units : " + units);
+                Sales sales = new Sales(txId, advId, accNo, txDate, units);
+                salesArr.add(sales);
+            }
+            
+            return "view_sales";
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(
+                null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    "SQL Error"));
+            return "";
+        }
+    }
+    
+    public String filteredTxList () {
+        System.out.println("Inside filteredTxList");
+        
+        salesArr.clear();
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+//        String compare = year + "-" + month + "-%";
+        try {
+            con = DataConnect.getConnection();
+            ResultSet rs;
+            if (txMode.equals("itemName")) {
+//                ps = con.prepareStatement("Select TransactionId, S.AdvId, AccountNo, TransactionDate, NoOfUnits from Sales S, Advertisements A where A.ItemName = ? and A.AdvId = S.AdvId");
+//                ps.setString(1, txItemName);
+                ps = con.prepareStatement("Select TransactionId, S.AdvId, AccountNo, TransactionDate, NoOfUnits from Sales S, Advertisements A where A.ItemName = \"S6\" and A.AdvId = S.AdvId");
+                rs = ps.executeQuery();
+            } else {
+//                ps = con.prepareStatement("Select TransactionId, S.AdvId, AccountNo, TransactionDate, NoOfUnits from Sales S, Accounts A, Users U where U.EmailId = ? and A.UserId = U.UserId and A.AccountNo = S.AccountNo;");
+//                ps.setString(1, txUserId);
+                ps = con.prepareStatement("Select TransactionId, S.AdvId, AccountNo, TransactionDate, NoOfUnits from Sales S, Accounts A, Users U where U.EmailId = \"gksharma1203@gmail.com\" and A.UserId = U.UserId and A.AccountNo = S.AccountNo");
+                rs = ps.executeQuery();
+            }
+
+            while(rs.next())
+            {
+                String txId = rs.getString("TransactionId");
+                String advId = rs.getString("AdvId");
+                String accNo = rs.getString("AccountNo");
+                String txDate = rs.getString("TransactionDate");
+                String units = rs.getString("NoOfUnits");
+                System.out.println("No Of Units : " + units);
+                Sales sales = new Sales(txId, advId, accNo, txDate, units);
+                salesArr.add(sales);
+            }
+            
+            return "view_transactions";
+            
         } catch (SQLException ex) {
             Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext.getCurrentInstance().addMessage(
