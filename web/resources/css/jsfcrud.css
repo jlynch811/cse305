@@ -80,3 +80,10 @@ tr.jsfcrud_even_row {
     left: 50%;
     top: 50%;
 }
+
+
+.myDataTable { 
+    border-collapse: separate; 
+    border-spacing: 15px; 
+    *border-collapse: expression('separate', cellSpacing = '10px');
+}

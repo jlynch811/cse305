@@ -8,12 +8,25 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <head>
-        <title>TODO supply a title</title>
+    <h:head>
+        <title>List of All Items</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+    </h:head>
+    <h:body>
+        <h:form>
+        <p style="font-size: 25px; margin: 0px; padding: 0px;">List of All Items</p>
+        <p align="right">
+            <h:commandButton value="Home" action="/home_manager" />
+        </p></h:form>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{factorybean.initDistinctItems()}"/>
+        </f:metadata>
+        <h:dataTable class="myDataTable" value="#{itemList}" var="itemvar">
+            <h:column>    				
+                <f:facet name="header">Item names</f:facet>    				
+                        #{itemvar.itemName}
+            </h:column>
+         </h:dataTable>
+    </h:body>
 </html>

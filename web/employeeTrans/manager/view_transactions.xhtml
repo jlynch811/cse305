@@ -8,12 +8,65 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <head>
-        <title>TODO supply a title</title>
+    <h:head>
+        <title>View Transactions</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+    </h:head>
+    <h:body>
+        <h:form>
+        <p style="font-size: 25px; margin: 0px; padding: 0px;">View Transactions</p>
+        <p align="right">
+            <h:commandButton value="Home" action="/home_manager" />
+        </p></h:form>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{factorybean.initDistinctItems()}"/>
+            <f:event type="preRenderView" listener="#{factorybean.initFMPUser()}"/>
+        </f:metadata>
+        <h:outputText value="" style="font-weight:bold"/>
+        <h:form>
+            <p>Select Item Name :</p>
+            <h:selectOneMenu value="#{managerTransactions.txItemName}">
+                <f:selectItems value="#{itemList}" var="itemvar" itemLabel="#{itemvar.itemName}" itemValue="#{itemvar.itemName}" />
+            </h:selectOneMenu>
+            <p>Select Customer :</p>
+            <h:selectOneMenu value="#{managerTransactions.txUserId}">
+                <f:selectItems value="#{fmpUsersList}" var="uservar" itemLabel="#{uservar.emailId}" itemValue="#{uservar.userId}" />
+            </h:selectOneMenu>
+            <br /><br />
+            <p style="padding: 0px; margin: 0px">Filter using :</p>
+            <br />
+            <h:selectOneRadio id="emptype" value="#{managerTransactions.txMode}">
+                <f:selectItem itemValue="itemName" itemLabel="Item Name" />
+                <f:selectItem itemValue="userId" itemLabel="User ID" />
+            </h:selectOneRadio>
+            <br />
+            <br />
+            <h:commandButton value="View Transactions" action="#{managerTransactions.filteredTxList()}" /><br/>
+            
+            <h:dataTable class="myDataTable" value="#{managerTransactions.salesArr}" var="sale">
+                <h:column>    				
+                        <f:facet name="header">Transaction ID</f:facet>    				
+                                #{sale.txId}
+                </h:column>
+                <h:column>
+                        <f:facet name="header">Advertisement ID</f:facet>    				
+                                #{sale.advId}
+                </h:column>
+                <h:column>
+                        <f:facet name="header">Account Number</f:facet>    				
+                                #{sale.accountNo}
+                </h:column>
+                <h:column>
+                        <f:facet name="header">Transaction Date</f:facet>    				
+                                #{sale.transactionDate}
+                </h:column>
+                <h:column>
+                        <f:facet name="header">Number of Units</f:facet>    				
+                                #{sale.noOfUnits}
+                </h:column>
+         </h:dataTable>
+            
+        </h:form>
+    </h:body>
 </html>

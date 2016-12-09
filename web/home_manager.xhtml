@@ -6,6 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
 	<title>Manager Home Page</title>
+        <p style="font-size: 25px; margin: 0px; padding: 0px;">Welcome, #{homepage.firstName} #{homepage.lastName}</p>
         <h:outputStylesheet name="css/jsfcrud.css"/>
 </h:head>
 <h:body>
@@ -13,28 +14,35 @@
         <f:event type="preRenderView" listener="#{homepage.initUserAttributes()}"/>
     </f:metadata>
     <h:form>
-        <p>Welcome - #{homepage.firstName} #{homepage.lastName}</p>
+        <br /><br />
+        <h:commandButton value="Modify Employee Info" action="employeeTrans/manager/manage_emp" />
         <br />
         <br />
-        <h:commandButton value="Manage Employee Info" action="employeeTrans/manager/manage_emp" />
+        <h:commandButton value="View Sales Report" action="employeeTrans/manager/view_sales" />
         <br />
         <br />
-        <h:commandButton value="See Sales Report" action="employeeTrans/manager/view_sales" />
+        <h:commandButton value="View All Items" action="employeeTrans/manager/view_items" />
         <br />
         <br />
-        <h:commandButton value="See Advertisements" action="employeeTrans/manager/view_adv" />
+        <h:commandButton value="View Transactions" action="employeeTrans/manager/view_transactions" />
         <br />
         <br />
-        <h:commandButton value="See Transactions" action="employeeTrans/manager/view_transactions" />
+        <h:commandButton value="View Revenues" action="employeeTrans/manager/view_revenues" />
         <br />
         <br />
-        <h:commandButton value="See Revenues" action="employeeTrans/manager/view_revenues" />
+        <h:commandButton value="View Best Employee" action="employeeTrans/manager/view_best_emp" />
         <br />
         <br />
-        <h:commandButton value="See Customers" action="employeeTrans/manager/view_customers" />
+        <h:commandButton value="View Best Customer" action="employeeTrans/manager/view_best_cust" />
         <br />
         <br />
-        <h:commandButton value="See Items" action="employeeTrans/manager/view_items" />
+        <h:commandButton value="View Most Active Item" action="employeeTrans/manager/view_active_items" />
+        <br />
+        <br />
+        <h:commandButton value="View Customers of an Item" action="employeeTrans/manager/customer_item" />
+        <br />
+        <br />
+        <h:commandButton value="View Items of a Company" action="employeeTrans/manager/items_company" />
         <br /><br />
         <br /><br />
         <h:commandButton value="Logout" action="#{login.logout}" />

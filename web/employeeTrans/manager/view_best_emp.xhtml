@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>View Best Revenue</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h:form>
+        <p style="font-size: 25px; margin: 0px; padding: 0px;">View Best Revenue</p>
+        <p align="right">
+            <h:commandButton value="Home" action="/home_manager" />
+        </p></h:form>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{managerTransactions.bestEmpRevenueList()}"/>
+        </f:metadata>
+        <h:outputText value="" style="font-weight:bold"/>
+        <h:form>
+            <h:dataTable class="myDataTable" value="#{managerTransactions.revenueArr}" var="revenuevar">
+                    <h:column>    				
+                            <f:facet name="header">Employee Mail</f:facet>    				
+                                    #{revenuevar.empMail}
+                    </h:column>
+                    <h:column>    				
+                            <f:facet name="header">Total Revenue</f:facet>    				
+                                    #{revenuevar.profit}
+                    </h:column>
+             </h:dataTable>
+        </h:form>
+    </h:body>
+</html>

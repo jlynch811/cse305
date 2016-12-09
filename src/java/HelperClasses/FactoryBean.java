@@ -423,4 +423,124 @@ public class FactoryBean implements Serializable {
         }
     }
     
+    public void initDistinctItems() {
+        ArrayList<Item> itemList = new ArrayList();
+        HttpSession session = SessionUtils.getSession();
+
+        System.out.println("Inside initDistinctItems");
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            ps = con.prepareStatement("Select Distinct ItemName from Advertisements");
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                String item = rs.getString("ItemName");
+//                System.out.println("ItemName : " + item);
+                Item itemName = new Item(item, null);
+                itemList.add(itemName);
+            }
+            session.setAttribute("itemList", itemList);
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public void initItemsTypes() {
+        ArrayList<Item> itemTypeList = new ArrayList();
+        HttpSession session = SessionUtils.getSession();
+
+        System.out.println("Inside initDistinctItems");
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            ps = con.prepareStatement("Select Distinct AdvType from Advertisements");
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                String itemType = rs.getString("AdvType");
+                //System.out.println("ItemName : " + item);
+                Item itemName = new Item(null, itemType);
+                itemTypeList.add(itemName);
+            }
+            session.setAttribute("itemTypeList", itemTypeList);
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void initFMPUser()
+    {
+        ArrayList<Users> fmpUsersList = new ArrayList();
+        HttpSession session = SessionUtils.getSession();
+        
+        System.out.println("Inside initFMPUser");
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            ps = con.prepareStatement("SELECT * FROM Users where UserType = \"FMUser\"");
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                String userId = rs.getString("UserId");
+                String emailId = rs.getString("EmailId");
+                String psswd = rs.getString("Psswd");
+                String firstName = rs.getString("FirstName");
+                String lastName = rs.getString("LastName");
+                String address = rs.getString("Address");
+                String city = rs.getString("City");
+                String state = rs.getString("State");
+                String zipcode = rs.getString("Zipcode");
+                String telephone = rs.getString("Telephone");
+                String userType = rs.getString("UserType");
+                //System.out.println("Users Name : " + firstName);
+                Users user = new Users(userId, emailId, psswd, firstName, lastName, address, city, state, zipcode, telephone, userType);
+                fmpUsersList.add(user);
+            }
+            session.setAttribute("fmpUsersList", fmpUsersList);
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void initAllCompanyNames()
+    {
+        ArrayList<Item> companyList = new ArrayList();
+        HttpSession session = SessionUtils.getSession();
+        
+        System.out.println("Inside initAllCompanyNames");
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        
+        try {
+            con = DataConnect.getConnection();
+            ps = con.prepareStatement("Select distinct Company from Advertisements");
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                String company = rs.getString("Company");
+                System.out.println("Company Name : " + company);
+                Item item = new Item(company);
+                companyList.add(item);
+            }
+            session.setAttribute("companyList", companyList);
+        } catch (SQLException ex) {
+            Logger.getLogger(FactoryBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

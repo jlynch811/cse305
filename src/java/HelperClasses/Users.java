@@ -44,6 +44,20 @@ public class Users implements Serializable {
         this.userType = userType;
     }
     
+    public Users(String emailId) {     
+        this.userId = null;
+        this.emailId = emailId;
+        this.psswd = null;
+        this.firstName = null;
+        this.lastName = null;
+        this.address = null;
+        this.city = null;
+        this.state = null;
+        this.zipcode = null;
+        this.telephone = null;
+        this.userType = null;
+    }
+    
     
     public Users() {
     }

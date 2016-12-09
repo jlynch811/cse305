@@ -16,10 +16,16 @@ and open the template in the editor.
     </h:head>
     <body>
         <h:form>
+        <p style="font-size: 25px; margin: 0px; padding: 0px;">Manage Employee</p>
+        <p align="right">
+            <h:commandButton value="Home" action="/home_manager" />
+        </p></h:form>
+        <h:form>
+            <p>Choose the employee information you want to Modify :</p>
             <h:selectOneMenu value="#{managerTransactions.empId}">
                     <f:selectItems value="#{representativeList}" var="f" itemLabel="#{f.emailId}" itemValue="#{f.userId}" />
             </h:selectOneMenu>
-            <tr />
+            <br /><br /><br />
             <h:commandButton value="Update Employee Info" action="update_emp_info" /><br/>
         </h:form>
     </body>
