@@ -17,10 +17,11 @@ and open the template in the editor.
         <f:metadata>
             <f:event type="preRenderView" listener="#{factorybean.initDistinctItems()}"/>
         </f:metadata>
-        <h:dataTable value="#{itemList}" var="advertisement">
-            <h:column>
-                <p>#{advertisement.itemName}</p>
+        <h:dataTable class="myDataTable" value="#{itemList}" var="itemvar">
+            <h:column>    				
+                <f:facet name="header">Item names</f:facet>    				
+                        #{itemvar.itemName}
             </h:column>
-        </h:dataTable>
+         </h:dataTable>
     </h:body>
 </html>

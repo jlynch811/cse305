@@ -6,6 +6,7 @@
 package HelperClasses;
 
 import EntityClasses.DataConnect;
+import EntityClasses.SessionUtils;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +19,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -396,14 +398,14 @@ public class ManagerTransactions implements Serializable {
     
     public String populateSalesList () {
         System.out.println("Inside populateSalesList");
-        
-        salesArr.clear();
+        HttpSession session = SessionUtils.getSession();
+        salesArr = new ArrayList<>();
         
         Connection con = null;
         PreparedStatement ps = null;
         
-//        String compare = year + "-" + month + "-%";
-        String compare = "2016-08-%";
+        String compare = year + "-" + month + "-%";
+        
         try {
             con = DataConnect.getConnection();
             ps = con.prepareStatement("Select * from Sales where TransactionDate like ?");
@@ -421,7 +423,6 @@ public class ManagerTransactions implements Serializable {
                 Sales sales = new Sales(txId, advId, accNo, txDate, units);
                 salesArr.add(sales);
             }
-            
             return "view_sales";
             
         } catch (SQLException ex) {
@@ -438,7 +439,7 @@ public class ManagerTransactions implements Serializable {
     public String filteredTxList () {
         System.out.println("Inside filteredTxList");
         
-        salesArr.clear();
+        salesArr = new ArrayList<>();
         
         Connection con = null;
         PreparedStatement ps = null;
@@ -448,11 +449,11 @@ public class ManagerTransactions implements Serializable {
             ResultSet rs;
             if (txMode.equals("itemName")) {
                 ps = con.prepareStatement("Select TransactionId, S.AdvId, AccountNo, TransactionDate, NoOfUnits from Sales S, Advertisements A where A.ItemName = ? and A.AdvId = S.AdvId");
-                ps.setString(1, "S6");
+                ps.setString(1, txItemName);
                 rs = ps.executeQuery();
             } else {
-                ps = con.prepareStatement("Select TransactionId, S.AdvId, AccountNo, TransactionDate, NoOfUnits from Sales S, Accounts A, Users U where U.EmailId = ? and A.UserId = U.UserId and A.AccountNo = S.AccountNo;");
-                ps.setString(1, "gksharma1203@gmail.com");
+                ps = con.prepareStatement("Select TransactionId, S.AdvId, S.AccountNo, TransactionDate, NoOfUnits from Sales S, Accounts A, Users U where U.UserId = ? and A.UserId = U.UserId and A.AccountNo = S.AccountNo;");
+                ps.setString(1, txUserId);
                 rs = ps.executeQuery();
             }
 
@@ -494,23 +495,23 @@ public class ManagerTransactions implements Serializable {
             con = DataConnect.getConnection();
             ResultSet rs;
             if (txMode.equals("itemName")) {
-                ps = con.prepareStatement("Select AD.AdvId, EmployeeId, AdvType, AdvDate, Company, ItemName, Price, UserId, AC.AccountNo, TransactionId, TransactionDate, NoOfUnits, Price*NoOfUnits AS Revenue  from Advertisements AD, Accounts AC, Sales S where AD.ItemName = ? and AD.AdvId = S.AdvId and AC.AccountNo = S.AccountNo");
-                ps.setString(1, "S6");
+                ps = con.prepareStatement("Select AD.AdvId, EmployeeId, AdvType, AdvDate, Company, ItemName, Price, UserId, AC.AccountNo, TransactionId, TransactionDate, NoOfUnits, Price*NoOfUnits AS Revenue from Advertisements AD, Accounts AC, Sales S where AD.ItemName = ? and AD.AdvId = S.AdvId and AC.AccountNo = S.AccountNo");
+                ps.setString(1, revItemName);
                 rs = ps.executeQuery();
             } else if (txMode.equals("userName")) {
-                ps = con.prepareStatement("Select AD.AdvId, EmployeeId, AdvType, AdvDate, Company, ItemName, Price, UserId, AC.AccountNo, TransactionId, TransactionDate, NoOfUnits, Price*NoOfUnits AS Revenue  from Advertisements AD, Accounts AC, Sales S where AD.AdvType = ? and AD.AdvId = S.AdvId and AC.AccountNo = S.AccountNo");
-                ps.setString(1, "Mobile");
+                ps = con.prepareStatement("Select AD.AdvId, EmployeeId, AdvType, AdvDate, Company, ItemName, Price, UserId, AC.AccountNo, TransactionId, TransactionDate, NoOfUnits, Price*NoOfUnits AS Revenue from Advertisements AD, Accounts AC, Sales S where AC.UserId = ? and AD.AdvId = S.AdvId and AC.AccountNo = S.AccountNo");
+                ps.setString(1, revUserName);
                 rs = ps.executeQuery();
             } else {
-                ps = con.prepareStatement("Select AD.AdvId, EmployeeId, AdvType, AdvDate, Company, ItemName, Price, UserId, AC.AccountNo, TransactionId, TransactionDate, NoOfUnits, Price*NoOfUnits AS Revenue  from Advertisements AD, Accounts AC, Sales S where AC.UserId = ? and AD.AdvId = S.AdvId and AC.AccountNo = S.AccountNo");
-                ps.setString(1, "12");
+                ps = con.prepareStatement("Select AD.AdvId, EmployeeId, AdvType, AdvDate, Company, ItemName, Price, UserId, AC.AccountNo, TransactionId, TransactionDate, NoOfUnits, Price*NoOfUnits AS Revenue from Advertisements AD, Accounts AC, Sales S where AD.AdvType = ? and AD.AdvId = S.AdvId and AC.AccountNo = S.AccountNo");
+                ps.setString(1, revItemType);
                 rs = ps.executeQuery();            
             }
 
             while(rs.next())
             {
                 String advId = rs.getString("AdvId");
-                String empId = rs.getString("EmployeeId");
+                String emplId = rs.getString("EmployeeId");
                 String advType = rs.getString("AdvType");
                 String advDate = rs.getString("AdvDate");
                 String company = rs.getString("Company");
@@ -525,7 +526,7 @@ public class ManagerTransactions implements Serializable {
 
                 System.out.println("Profit : " + profit);
                 
-                Revenue revenue = new Revenue(advId, empId, advType, advDate, company, itemName, price, userId, accNo, txId, txDate, units, profit);
+                Revenue revenue = new Revenue(advId, emplId, advType, advDate, company, itemName, price, userId, accNo, txId, txDate, units, profit);
                 revenueArr.add(revenue);
             }
             

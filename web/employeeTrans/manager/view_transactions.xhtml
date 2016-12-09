@@ -21,11 +21,11 @@ and open the template in the editor.
         <h:outputText value="" style="font-weight:bold"/>
         <h:form>
             <h:selectOneMenu value="#{managerTransactions.txItemName}">
-                <f:selectItems value="#{itemList}" var="item" itemLabel="#{item.itemName}" itemValue="#{item.itemName}" />
+                <f:selectItems value="#{itemList}" var="itemvar" itemLabel="#{itemvar.itemName}" itemValue="#{itemvar.itemName}" />
             </h:selectOneMenu>
             <tr /><tr /><tr />
             <h:selectOneMenu value="#{managerTransactions.txUserId}">
-                <f:selectItems value="#{fmUsersList}" var="users" itemLabel="#{users.emailId}" itemValue="#{users.userId}" />
+                <f:selectItems value="#{fmpUsersList}" var="uservar" itemLabel="#{uservar.emailId}" itemValue="#{uservar.userId}" />
             </h:selectOneMenu>
             <br /><br />
             <p style="padding: 0px; margin: 0px">Filter using :</p>
@@ -38,11 +38,29 @@ and open the template in the editor.
             <br />
             <h:commandButton value="View Transactions" action="#{managerTransactions.filteredTxList()}" /><br/>
             
-            <h:dataTable value="#{managerTransactions.salesArr}" var="sales">
-                <h:column>
-                    <p>#{sales.noOfUnits}</p>
+            <h:dataTable class="myDataTable" value="#{managerTransactions.salesArr}" var="sale">
+                <h:column>    				
+                        <f:facet name="header">Transaction ID</f:facet>    				
+                                #{sale.txId}
                 </h:column>
-            </h:dataTable>
+                <h:column>
+                        <f:facet name="header">Advertisement ID</f:facet>    				
+                                #{sale.advId}
+                </h:column>
+                <h:column>
+                        <f:facet name="header">Account Number</f:facet>    				
+                                #{sale.accountNo}
+                </h:column>
+                <h:column>
+                        <f:facet name="header">Transaction Date</f:facet>    				
+                                #{sale.transactionDate}
+                </h:column>
+                <h:column>
+                        <f:facet name="header">Number of Units</f:facet>    				
+                                #{sale.noOfUnits}
+                </h:column>
+         </h:dataTable>
+            
         </h:form>
     </h:body>
 </html>

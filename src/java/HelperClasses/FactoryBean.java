@@ -440,7 +440,7 @@ public class FactoryBean implements Serializable {
             while(rs.next())
             {
                 String item = rs.getString("ItemName");
-                //System.out.println("ItemName : " + item);
+//                System.out.println("ItemName : " + item);
                 Item itemName = new Item(item, null);
                 itemList.add(itemName);
             }
